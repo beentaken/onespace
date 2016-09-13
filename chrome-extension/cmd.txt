@@ -1,0 +1,21 @@
+[CMD] { "context" : "liveview", "role" : "surfer", "action" : "send-share-request" }
+
+
+
+
+
+[CMD] { "context" : "liveview", "role" : "surfer", "action" : "handle-share-request-accepted" }
+
+
+[CMD] { "context" : "liveview", "role" : "surfer", "action" : "handle-share-request-rejected" }
+
+
+[CMD] { "context" : "liveview", "role" : "surfer", "action" : "handle-following-stopped" }
+
+[CMD] { "context" : "liveview", "role" : "surfer", "action" : "handle-guiding-stopped" }
+
+
+
+[CMD] { "context" : "liveview", "role" : "surfer", "action" : "send-url", "url" : "http://www.stern.de" }
+
+

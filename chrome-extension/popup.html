@@ -1,0 +1,441 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+  <head>
+    <title>OneSpace</title>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/jsjac/JSJaC.js"></script>
+    <!-- <script type="text/javascript" charset="utf-8" src="markerwithlabel.js"></script> -->
+    <script type="text/javascript" charset="utf-8" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript" charset="utf-8" src="onespace-popup-model.js"></script>
+    <script type="text/javascript" charset="utf-8" src="onespace-popup-view.js"></script>
+    <script type="text/javascript" charset="utf-8" src="onespace-popup.js"></script>
+    
+<!--    <script type="text/javascript" charset="utf-8">
+      function init(){ 
+	onPopupWindowLoaded();
+      }
+	
+      function unload(){ 
+	onPopupWindowUnloaded();
+      }
+
+      
+    </script>-->
+    
+    
+    <link href="style.css" rel="stylesheet" type="text/css">
+  </head>
+
+  
+  
+  <body>
+  
+    <div id="wrapper">
+  
+      <div id="header">
+
+	<div id="nav"> 
+	  <ul> 
+	    <li><a class="nav-link" id="nav-link-dashboard" href="#">Dashboard</a></li> 
+	    <li><a class="nav-link" id="nav-link-map" href="#">Map</a></li> 
+	    <li><a class="nav-link" id="nav-link-chat" href="#">Chat</a></li> 
+	    <li><a class="nav-link" id="nav-link-liveview" href="#">Live View</a></li> 
+	    <li><a class="nav-link" id="nav-link-settings" href="#">Settings</a></li> 
+	  <!--
+	  <li><a href="#">One Dropdown</a> 
+		  <ul> 
+		  <li><a href="#">Level 2.1</a></li> 
+		  <li><a href="#">Level 2.2</a></li> 
+		  <li><a href="#">Level 2.3</a></li> 
+		  <li><a href="#">Level 2.4</a></li> 
+		  <li><a href="#">Level 2.5</a></li> 
+		  </ul> 
+	  </li> 
+	  <li><a href="#">Three Levels</a> 
+		  <ul> 
+		  <li><a href="#">Level 2.1</a></li> 
+		  <li><a href="#">Level 2.2</a></li> 
+		  <li><a href="#">Level 2.3</a> 
+			  <ul> 
+			  <li><a href="#">Level 2.3.1</a></li> 
+			  <li><a href="#">Level 2.3.2</a></li> 
+			  <li><a href="#">Level 2.3.3</a></li> 
+			  <li><a href="#">Level 2.3.4</a></li> 
+			  <li><a href="#">Level 2.3.5</a></li> 
+			  <li><a href="#">Level 2.3.6</a></li> 
+			  <li><a href="#">Level 2.3.7</a></li> 
+			  </ul> 
+		  </li> 
+		  <li><a href="#">Level 2.4</a></li> 
+		  <li><a href="#">Level 2.5</a></li> 
+		  </ul> 
+	  </li> 
+	  <li><a href="#">Services</a></li> 
+	  <li><a href="#">Contact Us</a></li> 
+	  	  -->
+	  </ul> 
+
+	</div> 
+
+      
+      </div>
+      
+      
+      <div id="content">
+      
+	<div id="content-div-notification-panel">
+	  <div class="link-button-panel-close"><a href="button-notification-panel-close" id="button-notification-panel-close"><img src='images/icon-close.png' /></a></div>
+	  <div id="content-div-notification-panel-content">
+	    <div id="content-div-notification-panel-text">
+	    </div>
+	    <div>
+	      <table id="content-div-notification-panel-action-button-table">
+		<tr><th></th></tr>
+	      </table>
+	    </div>
+	  </div>
+	</div>
+      
+      
+      
+	<div class="content-div" id="content-div-dashboard">
+	    
+	    <table id="dashboard-table-main">
+
+	      <tr id="dashboard-table-main-row">
+		<td id="dashboard-table-main-sidebar-column">
+		
+		  <div id="content-div-dashboard-sidebar">
+
+		    <div id="content-div-dashboard-sidebar-nav">
+
+		      <ul>
+		      <li>Social Media
+		      <ul>
+		      <li><a class="dashboard-sidebar-nav-link" id="dashboard-sidebar-nav-link-twitter" href="#">Latest Tweets</a></li>
+		      </ul>
+		      </li>
+		      <li>Videos
+		      <ul>
+		      <li><a class="dashboard-sidebar-nav-link" id="dashboard-sidebar-nav-link-youtube" href="#">YouTube</a></li>
+		      </ul>
+		      </li>
+		      <li>Images
+		      <ul>
+		      <li><a class="dashboard-sidebar-nav-link" id="dashboard-sidebar-nav-link-flickr" href="#">Flickr</a></li>
+		      <li><a class="dashboard-sidebar-nav-link" id="dashboard-sidebar-nav-link-instagram" href="#">Instagram</a></li>
+		      </ul>
+		      </li>
+		      <li>Live Data
+		      <ul>
+		      <li><a class="dashboard-sidebar-nav-link" id="dashboard-sidebar-nav-link-nea" href="#">Weather (NEA)</a></li>
+		      <li><a class="dashboard-sidebar-nav-link" id="dashboard-sidebar-nav-link-lta" href="#">Carparks (LTA)</a></li>
+		      <li><a class="dashboard-sidebar-nav-link" id="dashboard-sidebar-nav-link-ltabuses" href="#">Bus Info (LTA)</a></li>
+		      </ul>
+		      </li>
+		      <li>Go Local
+		      <ul>
+		      <li><a class="dashboard-sidebar-nav-link" id="dashboard-sidebar-nav-link-products" href="#">Products</a></li>
+		      </ul>
+		      </li>
+		      </ul>
+
+		    </div>
+		      
+		  </div>
+		
+		</td>
+		<td id="dashboard-table-main-content-column">
+		  <div id="content-div-dashboard-main">
+		    <div id="content-div-dashboard-main-heading"></div>
+		    <div d="ontent-div-dashboard-main-table">
+		      <table id="data-table">
+			<tbody id="data-table-tbody">
+			  <tr><td></td></tr>
+			</tbody>
+		      </table>
+		    </div>
+		  </div>
+		</td>
+	      </tr>
+	  </table>
+	    
+	</div>
+      
+      
+	<div class="content-div" id="content-div-map">
+	  <div id="content-div-map-canvas" style="width:100%; height:100%"></div>
+	  <div id="content-div-map-context-menu">
+	    <div class="content-div-map-context-menu-item" id="content-div-map-context-menu-item-create-corner"><a id="content-div-map-context-menu-item-link-createcorner" class="content-div-map-context-menu-item-link" href="#">Create Corner here...</a></div>
+	  </div>
+	  <div id="content-div-map-info-panel">
+	    <div class="link-button-panel-close"><a href="button-info-panel-close" id="button-info-panel-close"><img src='images/icon-close.png' /></a></div>
+	    <div id="content-div-map-info-panel-content">
+	      <div id="content-div-map-info-panel-text">
+	      </div>
+	      <div>
+		<table id="content-div-map-info-panel-action-button-table">
+		  <tr><th></th></tr>
+		</table>
+	      </div>
+	    </div>
+	  </div>
+	  <div id="content-div-map-legend">
+	    <div>Select to display:</div>
+	    <div>
+	      <input type="checkbox" class="map-legend-checkbox" id="map-legend-show-locations" name="map-legend-show-locations" value="locations" />Locations<br />
+	      <input type="checkbox" class="map-legend-checkbox" id="map-legend-show-corners" name="map-legend-show-corners" value="corners" />User Corners<br />
+	      <input type="checkbox" class="map-legend-checkbox" id="map-legend-show-surfers" name="map-legend-show-surfers" value="surfers" />Surfers<br /> 
+	      <input type="checkbox" class="map-legend-checkbox" id="map-legend-show-walkers" name="map-legend-show-walkers" value="walkers" />Walkers
+	    </div>
+	  </div>
+	  <div id="content-div-map-legend-location-categories">
+	    <div>Filter locations:</div>
+	    <div>
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-accommodation" name="map-legend-show-locations-accommodation" value="accommodation" />Accommodation<br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-amusement" name="map-legend-show-locations-amusement" value="amusement" />Amusement<br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-education" name="map-legend-show-locations-education" value="education" />Education<br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-establishment" name="map-legend-show-locations-establishment" value="establishment" />Establishment<br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-finance" name="map-legend-show-locations-finance" value="finance" />Finance<br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-food" name="map-legend-show-locations-food" value="food" />Food<br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-government " name="map-legend-show-locations-government " value="government " />Government<br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-health_and_wellness" name="map-legend-show-locations-health_and_wellness" value="health_and_wellness" />Health &amp; Wellness<br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-place_of_worship" name="map-legend-show-locations-place_of_worship" value="place_of_worship" />Worship<br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-recreation" name="map-legend-show-locations-recreation " value="recreation" />Recreation<br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-service" name="map-legend-show-locations-service" value="service" />Service<br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-shopping" name="map-legend-show-locations-shopping" value="shopping" />Shopping <br />
+	      <input type="checkbox" class="map-legend-checkbox-location-filter" id="map-legend-show-locations-transport" name="map-legend-show-locations-transport" value="transport" />Transport<br />	      
+	    </div>
+	  </div>
+	</div>
+
+	<div class="content-div" id="content-div-chat">
+	  <table id="chat-table-main">
+
+	    <tr id="chat-table-main-top-row">
+	      <td>
+		<div>
+		  <select id="chat-select">
+		    
+		  </select> 
+		</div>
+	      </td>	    
+	      <td> <button class="button-popup" id="button-chat-close" type="button">Close Chat</button> </td>
+	    </tr>
+	  
+	    <tr>
+	      <td>
+		<div id="chat-received-messages-wrapper">
+		  <div id="chat-received-messages">
+		   
+		  </div>
+		</div>
+	      </td>
+	      <td style="width: 150px;">
+		<div style="height: 100%; display: block; position: relative;">
+		  <div id="chat-participants-wrapper">
+		    <div id="chat-participants">
+		  
+		    </div>
+		  </div>
+		  <div id="chat-options">
+		    <input id="input-share-media" type="file" name="input-share-media" style="display: none;" />
+		    <a href="button-share-media" id="button-share-media"><img src='images/icon-gallery.png' /></a>
+		  </div>
+		</div>
+	      </td>
+	    </tr>
+
+	    <tr id="chat-table-main-send-row">
+	      <td><input class="form-textfield" id="chat-send-message-text" type="text"/></td>
+	      <td><button class="button-popup" id="button-chat-send-message" type="button">Send Message</button></td>
+	    </tr>
+
+	  </table>
+	</div>
+	
+	<div class="content-div" id="content-div-liveview">
+	
+	  <!--
+	  <ul class="tabs">
+	    <li>
+	      <input type="radio" checked name="tabs" id="liveview-tab-surfer">
+	      <label for="liveview-tab-surfer">Surfer</label>
+	      <div id="tab-content-surfer" class="tab-content">
+		<table id="liveview-table-main">
+
+		  <tr id="liveview-table-main-top-row">
+		    <td>
+		      <div>
+			<select id="liveview-surfer-guide-select">
+			  
+			</select> 
+		      </div>
+		    </td>	    
+		    <td style="width: 150px;"> 
+		      <button class="button-popup" id="button-liveview-unfollow" type="button">Unfollow User</button> 
+		    </td>
+		  </tr>
+		  <tr id="liveview-table-main-top-row">
+		    <td colspan="2">
+		      <input class="form-textfield" id="liveview-address-bar-text-field" type="text" disabled />
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="2">
+		      <div id="liveview-content-wrapper">
+			  <iframe id="liveview-frame" src="" frameborder="0"></iframe> 
+		      </div>
+		    </td>
+		  </tr>
+		</table>
+	      </div>
+	    </li>
+	    <li>
+	      <input type="radio" name="tabs" id="liveview-tab-walker">
+	      <label for="liveview-tab-walker">Walker</label>
+	      <div id="tab-content-walker" class="tab-content">
+	      
+	      </div>
+	    </li>
+	     
+	  </ul>
+	  -->
+
+	  <ul class="tabs">
+	    <li>
+	      <input type="radio" checked name="tabs" id="liveview-tab-monitor">
+	      <label for="liveview-tab-monitor">Live View</label>
+	      <div id="tab-content-monitor" class="tab-content">
+
+		<table id="liveview-table-main">
+
+		  <tr>
+		    <td>
+		      <table class="liveview-table-content">
+			<tr id="liveview-table-content-top-row">
+			  <td>
+			    <input class="form-textfield" id="liveview-address-bar-text-field" type="text" disabled />
+			  </td>
+			</tr>
+			<tr>
+			  <td style="padding-top: 5px; padding-right: 3px;">
+			    <div id="liveview-content-wrapper">
+
+			    </div>
+			  </td>
+			</tr>
+		      </table>
+		    <td style="width: 200px;">
+		    
+		      <table id="liveview-table-users">
+			<tr>
+			  <td  style="padding-bottom: 5px;">
+			    <div class="liveview-users-wrapper">
+			      <div id="liveview-guides">
+				
+			      </div>
+			    </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>
+			    <div class="liveview-users-wrapper">
+			      <div id="liveview-followers">
+				
+			      </div>
+			    </div>
+			  </td>
+			</tr>
+		      </table>
+		    </td>
+		  </tr>
+
+		</table>
+	      </div>
+	    </li>
+	    <li>
+	      <input type="radio" name="tabs" id="liveview-tab-snapshot">
+	      <label for="liveview-tab-snapshot">Take Snapshot</label>
+	      <div id="tab-content-snapshot" class="tab-content">
+	      
+		<table id="liveview-table-snapshot">
+		  <tr>
+		    <td>
+		      <table class="liveview-table-content">
+			<tr>
+			  <td style="padding-top: 5px; padding-right: 3px;">
+			    <div id="liveview-snapshot-wrapper">
+			      No webcam found.
+			    </div>
+			  </td>
+			</tr>
+		      </table>
+		    <td style="width: 200px;">
+		      <button class="button-popup" id="button-liveview-share-snapshot" type="button">Snap & Share!</button>
+		    </td>
+		  </tr>
+
+		</table>
+	      
+	      </div>
+	    </li>
+	     
+	  </ul>
+	</div>
+	  
+	  
+	  
+	</div>
+	
+	
+	<div class="content-div" id="content-div-settings">
+	  <table id="settings-table-main">
+	    <tr>
+	      <td>
+		<div id="settings-wrapper">
+		  <table id="settings-table">
+		    <tr>
+		      <td><div class="settings-option-title">Multiple Locations</div>When enabled, the add-on supports multiple group chats for each Web page at the same time (for example, by opening multiple browser windows or opening multiple tabs). Without that option, you visit only one group chat at a time.</td>
+		      <td><input type="checkbox" class="settings-checkbox" id="settings-multiloc" name="settings-multiloc" value="multiple-locations" /></td>
+		    </tr>
+		    <tr>
+		      <td><div class="settings-option-title">Auto-Tracking</div>When enabled, the chat view always shows the group chat of the currently view Web page. Thus, when you select a different tab in the same or another browser window, the chat view automatically switches to curresponding group chat. Without that option, you have to select the group chats mannually.</td>
+		      <td><input type="checkbox" class="settings-checkbox" id="settings-autotracking" name="settings-autotracking" value="auto-tracking" /></td>
+		    </tr>	    
+		  </table>
+		</div>
+	      </td>
+	    </tr>
+	  </table>
+	</div>
+	
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    <div id="dialog-window-create-corner" class="dialog-window">
+      <div class="link-button-panel-close"><a href="#" class="button-dialog-window-close"><img src='images/icon-close.png' /></a></div>
+      <div class="dialog-window-title">Create a New Corner</div>
+      <span>Name (max 50 characters):</span>
+      <input id="dialog-window-create-corner-name" type="text"  maxlength="50"/>
+      <span>Description (optional; max 200 characters):</span>
+      <textarea id="dialog-window-create-corner-description" type="text" maxlength="200" /></textarea>
+      <br /><br />
+      <table style="width:100%">
+	<tr>
+	  <td><button class="button-dialog-window" id="button-dialog-window-close" type="button">Cancel</button></td>
+	  <td><button class="button-dialog-window" id="button-dialog-window-createcorner" type="button">Create</button></td>
+	</tr>
+      </table>
+    <div>
+    
+    
+  </body>
+  
+  
+</html>
