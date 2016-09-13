@@ -12,6 +12,8 @@ In the following, we outline the required configurations to set up OneSpace.
 ### MySQL
 The backend data is stored in a [MySQL](https://www.mysql.com/) database. Please check the MySQL website for the latest version and documentations.
 
+The latest snapshot of our database can be downloaded as MySQL dump [here](http://christianvonderweth.org/projects/onespace/data/).
+
 ### Apache
 The sole purpose [Apache Web server](https://www.apache.org/) is to enable the BOSH-based access to the XMPP server, see below, as well as accessing the configuration Web interface of Openfire, the XMPP server we currently deploy. Please check the Apache website for the latest version and documentations.
 
