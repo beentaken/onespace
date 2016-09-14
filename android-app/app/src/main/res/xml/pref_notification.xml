@@ -1,0 +1,33 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="@string/pref_notification"
+        android:title="@string/pref_notification_title"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
+        android:key="@string/pref_notification_vibrate"
+        android:dependency="pref_notification"
+        android:defaultValue="true"
+        android:title="@string/pref_notification_vibrate_title" />
+
+    <CheckBoxPreference
+        android:key="@string/pref_notification_led"
+        android:dependency="pref_notification"
+        android:defaultValue="true"
+        android:title="@string/pref_notification_led_title" />
+
+    <CheckBoxPreference
+        android:key="@string/pref_notification_sound"
+        android:dependency="pref_notification"
+        android:defaultValue="true"
+        android:title="@string/pref_notification_sound_title" />
+
+    <RingtonePreference
+        android:key="@string/pref_notification_tone"
+        android:dependency="@string/pref_notification_sound"
+        android:showDefault="true"
+        android:ringtoneType="notification"
+        android:title="@string/pref_notification_tone_title" />
+
+</PreferenceScreen>

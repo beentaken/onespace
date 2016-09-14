@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="current_location">Your current location</string>
+    <string name="location">location</string>
+    <string name="created">created</string>
+    <string name="empty_corners">You don\'t have any corner yet</string>
+
+    <string name="title_filter_drawer">Filtering markers</string>
+    <string name="display_places">Places</string>
+    <string name="display_places_all">All</string>
+    <string name="display_places_accommodation">Accommodation</string>
+    <string name="display_places_amusement">Amusement</string>
+    <string name="display_places_education">Education</string>
+    <string name="display_places_establishment">Establishment</string>
+    <string name="display_places_finance">Finance</string>
+    <string name="display_places_food">Food</string>
+    <string name="display_places_government">Government</string>
+    <string name="display_places_health_and_wellness">Health &amp; Wallness</string>
+    <string name="display_places_place_of_worship">Worship</string>
+    <string name="display_places_recreation">Recreation</string>
+    <string name="display_places_service">Service</string>
+    <string name="display_places_shopping">Shopping</string>
+    <string name="display_places_transport">Transport</string>
+    <string name="display_surfers">Surfers</string>
+    <string name="display_walkers">Walkers</string>
+    <string name="display_corners">Corners</string>
+    <string name="display_corners_my">My corners</string>
+    <string name="display_corners_other">Other</string>
+
+    <string name="action_open_dashboard">Open DashBoard</string>
+    <string name="action_join_group_chat">Join Group Chat</string>
+    <string name="action_open_chat">Open Chat</string>
+    <string name="action_start_private_chat">Start Private Chat</string>
+    <string name="action_create_corner">Create a New Corner here</string>
+    <string name="action_delete_corner">Delete this corner</string>
+    <string name="action_get_corner_info">Get Corner Info</string>
+
+</resources>

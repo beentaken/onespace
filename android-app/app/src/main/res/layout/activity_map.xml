@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity" >
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/app_bar_layout">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <com.sothree.slidinguppanel.SlidingUpPanelLayout
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            xmlns:sothree="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/sliding_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            sothree:umanoParallaxOffset="220dp"
+            sothree:umanoInitialState="hidden"
+            sothree:umanoFadeColor="@android:color/transparent"
+            sothree:umanoDragView="@+id/sliding_container"
+            sothree:umanoPanelHeight="@dimen/sliding_height"
+            sothree:umanoShadowHeight="4dp"
+            sothree:umanoOverlay="false">
+
+            <FrameLayout
+                android:gravity="top"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <fragment
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/sliding_container"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/collapse_sliding_panel"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/sliding_height"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/action_create_corner"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="top"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"/>
+
+                    <TextView
+                        android:id="@+id/corner_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:text="---"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/black"
+                        android:fontFamily="roboto-regular"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your Corners"
+                    android:textSize="16sp"
+                    android:textColor="@color/grey_800"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="10dp"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/corner_list"
+                    android:cacheColorHint="@android:color/white"
+                    android:drawSelectorOnTop="true"
+                    android:dividerHeight="@dimen/divider_height"
+                    android:divider="@android:color/darker_gray"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:smoothScrollbar="false"/>
+
+            </LinearLayout>
+
+        </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_open_corner_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin_bottom"
+            android:layout_marginRight="@dimen/fab_margin_right"
+            android:layout_marginEnd="@dimen/fab_margin_right"
+            android:src="@drawable/ic_pin_drop"
+            app:rippleColor="@color/green_100"
+            app:layout_anchor="@id/map"
+            app:layout_anchorGravity="bottom|right|end"
+            app:fabSize="normal" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_current_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_map_my_location"
+            android:layout_marginBottom="90dp"
+            android:layout_marginRight="@dimen/fab_margin_right"
+            android:layout_marginEnd="@dimen/fab_margin_right"
+            app:backgroundTint="@color/white"
+            app:layout_anchorGravity="bottom|right|end"
+            app:layout_anchor="@id/map"
+            app:fabSize="normal" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_create_corner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin_bottom"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_add_white"
+            android:visibility="gone"
+            app:rippleColor="@color/green_100"
+            app:layout_anchor="@id/collapse_sliding_panel"
+            app:layout_anchorGravity="center_vertical|right"
+            app:fabSize="mini" />
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="end"
+        android:id="@+id/nav_view" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_filter_drawer"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:background="@color/color_primary"/>
+
+        <ExpandableListView
+            android:id="@+id/exp_list_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:choiceMode="multipleChoice"
+            android:scrollbars="none"
+            android:groupIndicator="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="@color/white"/>
+
+    </LinearLayout>
+
+
+</android.support.v4.widget.DrawerLayout>
