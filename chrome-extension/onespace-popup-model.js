@@ -901,6 +901,15 @@ OneSpacePopupModel.Http.prototype = {
   },
 
   
+  requestWalkersAroundVloc(vloc, maxDistance) {
+    var url = HTTP_SERVER_URL + "/walkers/vloc/?vloc="+vloc+"&maxdistance="+maxDistance;
+    this.doAjaxPostRequest(url, "get", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onWalkersAroundVlocReceived));
+  },
+  
+  
+  onWalkersAroundVlocReceived : function(response) {
+    this.controller.onWalkersAroundVlocReceived(response);
+  },
 };
 
 

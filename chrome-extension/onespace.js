@@ -1,7 +1,7 @@
-const HTTP_SERVER_URL = "http://172.29.33.45:11090";
+//const HTTP_SERVER_URL = "http://172.29.33.45:11090";
 //const HTTP_SERVER_URL = "http://172.18.101.112:8091";
 //const HTTP_SERVER_URL = "http://127.0.0.1:8888";
-//const HTTP_SERVER_URL = "http://sesame.comp.nus.edu.sg/app/onespace/api";
+const HTTP_SERVER_URL = "http://sesame.comp.nus.edu.sg/app/onespace/api";
 
 
 

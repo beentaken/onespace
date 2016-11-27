@@ -154,11 +154,13 @@ Server.Http.prototype = {
     this.app.get('/places/ploc/', Server.Util.bind(this, this.onGetPlocForVlocRequest));
     this.app.get('/surfers/box/', Server.Util.bind(this, this.onGetSurfersWithinBoxRequest));
     this.app.get('/walkers/box/', Server.Util.bind(this, this.onGetWalkersWithinBoxRequest));
+    this.app.get('/walkers/vloc/', Server.Util.bind(this, this.onGetWalkersAroundVlocRequest));
     this.app.get('/notes/:placeid/', Server.Util.bind(this, this.onGetNotesRequest));
     
     this.app.post('/user/login/', Server.Util.bind(this, this.onHandleUserLoginRequest));
     
     this.app.put('/user/ploc/', Server.Util.bind(this, this.onUpdatePlocOfUserRequest));
+    this.app.put('/user/vloc/', Server.Util.bind(this, this.onUpdateVlocOfUserRequest));
     this.app.put('/user/vloc/', Server.Util.bind(this, this.onUpdateVlocOfUserRequest));
     
     this.app.post('/notes/add/', Server.Util.bind(this, this.onInsertNoteRequest));
@@ -514,6 +516,16 @@ Server.Http.prototype = {
       parseFloat(request.query.lat2), 
       parseFloat(request.query.lng2), 
       parseInt(request.query.limit, 10),
+      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+    );
+  },
+  
+
+  onGetWalkersAroundVlocRequest : function(request, response) {
+    var that = this;
+    this.main.mysqlManagerOnespace.users.getWalkersAroundVloc(
+      request.query.vloc,
+      parseInt(request.query.maxdistance, 10000),
       function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
     );
   },

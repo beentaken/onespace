@@ -30,8 +30,9 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://www.google.com/*", "http://www.google.com.sg/*", "https://www.google.com/*", "https://www.google.com.sg/*"],
-      "js": ["jquery-1.7.2.js", "onespace-content.js"]
+      "matches": ["*://*/*"],
+      "js": ["jquery-1.7.2.js", "onespace-content.js"],
+       "css": ["onespace-style.css"]
     }
   ],
   "options_page": "options.html",

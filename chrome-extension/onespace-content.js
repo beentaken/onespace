@@ -1,3 +1,8 @@
+const ONESPACE_CSS_CLASS__GOOGLE_RESULT_INFO = "onespace-result-info";
+
+
+
+
 OneSpace = function() { };
 OneSpace.prototype = { };
 
@@ -10,80 +15,54 @@ OneSpace.Content.prototype = { };
 
 
 OneSpace.Content.Controller =  function() {
-  this.messageHandler = new OneSpace.Content.Controller.MessageHandler(this);
   this.contentView = new OneSpace.Content.View(this);
+  this.mutationObserver = null;
 };
 
 OneSpace.Content.Controller.prototype = {
 
   initialize : function() {
-    this.messageHandler.initialize();
     this.contentView.initialize();
     
-    var tempController = this;
-    window.addEventListener("mouseup", function(event) { tempController.contentView.snapSelectionToWord(); tempController.contentView.highlightSelection(); });
-
-  },
-  
-  onMapIconClicked : function() {
-    this.contentView.toggleContentBox();
-  },
-
-
-  onChatIconClicked : function() {
-    this.contentView.toggleContentBox();
-  },
-
-
-  onSettingsIconClicked : function() {
-    this.contentView.toggleContentBox();
-  },
-  
-  onGoogleMapsScriptLoaded : function() {
-    alert('onGoogleMapsScriptLoaded');
-  },
-
-  test : function() {
-    alert('BLA');
-  },
-  
-  handleDOM : function(domContent) {
-    var treeWalker = document.createTreeWalker(domContent, NodeFilter.SHOW_TEXT, function(node) { return NodeFilter.FILTER_ACCEPT; }, false);
-    while(treeWalker.nextNode()) {
-      var textContent = treeWalker.currentNode.textContent;
-      if (textContent.split(" ").length >= 6 ) {
-	console.log(treeWalker.currentNode.textContent);
-      }
-    };
-  },
+    var that = this;
+    $(document).ready(function() { 
+      that.initializeMutationObserver();
+    });
     
 
-};
 
-
-
-
-OneSpace.Content.Controller.MessageHandler = function(controller) {
-  this.controller = controller;
-};
-
-OneSpace.Content.Controller.MessageHandler.prototype = {
-
-  initialize : function() {
-   
-//     var tmpController = this.controller
-//     chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-//       if (message.action == "append-info-window") {
-// 	tmpController.contentView.appendContentBox();
-//         tmpController.contentView.appendInfoBox();
-// 	tmpController.contentView.asyncLoadGoogleMap();
-//       } 
-//     });
   },
   
+  initializeMutationObserver : function() {
+    var that = this;
+    
+    // create an observer instance
+    this.mutationObserver = new MutationObserver(function(mutations) {
+      that.handleContentUpdate();
+    });
 
-};  
- 
+    // configuration of the observer:
+    var config = { childList: true, subtree: true };
+
+    // pass in the target node, as well as the observer options
+    this.mutationObserver.observe(document.body, config);
+  },
+  
+  
+  handleContentUpdate : function() {
+    this.contentView.updateGoogleResultLinks();
+  },
+
+};
+
+
+OneSpace.Content.Utilities = {
+
+  getRandomInteger : function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;;
+  },
+  
+};
 
 
 OneSpace.Content.View = function(controller) {
@@ -93,91 +72,60 @@ OneSpace.Content.View = function(controller) {
 OneSpace.Content.View.prototype = {
 
   initialize : function() {
-    //var s = document.createElement('script');
-    // TODO: add "script.js" to web_accessible_resources in manifest.json
-    //s.src = chrome.extension.getURL('vlimsy-content-page.js');
-    //s.onload = function() {
-    // this.parentNode.removeChild(this);
-    //};
-    //(document.head||document.documentElement).appendChild(s);
-    //alert("Blubb");
+
   },
   
-  test : function() {
-    alert('BLA');
-  },
   
-  asyncLoadGoogleMap : function() {
-    
-    $.getScript("http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initialize")
-      .done(function (script, textStatus) {            
-	  alert("Google map script loaded successfully");
-      })
-      .fail(function (jqxhr, settings, ex) {
-	  alert("Could not load Google Map script: " + ex);
+  extractGoogleResultLinks : function() {
+    var links = [];
+    $('h3.r').each( function(){
+      $(this).children('a').each(function () {
+        links.push($(this).attr('href'));
       });
-      
+    });
+    return links;
   },
   
-  appendInfoBox : function() {
-    var tempController = this.controller;
+  
+  updateGoogleResultLinks : function() {
+    var links = this.extractGoogleResultLinks();
+    links = links.filter(function(elem, index, self) {
+      return index == self.indexOf(elem);
+    });
     
-    var infoBoxHtmlString = 
-   ['<div id="vlimsy-infobox">',
-    '<table id ="vlimsy-infobox-table">',
-    '<tr>',
-    '<td><a><img id="vlimsy-icon-map" src="' + chrome.extension.getURL('/images/icon-map.png') + '" /></a></td>',
-    '<td><a><img id="vlimsy-icon-chat" src="' + chrome.extension.getURL('/images/icon-chat.png') + '" /></a></td>',
-    '<td><a><img id="vlimsy-icon-settings" src="' + chrome.extension.getURL('/images/icon-settings.png') + '" /></a></td>',
-    '</tr>',
-    '</table>',
-    '</div>'
-   ].join('\n');
-    $('body').append(infoBoxHtmlString);
-
-    $('#vlimsy-icon-map').click(function(){ tempController.onMapIconClicked(); });
-    $('#vlimsy-icon-chat').click(function(){ tempController.onChatIconClicked(); });
-    $('#vlimsy-icon-settings').click(function(){ tempController.onSettingsIconClicked(); });
+    this.injectLinkData(links)
   },
   
-  appendContentBox : function() {
-    var contentBoxHtmlString = 
-    ['<div id="vlimsy-contentbox">',
-      '<div>',
-      '<ul id="tabnav">',
-      '<li class="tab1"><a>Tab One</a></li>',
-      '<li class="tab2"><a>Tab Two</a></li>',
-      '</ul>',
-      '</div>',
-      '<div id="vlimsy-map-canvas"></div>',
-      '</div>',
-    ].join('\n');
-    $('body').append(contentBoxHtmlString);
-
-  },
   
-  toggleContentBox : function() {
-    $('#vlimsy-contentbox').toggle();
+  injectLinkData : function(linkData) {
+    // Just to be sure since we change the content by injecting
+    this.controller.mutationObserver.disconnect();
+    
+    for (var i = 0; i < linkData.length; i++) {
+      link = linkData[i];
+      
+      $('a[href="' + link + '"]').each(function(){
+        var parentH3 = $(this).parent();
+        var next = parentH3.next();
+        try {
+          classes = next.attr('class').split(" ");
+          // Check if info has already been injected
+          if ($.inArray(ONESPACE_CSS_CLASS__GOOGLE_RESULT_INFO, classes) == -1) {
+            parentH3.after('<div class="s ' + ONESPACE_CSS_CLASS__GOOGLE_RESULT_INFO + '">OneSpace &ndash; #Surfers: ' + OneSpace.Content.Utilities.getRandomInteger(0,10) + ', #Walkers: ' + OneSpace.Content.Utilities.getRandomInteger(0,5) + '</div>');
+          }
+        } catch (err) {
+          
+        }
+      });
+    }
+    
+    this.controller.initializeMutationObserver();
   },
   
 };  
   
 
 
-
-
 oneSpaceContentController = new OneSpace.Content.Controller();
 oneSpaceContentController.initialize();
 
-
-// Listen for messages
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-
-    // If the received message has the expected format...
-    if (msg.text === 'request-dom') {
-        // Call the specified callback, passing
-        // the web-pages DOM content as argument
-        //sendResponse(document.all[0]);
-	//oneSpaceContentController.handleDOM(document.body)
-    }
-});

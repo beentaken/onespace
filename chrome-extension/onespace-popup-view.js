@@ -7,6 +7,7 @@ OneSpacePopupView = function(controller) {
   this.notificationPanel = new OneSpacePopupView.NotificationPanel(this.controller);
   this.dashboard = new OneSpacePopupView.Dashboard(this.controller);
   this.map = new OneSpacePopupView.Map(this.controller);
+  this.radar = new OneSpacePopupView.Radar(this.controller);
   this.chat = new OneSpacePopupView.Chat(this.controller);
   this.liveView = new OneSpacePopupView.LiveView(this.controller);
   this.settings = new OneSpacePopupView.Settings(this.controller);
@@ -20,12 +21,13 @@ OneSpacePopupView.prototype = {
     this.notificationPanel.initialize()
     this.dashboard.initialize()
     this.map.initialize();
+    this.radar.initialize();
     this.chat.initialize();
     this.liveView.initialize();
     this.settings.initialize();
     
     this.initializeNavLinks();
-    this.showContentDiv('map');
+    this.showContentDiv('chat');
     
 
   },
@@ -53,6 +55,8 @@ OneSpacePopupView.prototype = {
       this.liveView.updateGuidesList();
       this.liveView.updateFollowersList();
       this.liveView.markCurrentGuide();
+    } else if (target == 'radar') {
+      this.controller.onRadarViewSelected();
     }
   },
   
@@ -983,7 +987,7 @@ OneSpacePopupView.Chat.prototype = {
     //for(var i = 0; i < participants.length; i++) {
     for(jid in participants) {
       var participant = participants[jid];
-      str += "<table id='table-chat-participants'><tr><td width='100%'><div class='" + CSS_CLASS_CHAT_PARTICIPANTS_USER + "'>" + participant.name + "</div></td><td><a href='#' title='Click to start private chat'><img class='private-chat-icon' id='private-chat-" + participant.jid + "' src='images/private-chat-icon.png' /></a></td><td><a href='#' title='Click to share your browsing session'><img class='share-session-icon' id='share-session-" + participant.jid + "' src='images/share-session-icon.png' /></a></td></tr></table>";
+      str += "<table id='table-chat-participants'><tr><td width='100%'><div class='" + CSS_CLASS_CHAT_PARTICIPANTS_USER + "'>" + participant.name + "</div></td><td><a href='#' title='Click to share your browsing session'><img class='share-session-icon' id='share-session-" + participant.jid + "' src='images/share-session-icon.png' /></a></td><td><a href='#' title='Click to start private chat'><img class='private-chat-icon' id='private-chat-" + participant.jid + "' src='images/private-chat-icon.png' /></a></td></tr></table>";
     }
     str += "</div>";
     
@@ -1047,6 +1051,82 @@ OneSpacePopupView.Chat.prototype = {
 };
 
 
+
+
+
+OneSpacePopupView.Radar = function(controller) {
+  this.controller = controller;
+};
+
+
+OneSpacePopupView.Radar.prototype = {
+  
+  initialize : function() {
+
+  },
+
+  updateSurfersList : function(jid) {
+    $('#radar-table-surfer').empty();
+    str = "<div class='" + CSS_CLASS_CHAT_PARTICIPANTS + "'><table id='table-radar-surfers'>";
+    participants = null;
+    if (this.controller.model.xmpp.groupChats[jid] != null) {
+      participants = this.controller.model.xmpp.groupChats[jid].participants;
+    } else {
+      return;
+    }
+    //for(var i = 0; i < participants.length; i++) {
+    for(jid in participants) {
+      var participant = participants[jid];
+      str += "<tr><td width='100%'><div class='radar-user'>" + participant.name + "</div></td><td><a href='#' title='Click to share your browsing session'><img class='share-session-icon' id='share-session-" + participant.jid + "' src='images/share-session-icon.png' /></a></td><td><a href='#' title='Click to start private chat'><img class='private-chat-icon' id='private-chat-" + participant.jid + "' src='images/private-chat-icon.png' /></a></td></tr>";
+    }
+    str += "</table></div>";
+    
+    $('#radar-table-surfer').append(str);
+    
+    // Attache click handler to private chat icons
+    var that = this;
+    $('.private-chat-icon').click(function() {
+      var elements = $(this).attr('id').split('-');
+      var userJid = elements[2]; 
+      that.controller.handleStartPrivateChatClick(userJid, true);
+    });
+    $('.share-session-icon').click(function() {
+      var elements = $(this).attr('id').split('-');
+      var userJid = elements[2]; 
+      that.controller.handleStartShareSessionClick(userJid);
+    });
+    
+  },  
+  
+  
+  updateWalkersList : function(response) {
+    $('#radar-table-walker').empty();
+    str = "<div class='" + CSS_CLASS_CHAT_PARTICIPANTS + "'><table id='table-radar-surfers'>";
+
+    for(var i = 0; i < response.length; i++) {
+      var walker = response[i];
+      var jid = walker['jid'] + '/' + walker['jid_resource'];
+      str += "<tr><td width='100%'><span class='radar-user'>" + walker['name'] + "</span> (" + walker['distance_in_meter'] + "m)</td><td><a href='#' title='Click to start private chat'><img class='private-chat-icon' id='private-chat-" + jid + "' src='images/private-chat-icon.png' /></a></td></tr>";
+    }
+    str += "</table></div>";
+    
+    $('#radar-table-walker').append(str);
+    
+    // Attache click handler to private chat icons
+    var that = this;
+    $('.private-chat-icon').click(function() {
+      var elements = $(this).attr('id').split('-');
+      var userJid = elements[2]; 
+      that.controller.handleStartPrivateChatClick(userJid, true);
+    });
+//     $('.share-session-icon').click(function() {
+//       var elements = $(this).attr('id').split('-');
+//       var userJid = elements[2]; 
+//       that.controller.handleStartShareSessionClick(userJid);
+//     });
+    
+  },  
+};
 
 
 

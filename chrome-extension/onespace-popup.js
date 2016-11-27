@@ -1,11 +1,11 @@
 //const HTTP_SERVER_URL = "http://172.18.101.112:8091";
 //const HTTP_SERVER_URL = "http://127.0.0.1:8888";
-const HTTP_SERVER_URL = "http://172.29.33.45:11090";
+//const HTTP_SERVER_URL = "http://172.29.33.45:11090";
 //const HTTP_SERVER_URL = "http://172.29.32.195:11090";
-//const HTTP_SERVER_URL = "http://sesame.comp.nus.edu.sg/app/onespace/api";
+const HTTP_SERVER_URL = "http://sesame.comp.nus.edu.sg/app/onespace/api";
 
-const MAP_MAX_DISPLAYED_LOCATIONS = 100000;
-const MAP_MAX_DISPLAYED_USER_CORNERS = 100000;
+const MAP_MAX_DISPLAYED_LOCATIONS = 1000;
+const MAP_MAX_DISPLAYED_USER_CORNERS = 1000;
 const MAP_MAX_DISPLAYED_SURFERS = 1000 ;
 const MAP_MAX_DISPLAYED_WALKERS = 1000;
 
@@ -31,6 +31,8 @@ const CSS_CLASS_CHAT_PARTICIPANTS_USER = "chat-participants-user";
 const CSS_CLASS_CHAT_MESSAGE = "chat-message";
 const CSS_CLASS_CHAT_MESSAGE_SENDER = "chat-message-sender";
 const CSS_CLASS_CHAT_MESSAGE_TEXT = "chat-message-text";
+
+const CSS_CLASS_RADAR_USER = "radar-user";
 
 const CSS_CLASS_LIVEVIEW_USERS = "liveview-users";
 const CSS_CLASS_LIVEVIEW_GUIDES = "liveview-guides";
@@ -403,6 +405,8 @@ OneSpacePopup.Controller.prototype = {
 	if ((tab.active == true) || (forceTracking == true)){
 	  this.view.chat.onNewLocationSelected(roomJid);
 	  this.view.chat.updateParticipantsList(roomJid);
+	  this.view.radar.updateSurfersList(roomJid);
+      this.onRadarViewSelected();
 	  return;
 	}
       }
@@ -429,6 +433,7 @@ OneSpacePopup.Controller.prototype = {
       this.view.chat.addGroupChatToList(roomJid, roomName, 'CGC');
       this.view.chat.onNewLocationSelected(roomJid);
       this.view.chat.updateParticipantsList(roomJid);
+      this.view.radar.updateSurfersList(roomJid);
     }
     this.handleAutoTracking(roomJid, forceTracking);
   },
@@ -459,6 +464,7 @@ OneSpacePopup.Controller.prototype = {
   handleGroupChatPresence : function(roomJid, user, status) {
     if (roomJid == this.view.chat.currentDisplayedChat) {
       this.view.chat.updateParticipantsList(roomJid);
+      this.view.radar.updateSurfersList(roomJid);
       this.view.chat.displayNewGroupChatPresence(user, status);
     }
   },
@@ -866,6 +872,22 @@ OneSpacePopup.Controller.prototype = {
   
   onShownLocationUpdated : function() {
     this.onLocationsReceived(this.model.http.locations);
+  },
+  
+  
+  
+  onRadarViewSelected : function() {
+    var currentTabId = this.model.currentActiveTab.id;
+    var vloc = this.model.openTabs[currentTabId].vloc;
+    
+    if (vloc != null) {
+      this.model.http.requestWalkersAroundVloc(vloc, 10000);
+    }
+  },
+  
+  onWalkersAroundVlocReceived : function(response) {
+    //alert(JSON.stringify(response, null, 4));
+    this.view.radar.updateWalkersList(response);
   },
   
 };

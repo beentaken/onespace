@@ -258,6 +258,28 @@ MysqlManager.Users.prototype = {
     );
   },
   
+  
+  //
+  // curl  "http://172.29.32.195:11090/walkers/vloc/?vloc=www.marinabaysands.com%2F%3F&maxdistance=10000"
+  //
+  getWalkersAroundVloc : function(vloc, maxDistance, callback) {
+    var that = this;
+    
+    step(
+      function executeQuery(){
+	var query = "SELECT HEX(u.id) AS user_id, u.name, u.jid, u.jid_resource, w2.distance_in_meter FROM osUsers u, (SELECT w.user_id, MIN(ROUND(glength(LineStringFromWKB(LineString(GeomFromText(astext(PointFromWKB(w.ploc))),GeomFromText(astext(PointFromWKB(p.ploc))))))*100*1000)) AS distance_in_meter FROM osWalkers w, (SELECT id, ploc FROM osPlaces WHERE vloc = '" + vloc + "') p GROUP BY w.user_id) w2 WHERE w2.user_id = u.id AND w2.distance_in_meter <= " + maxDistance + " ORDER BY w2.distance_in_meter";
+ 	that.main.connection.query(query, this);
+      },
+      function onResult(error, result){
+ 	if (error) {
+ 	  callback(error);
+ 	} else {
+ 	  callback(null, result)
+ 	}
+      }
+    );
+    
+  },
 };
 
 
@@ -282,6 +304,7 @@ MysqlManager.Places.prototype = {
     step(
       function executeQuery(){
 	var query = "SELECT id, name, formatted_address, formatted_phone_nr, primary_category, X(ploc) AS lat, Y(ploc) AS lng, vloc, website FROM osPlaces WHERE WITHIN(ploc, GeomFromText('POLYGON((" + polygon + " ))') ) LIMIT " + limit;
+        console.log(query);
  	that.main.connection.query(query, this);
       },
       function onResult(error, result){
