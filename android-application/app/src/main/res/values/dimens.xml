@@ -1,0 +1,51 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="chat_bubble_margin_horizontal">15dp</dimen>
+    <dimen name="chat_bubble_margin_vertical">4dp</dimen>
+    <dimen name="card_margin">4dp</dimen>
+
+    <dimen name="tab_layout_height">60dp</dimen>
+
+    <!-- Text -->
+    <dimen name="text_larger">30sp</dimen>
+
+    <!-- icon -->
+    <dimen name="action_icon_normal">32dp</dimen>
+    <dimen name="action_icon_large">50dp</dimen>
+    <dimen name="action_icon_xlarge">80dp</dimen>
+    <dimen name="icon_large">220dp</dimen>
+    <dimen name="icon_normal">180dp</dimen>
+    <dimen name="icon_text_normal">50dp</dimen>
+    <dimen name="avatar_small">32dp</dimen>
+    <dimen name="avatar_large">60dp</dimen>
+    <dimen name="avatar_xlarge">120dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
+
+    <!-- Login -->
+    <dimen name="login_input_margin">20dp</dimen>
+    <dimen name="login_button_margin_top">10dp</dimen>
+    <dimen name="login_button_margin_bottom">40dp</dimen>
+
+    <!-- Floating Button -->
+    <dimen name="fab_margin_right">16dp</dimen>
+    <dimen name="fab_margin_bottom">16dp</dimen>
+
+
+    <dimen name="sliding_height">100dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+
+    <!-- wrote by Thianchai -->
+    <!-- For spacesItemDecoretion -->
+    <dimen name="spacing_dashboard_items">1dp</dimen>
+    <dimen name="spacing_tweets_items">10dp</dimen>
+    <!-- For icon dashboard items -->
+    <dimen name="dashboard_icon_item">100dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+</resources>

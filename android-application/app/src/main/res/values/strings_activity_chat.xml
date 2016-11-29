@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_chat_tab_private">Private</string>
+    <string name="title_chat_tab_group">Group</string>
+
+    <string name="status_disconnected">Disconnected</string>
+    <string name="status_disconnecting">Disconnecting…</string>
+    <string name="status_connected">Connected</string>
+    <string name="status_connecting">Connecting…</string>
+    <string name="status_waiting_to_connect">Waiting to connect</string>
+    <string name="status_waiting_for_network">Waiting for network</string>
+
+    <string name="action_send_image">Send the image</string>
+    <string name="action_load_more">Load More</string>
+    <string name="action_attach_photo">Photo</string>
+    <string name="action_attach_gallery">Gallery</string>
+
+    <string name="hint_enter_message">Write a message</string>
+    <string name="empty_chat">You don\'t have any chat yet</string>
+
+</resources>

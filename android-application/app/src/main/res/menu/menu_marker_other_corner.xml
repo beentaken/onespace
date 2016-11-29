@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/join_groupchat"
+        android:title="@string/action_join_group_chat"
+        android:icon="@drawable/ic_group_24dp" />
+
+    <item
+        android:id="@+id/get_corner_info"
+        android:title="@string/action_get_corner_info"
+        android:icon="@drawable/ic_info_24dp" />
+
+
+</menu>

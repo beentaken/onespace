@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sesame.onespace.activities.ChatActivity" >
+
+    <item
+        android:id="@+id/menu"
+        android:title="@string/title_filter_drawer"
+        android:icon="@drawable/ic_action_toolbar_more_vert"
+        app:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/open_setting"
+                android:title="@string/setting"
+                app:showAsAction="ifRoom" />
+
+        </menu>
+    </item>
+
+</menu>

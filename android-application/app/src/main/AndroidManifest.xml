@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sesame.onespace">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Required to show current location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- test by thianchai for solve Authentication failed on the server. -->
+    <!-- the solve : change your API key (again and again) -->
+    <!-- uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/ -->
+
+
+    <!-- Required OpenGL ES 2.0. for Maps V2 -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application
+        android:name="android.support.multidex.MultiDexApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_trim"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activities.SplashScreenActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
+            android:name=".activities.MapActivity"
+            android:label="@string/title_activity_map"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:theme="@style/AppTheme.NoTitleBar.NonColorAccent"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.NoTitleBar" />
+
+        <!-- Thianchai (Dashboard) -->
+        <activity
+            android:name=".activities.dashboardActivity.TweetsListActivity"
+            android:label="@string/title_activity_tweets"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
+            android:name=".activities.dashboardActivity.YoutubeListActivity"
+            android:label="@string/title_activity_youtube"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
+            android:name=".activities.dashboardActivity.FlickrListActivity"
+            android:label="@string/title_activity_flickr"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
+            android:name=".activities.dashboardActivity.InstagramListActivity"
+            android:label="@string/title_activity_instagram"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
+            android:name=".activities.dashboardActivity.weatherActivity.WeatherNEAListActivity"
+            android:label="@string/title_activity_weatherNEA"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
+            android:name=".activities.dashboardActivity.weatherActivity.WeatherGraphListActivity"
+            android:label="@string/title_activity_weatherGraph"
+            android:theme="@style/AppTheme.NoTitleBar" />
+
+        <activity
+            android:name=".activities.dashboardActivity.weatherActivity.DashBoardActivity"
+            android:label="@string/title_activity_weatherGraph"
+            android:theme="@style/AppTheme.NoTitleBar" />
+
+        <activity
+            android:name=".activities.dashboardActivity.CarparksLTAActivity"
+            android:label="@string/title_activity_carparksLTA"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
+            android:name=".activities.dashboardActivity.BusInfoLTAActivity"
+            android:label="@string/title_activity_busInfoLTA"
+            android:theme="@style/AppTheme.NoTitleBar" />
+
+        <!-- **** -->
+
+        <activity
+            android:name=".activities.FullScreenViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoTitleBar" />
+
+        <receiver
+            android:name=".service.BootUpReceiver"
+            android:enabled="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".service.NetworkConnectivityReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <!--
+        Thianchai (Note)
+        <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.comgonzalovillarbaribus"/>
+            </intent-filter>
+        </receiver>
+        -->
+
+        <service
+            android:name=".service.MessageService"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.googlecode.gtalksms.action.CONNECT" />
+                <action android:name="com.googlecode.gtalksms.action.DISCONNECT" />
+                <action android:name="com.googlecode.gtalksms.action.TOGGLE" />
+                <action android:name="com.googlecode.gtalksms.action.SEND" />
+                <action android:name="com.googlecode.gtalksms.action.NETWORK_CHANGED" />
+                <action android:name="com.googlecode.gtalksms.action.COMMAND" />
+            </intent-filter>
+        </service>
+
+        <!-- Thianchai (GPSTracker) -->
+        <service
+            android:name=".service.gps.GPSTrackerService"
+            android:process=":my_service" />
+        <!-- **** -->
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"
+            tools:replace="android:value" />
+    </application>
+
+</manifest>

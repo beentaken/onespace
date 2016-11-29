@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item-->
+        <!--android:id="@+id/open_dashboard"-->
+        <!--android:title="@string/action_open_dashboard"-->
+        <!--android:icon="@drawable/ic_dashboard_black_24px" />-->
+    <item
+        android:id="@+id/join_groupchat"
+        android:title="@string/action_join_group_chat"
+        android:icon="@drawable/ic_group_24dp" />
+
+</menu>
