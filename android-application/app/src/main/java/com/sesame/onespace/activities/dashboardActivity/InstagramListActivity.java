@@ -1,7 +1,6 @@
 package com.sesame.onespace.activities.dashboardActivity;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -16,7 +15,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,15 +22,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sesame.onespace.R;
 import com.sesame.onespace.models.dashboard.Instagram;
 import com.sesame.onespace.models.dashboard.MyLink;
-import com.sesame.onespace.models.dashboard.Tweet;
-import com.sesame.onespace.utils.JSONParser;
+import com.sesame.onespace.utils.connectToServer.JSONParser;
+import com.sesame.onespace.interfaces.EndlessRecyclerOnScrollListener;
 import com.sesame.onespace.views.DividerItemDecoration;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -41,11 +37,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 

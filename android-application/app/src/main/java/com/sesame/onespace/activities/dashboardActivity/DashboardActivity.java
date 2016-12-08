@@ -3,13 +3,10 @@ package com.sesame.onespace.activities.dashboardActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.utils.SimpleGestureFilter;
+import com.sesame.onespace.interfaces.SimpleGestureFilter;
 
 /**
  * Created by Thian on 6/11/2559.

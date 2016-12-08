@@ -448,7 +448,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="b97489ae1f9ab453e56652778db483f5c0a0d5a2">
+        sha1="760b887b6f986d817396172dd3d7b13f87d5ac73">
         <dex dex="C:\Users\Thian\Desktop\HisOneSpace\OneSpace\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_8b85b78bec1690527a1e29019ff2e8a9409967f3\classes.dex" />
     </item>
     <item
@@ -646,7 +646,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="e8a3dcf73dd894b89ae14264c5707336b079ab95">
+        sha1="71c07eab72ac59d41467593def29d8e60d370d5a">
         <dex dex="C:\Users\Thian\Desktop\HisOneSpace\OneSpace\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_6727934c41a9dbbef7965772297efeb45382a5b4\classes.dex" />
     </item>
     <item

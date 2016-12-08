@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="@string/title_activity_tweets">
+        <menu>
+            <item
+                android:id="@+id/nav_lastTweets"
+                android:icon="@drawable/ic_dashboard_twitter"
+                android:title="Last Tweets" />
+            <item
+                android:id="@+id/nav_goToChat"
+                android:icon="@drawable/ic_chat_bubbles"
+                android:title="Go to chat" />
+            <item
+                android:id="@+id/nav_goToMap"
+                android:icon="@drawable/ic_tab_maps"
+                android:title="Go to map" />
+            <item
+                android:id="@+id/nav_addToMyFavorite"
+                android:icon="@drawable/ic_dashboard_love_this_place"
+                android:title="Add to my favorite" />
+            <item
+                android:id="@+id/nav_backToMainMenu"
+                android:icon="@drawable/ic_arrow_back"
+                android:title="Back to main menu" />
+        </menu>
+    </item>
+
+</menu>

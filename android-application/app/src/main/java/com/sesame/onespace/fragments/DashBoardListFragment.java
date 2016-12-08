@@ -23,10 +23,9 @@ import com.sesame.onespace.activities.dashboardActivity.BusInfoLTAActivity;
 import com.sesame.onespace.activities.dashboardActivity.CarparksLTAActivity;
 import com.sesame.onespace.activities.dashboardActivity.FlickrListActivity;
 import com.sesame.onespace.activities.dashboardActivity.InstagramListActivity;
-import com.sesame.onespace.activities.dashboardActivity.TweetsListActivity;
-import com.sesame.onespace.activities.dashboardActivity.weatherActivity.DashBoardActivity;
-import com.sesame.onespace.activities.dashboardActivity.weatherActivity.WeatherNEAListActivity;
 import com.sesame.onespace.activities.dashboardActivity.YoutubeListActivity;
+import com.sesame.onespace.activities.dashboardActivitys.TweetsActivity;
+import com.sesame.onespace.activities.dashboardActivity.weatherActivity.WeatherNEAListActivity;
 import com.sesame.onespace.views.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -157,7 +156,7 @@ public class DashBoardListFragment extends Fragment {
 
                     if (item.getActivityID() == 1){
 
-                        intent = new Intent(getContext(), TweetsListActivity.class);
+                        intent = new Intent(getContext(), TweetsActivity.class);
 
                     }
 

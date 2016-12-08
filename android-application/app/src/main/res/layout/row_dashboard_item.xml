@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:background="@drawable/dashboard_item_border">
+        android:background="@drawable/shape_dashboard_item_border">
 
         <ImageView
             android:layout_width="@dimen/dashboard_icon_item"

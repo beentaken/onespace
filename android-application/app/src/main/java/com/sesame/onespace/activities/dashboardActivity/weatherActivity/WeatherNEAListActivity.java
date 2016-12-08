@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.sesame.onespace.R;
 import com.sesame.onespace.activities.dashboardActivity.DashboardActivity;
 import com.sesame.onespace.managers.location.UserLocationManager;
-import com.sesame.onespace.utils.JSONParser;
+import com.sesame.onespace.utils.connectToServer.JSONParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;

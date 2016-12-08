@@ -25,6 +25,11 @@ android {
         javaMaxHeapSize "4g"
     }
 
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res', 'src/main/res/layouts/dashboard', 'src/main/res/layouts/dashboard/notification', 'src/main/res/layouts/dashboard/tweets', 'src/main/res/menus/dashboard', 'src/main/res/menus/dashboard/toolbar', 'src/main/res/drawables/dashboard', 'src/main/res/drawables/dashboard/icon', 'src/main/res/drawables/dashboard/shape', 'src/main/res/layouts/dialog', 'src/main/res/layouts/dialog/dialogActivity']
+        }
+    }
 }
 
 dependencies {

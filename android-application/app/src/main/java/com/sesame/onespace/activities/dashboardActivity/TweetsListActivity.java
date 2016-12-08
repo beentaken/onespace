@@ -1,7 +1,6 @@
 package com.sesame.onespace.activities.dashboardActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
@@ -22,7 +21,8 @@ import android.widget.TextView;
 import com.sesame.onespace.R;
 import com.sesame.onespace.models.dashboard.MyLink;
 import com.sesame.onespace.models.dashboard.Tweet;
-import com.sesame.onespace.utils.JSONParser;
+import com.sesame.onespace.utils.connectToServer.JSONParser;
+import com.sesame.onespace.interfaces.EndlessRecyclerOnScrollListener;
 import com.sesame.onespace.views.DividerItemDecoration;
 
 import org.apache.http.NameValuePair;
@@ -339,7 +339,7 @@ public class TweetsListActivity extends DashboardActivity{
 
         @Override
         public TweetsListActivity.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_tweets_item, null);
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_last_tweets_item2, null);
             return new TweetsListActivity.ViewHolder(view);
         }
 

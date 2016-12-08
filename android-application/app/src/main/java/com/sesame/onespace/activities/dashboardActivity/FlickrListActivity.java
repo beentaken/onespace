@@ -26,7 +26,8 @@ import android.widget.TextView;
 import com.sesame.onespace.R;
 import com.sesame.onespace.models.dashboard.Flickr;
 import com.sesame.onespace.models.dashboard.MyLink;
-import com.sesame.onespace.utils.JSONParser;
+import com.sesame.onespace.utils.connectToServer.JSONParser;
+import com.sesame.onespace.interfaces.EndlessRecyclerOnScrollListener;
 import com.sesame.onespace.views.DividerItemDecoration;
 
 import org.apache.http.NameValuePair;

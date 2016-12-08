@@ -61,10 +61,6 @@
     <string name="title_contacts_tab_all">All</string>
     <string name="title_contacts_tab_friend">Friends</string>
     <string name="title_activity_google_maps">Map</string>
-    <string name="title_activity_dash_board">DashBoardActivity</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 </resources>
 
