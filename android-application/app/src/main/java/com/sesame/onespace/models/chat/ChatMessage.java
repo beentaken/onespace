@@ -15,6 +15,12 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
     public static final String KEY_MESSAGE_TYPE = "message-type";
     public static final String KEY_MEDIA_TYPE = "media";
 
+    //Thianchai (I add this)
+
+    public static final String KEY_PRIMATIVE_TYPE = "primitive";
+
+    //
+
     private static final String KEY_ID = "id";
     private static final String KEY_CHAT_ID = "chat_id";
     private static final String KEY_FROM_JID = "from_jid";
@@ -200,14 +206,24 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
             bundle.putString(KEY_BODY, this.body);
             bundle.putString(KEY_READ_DEVICE_TIMESTAMP, this.readDeviceTimestamp);
 
-            if(this.type.equals(Type.IMAGE.getString()))
+            if(this.type.equals(Type.IMAGE.getString())) {
+
                 return new ImageMessage(bundle);
+
+            }
+
+            if(this.type.equals(Type.QUERY.getString())) {
+
+                return new ImageMessage(bundle);
+
+            }
+
             return new TextMessage(bundle);
         }
     }
 
     public enum Type {
-        TEXT("text"), IMAGE("image"), VIDEO("video"), AUDIO("audio");
+        TEXT("text"), IMAGE("image"), VIDEO("video"), AUDIO("audio"), QUERY("query");
 
         private String str;
 

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.sesame.onespace.activities.dialogActivity.DialogActivity;
 import com.sesame.onespace.network.OneSpaceApi;
 
 import retrofit.GsonConverterFactory;

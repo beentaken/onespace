@@ -103,10 +103,10 @@
 
         <!-- **** -->
 
-        <!-- Thianchai (DialogActivity) -->
+        <!-- Thianchai (QuestionMessageDialogActivity) -->
 
         <activity
-            android:name=".activities.dialogActivity.DialogActivity"
+            android:name=".activities.dialogActivitys.QuestionMessageDialogActivity"
             android:label=""
             android:excludeFromRecents="true"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>

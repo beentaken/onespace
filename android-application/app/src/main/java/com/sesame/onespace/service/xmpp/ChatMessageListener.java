@@ -3,7 +3,6 @@ package com.sesame.onespace.service.xmpp;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -11,11 +10,12 @@ import android.os.AsyncTask;
 import android.support.v7.app.NotificationCompat;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.activities.dialogActivity.DialogActivity;
+import com.sesame.onespace.activities.dialogActivitys.QuestionMessageDialogActivity;
 import com.sesame.onespace.models.chat.ChatMessage;
 import com.sesame.onespace.service.MessageService;
 import com.sesame.onespace.utils.DateTimeUtil;
 import com.sesame.onespace.utils.Log;
+import com.sesame.onespace.utils.date.MyDateConvert;
 
 import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.packet.Message;
@@ -53,7 +53,8 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
 
                             //Thianchai (I add this)
 
-                            Intent dialogIntent = new Intent(mContext, DialogActivity.class);
+                            Intent dialogIntent = new Intent(mContext, QuestionMessageDialogActivity.class);
+                            dialogIntent.putExtra("msgFrom", msgFrom);
                             dialogIntent.putExtra("idQuestion", jsonObject.getJSONObject("question").get("id") + "");
                             dialogIntent.putExtra("question", jsonObject.getJSONObject("question").get("str") + "");
 
@@ -89,9 +90,9 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                             PendingIntent pi = PendingIntent.getActivity(mContext, 0, dialogIntent, PendingIntent.FLAG_ONE_SHOT);
                             Resources r = mContext.getResources();
                             Notification notification = new NotificationCompat.Builder(mContext)
-                                    .setTicker("test")
-                                    .setSmallIcon(R.mipmap.ic_launcher)
-                                    .setContentTitle("Query")
+                                    .setTicker("Query")
+                                    .setSmallIcon(R.mipmap.ic_launcher_trim)
+                                    .setContentTitle("A new OneSpace query")
                                     .setContentText(jsonObject.getJSONObject("question").get("str") + "")
                                     .setContentIntent(pi)
                                     .setAutoCancel(true)
