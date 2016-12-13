@@ -25,7 +25,7 @@ import com.sesame.onespace.activities.dashboardActivity.FlickrListActivity;
 import com.sesame.onespace.activities.dashboardActivity.InstagramListActivity;
 import com.sesame.onespace.activities.dashboardActivity.YoutubeListActivity;
 import com.sesame.onespace.activities.dashboardActivity.weatherActivity.WeatherNEAListActivity;
-import com.sesame.onespace.activities.dashboardActivitys.TwitterActivity;
+import com.sesame.onespace.activities.dashboardActivities.TwitterActivity;
 
 import java.util.ArrayList;
 import java.util.List;

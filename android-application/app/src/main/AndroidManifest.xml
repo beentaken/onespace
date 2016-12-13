@@ -69,7 +69,7 @@
             android:label="@string/title_activity_tweets"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivitys.TwitterActivity"
+            android:name=".activities.dashboardActivities.TwitterActivity"
             android:label="@string/title_activity_tweets"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
@@ -106,7 +106,7 @@
         <!-- Thianchai (QuestionMessageDialogActivity) -->
 
         <activity
-            android:name=".activities.dialogActivitys.QuestionMessageDialogActivity"
+            android:name=".activities.dialogActivities.QuestionMessageDialogActivity"
             android:label=""
             android:excludeFromRecents="true"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>

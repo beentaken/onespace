@@ -11,12 +11,11 @@ import android.os.Build;
 import android.support.v7.app.NotificationCompat;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.activities.dialogActivitys.QuestionMessageDialogActivity;
+import com.sesame.onespace.activities.dialogActivities.QuestionMessageDialogActivity;
 import com.sesame.onespace.models.chat.ChatMessage;
 import com.sesame.onespace.service.MessageService;
 import com.sesame.onespace.utils.DateTimeUtil;
 import com.sesame.onespace.utils.Log;
-import com.sesame.onespace.utils.date.MyDateConvert;
 
 import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.packet.Message;
