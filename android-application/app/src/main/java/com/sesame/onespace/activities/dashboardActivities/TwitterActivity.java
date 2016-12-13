@@ -1,4 +1,4 @@
-package com.sesame.onespace.activities.dashboardActivitys;
+package com.sesame.onespace.activities.dashboardActivities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
