@@ -340,7 +340,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="54cfcead52475a3a202efa8796f00edb591f47b3">
+        sha1="07f865f9e0b9384f864d8279932251d95e77206c">
         <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_86e8fe4b3d7ce08344084b0b1a7243af625d507c\classes.dex" />
     </item>
     <item
