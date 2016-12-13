@@ -1,15 +1,17 @@
 package com.sesame.onespace.activities.dashboardActivitys;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,291 +21,116 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.interfaces.SimpleGestureFilter;
+import com.sesame.onespace.activities.baseActivity.BaseActivity;
+import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.CanNotConnectedToServerFragment;
+import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.InternetNotAvailableFragment;
+import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.LoadingFragment;
+import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.NoDataFragment;
+import com.sesame.onespace.managers.location.UserLocationManager;
+import com.sesame.onespace.network.OneSpaceApi;
 
-import java.util.Stack;
 import java.util.concurrent.CountDownLatch;
 
+import retrofit.GsonConverterFactory;
+
 /**
- * Created by Thian on 28/11/2559.
+ * Created by Thian on 12/12/2559.
  */
 
 public abstract class DashBoardActivity
-        extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener
-                  ,SimpleGestureFilter.SimpleGestureListener{
+        extends BaseActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     //===========================================================================================================//
     //  ATTRIBUTE                                                                                   ATTRIBUTE
     //===========================================================================================================//
 
-    private boolean isClosed;
+    private final static String STEP_DRAWERLAYOUT = "DrawerLayout";
 
-    protected Stack<String> stackStep;
-    private Handler handler;
+    protected final static int EVERYTHING_OK = -1;
+    protected final static int INTERNET_NOT_AVAILABLE = 0;
+    protected final static int CAN_NOT_CONNECT_TO_SERVER = 1;
+    protected final static int NO_DATA = 2;
+
     private CountDownLatch latch;
 
-    protected DashBoardActivity mainActivity;
-    protected Context context;
+    private GPSBroadcastReceiver gpsBroadcastReceiver;
 
-    protected DrawerLayout drawerLayout;
-    protected ActionBarDrawerToggle actionBarDrawerToggle;
-    protected Toolbar toolbar;
-    protected NavigationView navigationView;
+    protected OneSpaceApi.Service api;
 
-    protected SimpleGestureFilter detector;
+    protected int idFragment;
+    protected boolean result;
+    protected int caseFail;
 
     //===========================================================================================================//
-    //  ACTIVITY LIFECYCLE (MAIN BLOCK)                                                             ACTIVITY LIFECYCLE (MAIN BLOCK)
+    //  MAIN BLOCK                                                                                  MAIN BLOCK
     //===========================================================================================================//
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void initDefaultValue() {
 
-        //init
-
-
-        //before
-
-
-        //main
-        super.onCreate(savedInstanceState);
-        this.init();
-
-        //after
-        overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
+        DashBoardActivity.this.initDefaultValueForParallelRun();
+        DashBoardActivity.this.initDefaultValueForGPSReceiver();
+        DashBoardActivity.this.initDefaultValueForAPI();
 
     }
 
     @Override
-    protected void onStart(){
+    protected void initView() {
 
-        //init
-
-
-        //before
-
-
-        //main
-        super.onStart();
-
-        //after
+        DashBoardActivity.this.initStatusBar();
+        DashBoardActivity.this.initAppBarLayout();
+        DashBoardActivity.this.initDrawerLayout();
+        DashBoardActivity.this.initNavigationView();
+        DashBoardActivity.this.initToolbar();
 
     }
 
     @Override
-    protected void onResume() {
+    protected void doAfterCreate() {
 
-        //init
-
-
-        //before
-
-
-        //main
-        super.onResume();
-
-        //after
+        DashBoardActivity.this.playAnimationForOpenActivity();
 
     }
 
     @Override
-    public void onBackPressed() {
+    protected void doBeforeResume() {
 
-        //init
-
-
-        //before
-
-
-        //main
-        this.stepBack();
-
-        //after
-
+        DashBoardActivity.this.registerGPSReceiver();
 
     }
 
     @Override
-    protected  void onStop(){
+    protected void doBeforeStop() {
 
-        //init
-
-
-        //before
-
-
-        //main
-        super.onStop();
-
-        //after
+        DashBoardActivity.this.unregisterGPSReceiver();
 
     }
 
     @Override
-    protected void onRestart(){
+    protected void doAfterClose() {
 
-        //init
-
-
-        //before
-
-
-        //main
-        super.onRestart();
-
-        //after
+        DashBoardActivity.this.playAnimationForCloseActivity();
 
     }
 
     @Override
-    protected  void onDestroy(){
+    protected void doInBackToPreviousStep(String stepName) {
 
-        //init
+        switch (stepName) {
 
-
-        //before
-        if (this.isClosed == false){
-
-            this.sensitiveCaseForDestroy();
-
-        }
-
-        //main
-        super.onDestroy();
-
-        //after
-
-
-    }
-
-    //===========================================================================================================//
-    //  METHOD (SUB BLOCK)                                                                          METHOD (SUB BLOCK)
-    //===========================================================================================================//
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent me){
-
-        //init
-
-
-        //before
-
-
-        //main
-        this.detector.onTouchEvent(me);
-
-        //after
-
-        return super.dispatchTouchEvent(me);
-    }
-
-    @Override
-    public void onSwipe(int direction) {
-
-        //init
-
-
-        //before
-        if (this.stackStep.isEmpty() == false){
-
-            return;
-
-        }
-
-        //main
-        switch (direction) {
-
-            case SimpleGestureFilter.SWIPE_RIGHT :
-                close();
-                break;
-
-            case SimpleGestureFilter.SWIPE_LEFT :
-                break;
-
-            case SimpleGestureFilter.SWIPE_DOWN :
-                break;
-
-            case SimpleGestureFilter.SWIPE_UP :
+            case  DashBoardActivity.STEP_DRAWERLAYOUT:
+                DashBoardActivity.this.backToPreviousStepForDrawerLayoutStep();
                 break;
 
         }
 
-        //after
-
     }
 
     @Override
-    public void onDoubleTap() {
+    protected void doInSwipeRight() {
 
-        //init
-
-
-        //before
-
-
-        //main
-
-
-        //after
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        //init
-
-
-        //before
-
-
-        //main
-        getMenuInflater().inflate(R.menu.menu_dashboard_toolbar, menu);
-
-        //after
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        //init
-        final int id = item.getItemId();
-
-        //before
-
-
-        //main
-        if (id == R.id.action_openRight) {
-
-            this.drawerLayout.openDrawer(GravityCompat.END);
-
-        }
-
-        //after
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        //init
-        final int id = item.getItemId();
-
-        //before
-
-
-        //main
-        selectNavigation(id);
-
-        //after
-        this.drawerLayout.closeDrawer(GravityCompat.END);
-
-        return true;
+        DashBoardActivity.super.close();
 
     }
 
@@ -312,29 +139,10 @@ public abstract class DashBoardActivity
     //===========================================================================================================//
     //  method  ------------------------------------------------------------------------------------****method****
 
-    private void init(){
-
-        this.initDefaultValue();
-        this.initActivity();
-        this.initStatusBar();
-        this.initToolbar();
-        initContentViewForChild();
-
-    }
-
-    private void initDefaultValue(){
+    private void initDefaultValueForParallelRun(){
 
         //init
-        this.isClosed = false;
-
-        this.stackStep = new Stack<>();
-        this.handler = new Handler();
-        this.latch = null;
-
-        this.mainActivity = null;
-        this.context = null;
-
-        this.detector = new SimpleGestureFilter(this, this);
+        DashBoardActivity.this.latch = null;
 
         //before
 
@@ -343,17 +151,13 @@ public abstract class DashBoardActivity
 
 
         //after
-        initDefaultValueForChild();
-
 
     }
 
-    protected abstract void initDefaultValueForChild();
-
-    private void initActivity(){
+    private void initDefaultValueForGPSReceiver(){
 
         //init
-
+        DashBoardActivity.this.gpsBroadcastReceiver = new GPSBroadcastReceiver();
 
         //before
 
@@ -362,11 +166,28 @@ public abstract class DashBoardActivity
 
 
         //after
-        initActivityForChild();
 
     }
 
-    protected abstract void initActivityForChild();
+    private void initDefaultValueForAPI(){
+
+        //init
+        DashBoardActivity.this.api = new OneSpaceApi.Builder(getApplicationContext()).addConverterFactory(GsonConverterFactory.create()).build();
+
+        //before
+
+
+        //main
+
+
+        //after
+
+    }
+
+    //===========================================================================================================//
+    //  SET VIEW                                                                                    SET VIEW
+    //===========================================================================================================//
+    //  method  ------------------------------------------------------------------------------------****method****
 
     private void initStatusBar(){
 
@@ -379,67 +200,72 @@ public abstract class DashBoardActivity
         //main
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-            window = getWindow();
+            window = DashBoardActivity.super.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.BLACK);
 
         }
 
         //after
-        initStatusBarForChild();
 
 
     }
 
-    protected abstract void initStatusBarForChild();
-
-    private void initToolbar(){
+    private void initAppBarLayout(){
 
         //init
-        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
+        AppBarLayout appBarLayout = (AppBarLayout) DashBoardActivity.super.findViewById(R.id.app_bar_layout);
 
         //before
-        this.initDrawerLayout();
-        this.initNavigationView();
+
 
         //main
-        this.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        this.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                close();
-
-            }
-        });
-        setSupportActionBar(this.toolbar);
+        appBarLayout.setExpanded(true, true);
 
         //after
-        initToolbarForChild();
 
     }
 
     private void initDrawerLayout(){
 
         //init
-        this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        this.actionBarDrawerToggle = new ActionBarDrawerToggle(this.mainActivity, this.drawerLayout, this.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+        Toolbar toolbar = (Toolbar) DashBoardActivity.super.findViewById(R.id.toolbar);
+        DrawerLayout drawerLayout = (DrawerLayout) DashBoardActivity.super.findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(DashBoardActivity.this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
 
             public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
 
-                stackStep.push("DrawerLayout");
+                //init
+
+
+                //before
+
+
+                //main
+                super.onDrawerOpened(drawerView);
+                DashBoardActivity.super.addStep(DashBoardActivity.STEP_DRAWERLAYOUT);
+
+                //after
+
 
             }
 
             public void onDrawerClosed(View view) {
+
+                //init
+
+
+                //before
+
+
+                //main
                 super.onDrawerClosed(view);
+                DashBoardActivity.super.popStep();
 
-                stackStep.pop();
+                //after
+                if (DashBoardActivity.this.latch != null){
 
-                if (latch != null){
-
-                    latch.countDown();
+                    DashBoardActivity.this.latch.countDown();
 
                 }
 
@@ -451,8 +277,8 @@ public abstract class DashBoardActivity
 
 
         //main
-        this.drawerLayout.setDrawerListener(this.actionBarDrawerToggle);
-        this.actionBarDrawerToggle.syncState();
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
         //after
 
@@ -462,127 +288,175 @@ public abstract class DashBoardActivity
     private void initNavigationView(){
 
         //init
-        this.navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) DashBoardActivity.super.findViewById(R.id.nav_view);
 
         //before
 
 
         //main
-        this.navigationView.setNavigationItemSelectedListener(this.mainActivity);
-        this.navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(DashBoardActivity.this);
+        navigationView.setItemIconTintList(null);
 
         //after
 
     }
 
-    protected abstract void initToolbarForChild();
+    private void initToolbar(){
 
-    protected abstract void initContentViewForChild();
+        //init
+        Toolbar toolbar = (Toolbar) DashBoardActivity.super.findViewById(R.id.toolbar);
+
+        //before
+
+
+        //main
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //init
+
+                //before
+
+                //main
+                DashBoardActivity.super.close();
+
+                //after
+
+            }
+        });
+        DashBoardActivity.super.setSupportActionBar(toolbar);
+
+        //after
+
+
+    }
 
     //===========================================================================================================//
-    //  SELECT NAVIGATION                                                                           SELECT NAVIGATION
+    //  CREATE                                                                                      CREATE
     //===========================================================================================================//
     //  method  ------------------------------------------------------------------------------------****method****
 
-    protected abstract void selectNavigation(int id);
+    private void playAnimationForOpenActivity(){
+
+        //init
+
+
+        //before
+
+
+        //main
+        DashBoardActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
+
+        //after
+
+    }
+
+    //===========================================================================================================//
+    //  RESUME                                                                                      RESUME
+    //===========================================================================================================//
+    //  method  ------------------------------------------------------------------------------------****method****
+
+    private void registerGPSReceiver(){
+
+        //init
+
+
+        //before
+
+
+        //main
+        DashBoardActivity.super.registerReceiver(DashBoardActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
+
+        //after
+
+    }
+
+    //===========================================================================================================//
+    //  STOP                                                                                        STOP
+    //===========================================================================================================//
+    //  method  ------------------------------------------------------------------------------------****method****
+
+    private void unregisterGPSReceiver(){
+
+        //init
+
+
+        //before
+
+
+        //main
+        DashBoardActivity.super.unregisterReceiver(DashBoardActivity.this.gpsBroadcastReceiver);
+
+        //after
+
+    }
+
+    //===========================================================================================================//
+    //  CLOSE                                                                                       CLOSE
+    //===========================================================================================================//
+    //  method  ------------------------------------------------------------------------------------****method****
+
+    private void playAnimationForCloseActivity(){
+
+        //init
+
+
+        //before
+
+
+        //main
+        DashBoardActivity.super.overridePendingTransition(R.anim.nothing, R.anim.slide_out_to_right);
+
+        //after
+
+    }
 
     //===========================================================================================================//
     //  STEP BACK                                                                                   STEP BACK
     //===========================================================================================================//
     //  method  ------------------------------------------------------------------------------------****method****
 
-    private void stepBack(){
+    private void backToPreviousStepForDrawerLayoutStep(){
 
         //init
-        Thread thread = new Thread(){
-
-            public void run(){
-
-                backToPreviousStep();
-
-            }
-
-        };
+        final DrawerLayout drawerLayout = (DrawerLayout) DashBoardActivity.super.findViewById(R.id.drawer_layout);
 
         //before
-
-
-        //main
-        thread.start();
-
-        //after
-
-
-    }
-
-    private void stepBackToDeFault(){
-
-        //init
-        Thread thread = new Thread(){
-
-            public void run(){
-
-                while (stackStep.isEmpty() == false){
-
-                    backToPreviousStep();
-
-                }
-
-            }
-
-        };
-
-        //before
-
-
-        //main
-        thread.start();
-
-        //after
-
-
-    }
-
-    private void backToPreviousStep(){
-
-        //init
-        String step = "";
-
-        //before
-        if (stackStep.isEmpty() == true){
-
-            close();
+        if (DashBoardActivity.this.isDrawerLayoutOpen() == false){
 
             return;
 
         }
 
         //main
-        step = stackStep.get(stackStep.size() - 1);
+        DashBoardActivity.this.latch = new CountDownLatch(1);
 
-        if (step.equals("DrawerLayout") == true){
+        DashBoardActivity.super.handler.post(new Runnable() {
+            @Override
+            public void run() {
 
-            if (isDrawerLayoutOpen()){
+                //init
 
-                latch = new CountDownLatch(1);
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawerLayout.closeDrawer(GravityCompat.END);
-                    }
+                //before
 
-                });
 
-                try {
-                    latch.await();
-                    latch = null;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                //main
+                drawerLayout.closeDrawer(GravityCompat.END);
+
+                //after
 
             }
 
+        });
+
+        try {
+            DashBoardActivity.this.latch.await();
+            DashBoardActivity.this.latch = null;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         //after
@@ -593,6 +467,7 @@ public abstract class DashBoardActivity
     private boolean isDrawerLayoutOpen(){
 
         //init
+        DrawerLayout drawerLayout = (DrawerLayout) DashBoardActivity.super.findViewById(R.id.drawer_layout);
         boolean isOpen = false;
 
         //before
@@ -612,28 +487,12 @@ public abstract class DashBoardActivity
     }
 
     //===========================================================================================================//
-    //  CLOSE                                                                                       CLOSE
+    //  NAVIGATION VIEW                                                                             NAVIGATION VIEW
     //===========================================================================================================//
     //  method  ------------------------------------------------------------------------------------****method****
 
-    protected void close(){
-
-        //init
-        isClosed = true;
-
-        //before
-        stepBackToDeFault();
-
-        //main
-        finish();
-
-        //after
-        overridePendingTransition(R.anim.nothing, R.anim.slide_out_to_right);
-
-
-    }
-
-    private void sensitiveCaseForDestroy(){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
         //init
 
@@ -642,181 +501,251 @@ public abstract class DashBoardActivity
 
 
         //main
-
+        DashBoardActivity.super.getMenuInflater().inflate(R.menu.menu_dashboard_toolbar, menu);
 
         //after
-        sensitiveCaseForDestroyForChild();
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        //init
+        DrawerLayout drawerLayout = (DrawerLayout) DashBoardActivity.super.findViewById(R.id.drawer_layout);
+        final int id = item.getItemId();
+
+        //before
+
+
+        //main
+        if (id == R.id.action_openRight) {
+
+            drawerLayout.openDrawer(GravityCompat.END);
+
+        }
+
+        //after
+
+        return DashBoardActivity.super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        //init
+        DrawerLayout drawerLayout = (DrawerLayout) DashBoardActivity.super.findViewById(R.id.drawer_layout);
+        final int id = item.getItemId();
+
+        //before
+
+
+        //main
+        DashBoardActivity.this.doWhenSelectNavigation(id);
+
+        //after
+        drawerLayout.closeDrawer(GravityCompat.END);
+
+        return true;
 
     }
 
-    protected abstract void sensitiveCaseForDestroyForChild();
+    protected abstract void doWhenSelectNavigation(int id);
+
+    //===========================================================================================================//
+    //  LOCATION CHANGE                                                                             LOCATION CHANGE
+    //===========================================================================================================//
+    //  method  ------------------------------------------------------------------------------------****method****
+
+    protected abstract void doWhenLocationChange();
+
+    //  private class  -----------------------------------------------------------------------------****private class****
+
+    private class GPSBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            //init
+            Bundle b = intent.getExtras();
+
+            //before
+            UserLocationManager.setLatitude(b.getDouble("latitude", 0));
+            UserLocationManager.setLongitude(b.getDouble("longitude", 0));
+
+            //main
+            DashBoardActivity.this.doWhenLocationChange();
+
+            //after
+
+        }
+
+    }
+
+    //===========================================================================================================//
+    //  START FRAGMENT                                                                              START FRAGMENT
+    //===========================================================================================================//
+    //  method  ------------------------------------------------------------------------------------****method****
+
+    protected void startFragment(int index){
+
+        //init
+        OpenFragmentThread openFragmentThread = new OpenFragmentThread();
+
+        //before
+        DashBoardActivity.this.openLoadingFragment();
+        DashBoardActivity.this.idFragment = index;
+
+        //main
+        openFragmentThread.start();
+
+        //after
+
+
+    }
+
+    private void openLoadingFragment(){
+
+        //init
+        LoadingFragment fragment;
+
+        //before
+
+
+        //main
+        fragment = new LoadingFragment();
+        DashBoardActivity.super.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+        //after
+
+
+    }
+
+    protected abstract void doInPrepareForOpenFragment();
+
+    protected abstract void doInFailToOpenFragment();
+
+    protected abstract void doInSuccessToOpenFragment();
+
+    //  private class  -----------------------------------------------------------------------------****private class****
+
+    private class OpenFragmentThread extends Thread{
+
+        @Override
+        public void run(){
+
+            //init
+            DashBoardActivity.this.result = true;
+            DashBoardActivity.this.caseFail = DashBoardActivity.EVERYTHING_OK;
+
+            //before
+            OpenFragmentThread.this.prepareForOpenFragment();
+
+            //main
+            OpenFragmentThread.this.OpenFragment();
+
+            //after
+
+
+        }
+
+        private void prepareForOpenFragment(){
+
+            //init
+
+
+            //before
+
+
+            //main
+            DashBoardActivity.this.doInPrepareForOpenFragment();
+
+            //after
+
+        }
+
+        private void OpenFragment(){
+
+            //init
+            InternetNotAvailableFragment internetNotAvailableFragment = new InternetNotAvailableFragment();
+            CanNotConnectedToServerFragment notConnectingToServerFragment = new CanNotConnectedToServerFragment();
+            NoDataFragment noDataFragment = new NoDataFragment();
+
+            //before
+
+
+            //main
+            if (DashBoardActivity.this.result == false){
+
+                if (DashBoardActivity.this.caseFail == DashBoardActivity.INTERNET_NOT_AVAILABLE){
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, internetNotAvailableFragment, internetNotAvailableFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+                    Thread thread = new Thread(){
+
+                        @Override
+                        public void run(){
+
+                            DashBoardActivity.this.getWindow().getDecorView().getRootView().setOnTouchListener(new View.OnTouchListener() {
+
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event) {
+
+                                    DashBoardActivity.this.startFragment(DashBoardActivity.this.idFragment);
+
+                                    return false;
+                                }
+
+                            });
+
+                            try {
+                                Thread.sleep(10000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            DashBoardActivity.this.startFragment(DashBoardActivity.this.idFragment);
+
+                        }
+
+                    };
+
+                    thread.run();
+
+                }
+
+                if(DashBoardActivity.this.caseFail == DashBoardActivity.CAN_NOT_CONNECT_TO_SERVER){
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, notConnectingToServerFragment, notConnectingToServerFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+                }
+
+                if(DashBoardActivity.this.caseFail == DashBoardActivity.NO_DATA){
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, noDataFragment, noDataFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+                }
+
+                DashBoardActivity.this.doInFailToOpenFragment();
+
+            }
+            else{
+
+                DashBoardActivity.this.doInSuccessToOpenFragment();
+
+            }
+
+            //after
+
+
+        }
+
+    }
 
     //===========================================================================================================//
     //  NOTE                                                                                        NOTE
     //===========================================================================================================//
 
-//    ************1/12/2016 by Thianchai************
-
-//    this.actionBarDrawerToggle = new ActionBarDrawerToggle(this.dashBoardActivity, this.drawerLayout, this.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
-//
-//        public void onDrawerOpened(View drawerView) {
-//            super.onDrawerOpened(drawerView);
-//
-//        }
-//
-//        public void onDrawerClosed(View view) {
-//            super.onDrawerClosed(view);
-//
-//        }
-//
-//    };
-
-    //----------------------------------------------------------------------------------------------
-
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent me){
-//        // Call onTouchEvent of SimpleGestureFilter class
-//        this.detector.onTouchEvent(me);
-//        return super.dispatchTouchEvent(me);
-//    }
-
-    //----------------------------------------------------------------------------------------------
-
-//    @Override
-//    public void onDoubleTap() {
-//
-//        //        this.loadData();
-////
-////        try {
-////
-////            this.thread.join();
-////            this.adapter.notifyDataSetChanged();
-////
-////        } catch (InterruptedException e) {
-////
-////            e.printStackTrace();
-////
-////        }
-//
-////        list.remove(position);
-////        recycler.removeViewAt(position);
-////        mAdapter.notifyItemRemoved(position);
-////        mAdapter.notifyItemRangeChanged(position, list.size());
-//
-//    }
-
-    //----------------------------------------------------------------------------------------------
-
-//    String step = stackStep.pop();
-//
-//    if (!(step == "DrawerLayout")){
-//
-//        stackStep.push(step);
-//
-//    }
-
-    //----------------------------------------------------------------------------------------------
-
-//    this.mainActivity = this;
-//    this.context = getApplicationContext();
-
-    //----------------------------------------------------------------------------------------------
-
-//    this.navigationView.inflateMenu(R.menu.activity_dashboard_drawer);
-
-    //----------------------------------------------------------------------------------------------
-
-    //super.onBackPressed();
-
-    //----------------------------------------------------------------------------------------------
-
-//    @Override
-//    public void onDrawerSlide(View view, float v) {
-//
-//    }
-//
-//    @Override
-//    public void onDrawerOpened(View view) {
-//
-//    }
-//
-//    @Override
-//    public void onDrawerClosed(View view) {
-//        // your refresh code can be called from here
-//    }
-//
-//    @Override
-//    public void onDrawerStateChanged(int i) {
-//
-//    }
-
-    //----------------------------------------------------------------------------------------------
-
-    //    ************7/12/2016 by Thianchai************
-
-//    @Override
-//    public void onSwipe(int direction) {
-//
-//        //init
-//        boolean isReady = true;
-//
-//        //before
-//        if (this.stackStep.isEmpty() == false){
-//
-//            isReady = false;
-//
-//        }
-//
-//        //main
-//
-//        if (isReady == true){
-//
-//            switch (direction) {
-//
-//                case SimpleGestureFilter.SWIPE_RIGHT :
-//                    close();
-//                    break;
-//
-//                case SimpleGestureFilter.SWIPE_LEFT :
-//                    break;
-//
-//                case SimpleGestureFilter.SWIPE_DOWN :
-//                    break;
-//
-//                case SimpleGestureFilter.SWIPE_UP :
-//                    break;
-//
-//            }
-//
-//        }
-//
-//        //after
-//
-//    }
-
-    //----------------------------------------------------------------------------------------------
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        //init
-//        final int id = item.getItemId();
-//
-//        //before
-//
-//
-//        //main
-//        if (id == R.id.action_openRight) {
-//
-//            this.drawerLayout.openDrawer(GravityCompat.END);
-//
-//            return true;
-//
-//        }
-//
-//        //after
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
 }

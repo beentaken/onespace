@@ -69,6 +69,10 @@
             android:label="@string/title_activity_tweets"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
+            android:name=".activities.dashboardActivitys.TwitterActivity"
+            android:label="@string/title_activity_tweets"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
             android:name=".activities.dashboardActivity.YoutubeListActivity"
             android:label="@string/title_activity_youtube"
             android:theme="@style/AppTheme.NoTitleBar" />
@@ -87,10 +91,6 @@
         <activity
             android:name=".activities.dashboardActivity.weatherActivity.WeatherGraphListActivity"
             android:label="@string/title_activity_weatherGraph"
-            android:theme="@style/AppTheme.NoTitleBar" />
-        <activity
-            android:name=".activities.dashboardActivitys.TweetsActivity"
-            android:label="@string/title_activity_tweets"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
             android:name=".activities.dashboardActivity.CarparksLTAActivity"

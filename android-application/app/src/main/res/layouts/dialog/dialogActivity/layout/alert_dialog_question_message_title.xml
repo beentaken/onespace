@@ -30,7 +30,6 @@
             android:id="@+id/alertTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
             android:ellipsize="end"
             android:textSize="25dp"
             android:textColor="@color/white"/>

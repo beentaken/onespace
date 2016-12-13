@@ -6,7 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sesame.onespace.activities.dashboardActivitys.DashBoardActivity"
+    tools:context="com.sesame.onespace.activities.dashboardActivitys.TwitterActivity"
     tools:openDrawer="start">
 
     <android.support.design.widget.CoordinatorLayout
@@ -72,7 +72,6 @@
         android:background="@color/grey_900"
         android:fitsSystemWindows="true"
         app:menu="@menu/menu_dashboard_navright_tweets"
-        app:headerLayout="@layout/nav_header_dashboard_tweets"
         app:itemTextColor="@color/white">
 
         <LinearLayout
@@ -106,5 +105,8 @@ app:menu="@menu/activity_dashboard_drawer"
             android:id="@+id/fragment_dashboard_last_tweets"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+
+            app:headerLayout="@layout/nav_header_dashboard_tweets"
 
 -->

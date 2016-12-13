@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.NotificationCompat;
 
 import com.sesame.onespace.R;
@@ -87,11 +88,18 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                             dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             dialogIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
+                            int icon;
+                            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                icon = R.mipmap.ic_launcher_trim;
+                            } else {
+                                icon = R.drawable.ic_qa_message;
+                            }
+
                             PendingIntent pi = PendingIntent.getActivity(mContext, 0, dialogIntent, PendingIntent.FLAG_ONE_SHOT);
                             Resources r = mContext.getResources();
                             Notification notification = new NotificationCompat.Builder(mContext)
                                     .setTicker("Query")
-                                    .setSmallIcon(R.mipmap.ic_launcher_trim)
+                                    .setSmallIcon(icon)
                                     .setContentTitle("A new OneSpace query")
                                     .setContentText(jsonObject.getJSONObject("question").get("str") + "")
                                     .setContentIntent(pi)

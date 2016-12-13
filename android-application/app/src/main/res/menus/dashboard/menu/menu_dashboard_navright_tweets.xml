@@ -18,9 +18,13 @@
                 android:icon="@drawable/ic_tab_maps"
                 android:title="Go to map" />
             <item
-                android:id="@+id/nav_addToMyFavorite"
-                android:icon="@drawable/ic_dashboard_love_this_place"
-                android:title="Add to my favorite" />
+                android:id="@+id/nav_place_nearest"
+                android:icon="@drawable/ic_dashboard_place_nearest"
+                android:title="The place nearest" />
+            <item
+                android:id="@+id/nav_recently"
+                android:icon="@drawable/ic_dashboard_recently"
+                android:title="The place recently" />
             <item
                 android:id="@+id/nav_backToMainMenu"
                 android:icon="@drawable/ic_arrow_back"

@@ -24,9 +24,8 @@ import com.sesame.onespace.activities.dashboardActivity.CarparksLTAActivity;
 import com.sesame.onespace.activities.dashboardActivity.FlickrListActivity;
 import com.sesame.onespace.activities.dashboardActivity.InstagramListActivity;
 import com.sesame.onespace.activities.dashboardActivity.YoutubeListActivity;
-import com.sesame.onespace.activities.dashboardActivitys.TweetsActivity;
 import com.sesame.onespace.activities.dashboardActivity.weatherActivity.WeatherNEAListActivity;
-import com.sesame.onespace.views.DividerItemDecoration;
+import com.sesame.onespace.activities.dashboardActivitys.TwitterActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +85,6 @@ public class DashBoardListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         adapter = new DashBoardListAdapter(getContext(), items);
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1000, 0)); //This is length of underline record : 76,this is a original number by chongos
         return view;
     }
 
@@ -156,7 +154,7 @@ public class DashBoardListFragment extends Fragment {
 
                     if (item.getActivityID() == 1){
 
-                        intent = new Intent(getContext(), TweetsActivity.class);
+                        intent = new Intent(getContext(), TwitterActivity.class);
 
                     }
 
