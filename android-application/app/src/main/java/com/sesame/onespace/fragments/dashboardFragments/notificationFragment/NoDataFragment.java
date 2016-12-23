@@ -33,5 +33,4 @@ public class NoDataFragment extends Fragment {
 
     }
 
-
 }

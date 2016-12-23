@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:scrollbars="vertical"
+            android:clipToPadding="false"
+            android:scrollbarStyle="outsideOverlay"
+            android:background="@color/grey_100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/empty_chat_state_view"
+            android:gravity="center"
+            android:layout_marginBottom="?attr/actionBarSize"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/action_icon_xlarge"
+                android:layout_height="@dimen/action_icon_xlarge"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_qa_emtry_message"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="You don't have any message yet"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/grey_400" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

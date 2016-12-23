@@ -5,10 +5,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.sesame.onespace.R;
+import com.sesame.onespace.activities.dashboardActivities.FlickrActivity;
+import com.sesame.onespace.activities.dashboardActivities.InstagramActivity;
+import com.sesame.onespace.activities.dashboardActivities.TwitterActivity;
+import com.sesame.onespace.activities.dashboardActivities.YoutubeActivity;
+import com.sesame.onespace.dialogs.mapDialogs.SelectDashboardDialogBuilder;
 import com.sesame.onespace.models.map.Place;
 import com.sesame.onespace.models.map.Vloc;
 import com.sesame.onespace.network.OneSpaceApi;
@@ -26,11 +32,18 @@ import rx.android.schedulers.AndroidSchedulers;
 /**
  * Created by chongos on 11/5/15 AD.
  */
+
+// Modified code by Thianchai on 19/12/16
+
 public class PlaceBottomSheet implements DialogInterface.OnClickListener {
 
     private Context context;
     private Place place;
     private BottomSheet bottomSheet;
+
+    //Thianchai (I add this)
+    private int selectDashboard;
+    //
 
     public PlaceBottomSheet(Context context, Place place) {
         this.context = context;
@@ -52,6 +65,116 @@ public class PlaceBottomSheet implements DialogInterface.OnClickListener {
             case R.id.join_groupchat:
                 joinGroup();
                 break;
+
+            //Thianchai (I add this for open dashboard from map)
+
+            case R.id.open_dashboard_from_map:
+
+                final SelectDashboardDialogBuilder builder = new SelectDashboardDialogBuilder(context, R.style.MyAlertDialogStyle2);
+                builder.setTitle("Please select dashboard");
+
+                String[] array = new String[]{"Twitter", "Youtube", "Flickr", "Instagram", "Weather", "Carpark", "Bus Info"};
+                selectDashboard = 0;
+
+                builder.setSingleChoiceItems(array, -1, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int item) {
+
+                        selectDashboard = item;
+
+                    }
+
+                });
+
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        Intent intent = null;
+                        Bundle bundle = null;
+
+                        switch (selectDashboard){
+
+                            case 0:
+
+                                intent = new Intent(context, TwitterActivity.class);
+                                bundle = new Bundle();
+                                bundle.putString("Name", place.getName());
+                                bundle.putString("Vloc", place.getVloc());
+                                bundle.putDouble("Lat", place.getLat());
+                                bundle.putDouble("Lng", place.getLng());
+                                intent.putExtra("bundle", bundle);
+                                context.startActivity(intent);
+
+                                break;
+
+                            case 1:
+
+                                intent = new Intent(context, YoutubeActivity.class);
+                                bundle = new Bundle();
+                                bundle.putString("Name", place.getName());
+                                bundle.putString("Vloc", place.getVloc());
+                                bundle.putDouble("Lat", place.getLat());
+                                bundle.putDouble("Lng", place.getLng());
+                                intent.putExtra("bundle", bundle);
+                                context.startActivity(intent);
+
+                                break;
+
+                            case 2:
+
+                                intent = new Intent(context, FlickrActivity.class);
+                                bundle = new Bundle();
+                                bundle.putString("Name", place.getName());
+                                bundle.putString("Vloc", place.getVloc());
+                                bundle.putDouble("Lat", place.getLat());
+                                bundle.putDouble("Lng", place.getLng());
+                                intent.putExtra("bundle", bundle);
+                                context.startActivity(intent);
+
+                                break;
+
+                            case 3:
+
+                                intent = new Intent(context, InstagramActivity.class);
+                                bundle = new Bundle();
+                                bundle.putString("Name", place.getName());
+                                bundle.putString("Vloc", place.getVloc());
+                                bundle.putDouble("Lat", place.getLat());
+                                bundle.putDouble("Lng", place.getLng());
+                                intent.putExtra("bundle", bundle);
+                                context.startActivity(intent);
+
+                                break;
+
+                        }
+
+                    }
+
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+
+                    }
+
+                });
+
+                android.app.AlertDialog alert = builder.create();
+                alert.setCanceledOnTouchOutside(false);
+                alert.show();
+
+                alert.getListView().setItemChecked(selectDashboard, true);
+
+                break;
+
+            //
+
         }
     }
 
@@ -164,4 +287,5 @@ public class PlaceBottomSheet implements DialogInterface.OnClickListener {
         }
 
     }
+
 }

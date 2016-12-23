@@ -18,6 +18,9 @@ import rx.Subscriber;
 /**
  * Created by chongos on 11/13/15 AD.
  */
+
+// Modified code by Thianchai on 16/10/16
+
 public class LogoutManager {
 
     private static LogoutManager instance;

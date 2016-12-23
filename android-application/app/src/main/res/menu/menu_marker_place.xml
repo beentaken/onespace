@@ -9,4 +9,13 @@
         android:title="@string/action_join_group_chat"
         android:icon="@drawable/ic_group_24dp" />
 
+    <!-- Thianchai (I add this For open dashboard from map) -->
+
+    <item
+        android:id="@+id/open_dashboard_from_map"
+        android:title="Open Dashboard"
+        android:icon="@drawable/ic_map_open_dashboard" />
+
+    <!-- **** -->
+
 </menu>

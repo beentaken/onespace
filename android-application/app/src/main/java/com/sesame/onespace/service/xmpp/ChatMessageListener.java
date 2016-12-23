@@ -11,11 +11,14 @@ import android.os.Build;
 import android.support.v7.app.NotificationCompat;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.activities.dialogActivities.QuestionMessageDialogActivity;
+import com.sesame.onespace.activities.dialogActivities.QAMessageDialogActivity;
+import com.sesame.onespace.databases.qaMessageDatabases.QAMessageHelper;
 import com.sesame.onespace.models.chat.ChatMessage;
+import com.sesame.onespace.models.qaMessage.QAMessage;
 import com.sesame.onespace.service.MessageService;
 import com.sesame.onespace.utils.DateTimeUtil;
 import com.sesame.onespace.utils.Log;
+import com.sesame.onespace.utils.date.DateConvert;
 
 import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.packet.Message;
@@ -28,6 +31,9 @@ import java.util.ArrayList;
 /**
  * Created by chongos on 10/22/15 AD.
  */
+
+// Modified code by Thianchai for QAMessage
+
 public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMessageListener {
 
     private Context mContext;
@@ -51,54 +57,63 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                             JSONObject jsonObject = new JSONObject(msgBody);
                             String messageType = jsonObject.getString(ChatMessage.KEY_MESSAGE_TYPE);
 
-                            //Thianchai (I add this)
+                            //Thianchai (I add this for QAMessage)
 
-                            Intent dialogIntent = new Intent(mContext, QuestionMessageDialogActivity.class);
-                            dialogIntent.putExtra("msgFrom", msgFrom);
-                            dialogIntent.putExtra("idQuestion", jsonObject.getJSONObject("question").get("id") + "");
-                            dialogIntent.putExtra("question", jsonObject.getJSONObject("question").get("str") + "");
+                            String questionId = jsonObject.getJSONObject("question").get("id") + "";
+                            String questionStr = jsonObject.getJSONObject("question").get("str") + "";
+                            ArrayList<String> answerIdList = new ArrayList<String>();
+                            ArrayList<String> answerStrList = new ArrayList<String>();
+
+                            Long tsLong = System.currentTimeMillis()/1000;
+                            String ts = tsLong.toString();
+                            String date = DateConvert.convertTimeStampToDate(ts, DateConvert.DATE_FORMAT1);
 
                             JSONArray jsonArray = jsonObject.getJSONArray("answers");
 
                             int index = 0;
-                            ArrayList<String> answerArrayID = new ArrayList<String>();
 
                             while(index < jsonArray.length()){
 
-                                answerArrayID.add((String) ((JSONObject) jsonArray.get(index)).get("id"));
+                                answerIdList.add((String) ((JSONObject) jsonArray.get(index)).get("id"));
 
                                 index = index + 1;
 
                             }
 
                             index = 0;
-                            ArrayList<String> answerArrayStr = new ArrayList<String>();
 
                             while(index < jsonArray.length()){
 
-                                answerArrayStr.add((String) ((JSONObject) jsonArray.get(index)).get("str"));
+                                answerStrList.add((String) ((JSONObject) jsonArray.get(index)).get("str"));
 
                                 index = index + 1;
 
                             }
 
-                            dialogIntent.putStringArrayListExtra("answerArrayID", answerArrayID);
-                            dialogIntent.putStringArrayListExtra("answerArrayStr", answerArrayStr);
+                            QAMessageHelper qaMessageHelper = new QAMessageHelper(mContext);
+                            qaMessageHelper.addQAMessage(new QAMessage(msgFrom ,
+                                                                       questionId,
+                                                                       questionStr,
+                                                                       answerIdList,
+                                                                       answerStrList,
+                                                                       date));
+
+                            ArrayList<QAMessage> list = qaMessageHelper.getAllQAMessages();
+
+                            Intent dialogIntent = new Intent(mContext, QAMessageDialogActivity.class);
+                            dialogIntent.putExtra("id", list.get(list.size() - 1).getId());
+                            dialogIntent.putExtra("msgFrom", msgFrom);
+                            dialogIntent.putExtra("questionId", questionId);
+                            dialogIntent.putExtra("questionStr", questionStr);
+                            dialogIntent.putStringArrayListExtra("answerIdList", answerIdList);
+                            dialogIntent.putStringArrayListExtra("answerStrList", answerStrList);
+                            dialogIntent.putExtra("date", date);
                             dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             dialogIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
-                            int icon;
-                            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                icon = R.mipmap.ic_launcher_trim;
-                            } else {
-                                icon = R.drawable.ic_qa_message;
-                            }
-
-                            PendingIntent pi = PendingIntent.getActivity(mContext, 0, dialogIntent, PendingIntent.FLAG_ONE_SHOT);
-                            Resources r = mContext.getResources();
+                            PendingIntent pi = PendingIntent.getActivity(mContext, 0, dialogIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                             Notification notification = new NotificationCompat.Builder(mContext)
-                                    .setTicker("Query")
-                                    .setSmallIcon(icon)
+                                    .setSmallIcon(R.mipmap.ic_launcher_trim)
                                     .setContentTitle("A new OneSpace query")
                                     .setContentText(jsonObject.getJSONObject("question").get("str") + "")
                                     .setContentIntent(pi)
@@ -142,6 +157,5 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
         }
 
     }
-
 
 }

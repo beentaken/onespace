@@ -30,6 +30,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
+import com.sesame.onespace.fragments.dashboardFragments.DashBoardListFragment;
+import com.sesame.onespace.fragments.qaMessageFragments.QAListFragment;
 import com.sesame.onespace.models.chat.Chat;
 import com.sesame.onespace.service.MessageService;
 import com.sesame.onespace.utils.DrawableUtil;
@@ -37,6 +39,8 @@ import com.sesame.onespace.views.MenuCoverLocationView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+// Modified code by Thianchai on 16/10/16
 
 public class MainMenuFragment extends Fragment implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener,
         ChatListFragment.OnChatListInteractionListener {
@@ -67,6 +71,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
     private TabLayout mTabLayout;
     private ChatListFragment chatListFragment;
     private TabMapFragment tabMapFragment;
+    private QAListFragment qaListFragment; //wrote by Thianchai
     private DashBoardListFragment dashBoardListFragment;  //wrote by Thianchai
 
     private String name;
@@ -124,6 +129,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
 
         chatListFragment = ChatListFragment.newInstance(MessageService.getConnectionStatus());
         tabMapFragment = TabMapFragment.newInstance();
+        qaListFragment = QAListFragment.newInstance(); //wrote by Thianchai
         dashBoardListFragment = DashBoardListFragment.newInstance();  //wrote by Thianchai
 
         mViewPager = (ViewPager) view.findViewById(R.id.pager);
@@ -263,6 +269,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(tabMapFragment, "Map");
         adapter.addFragment(chatListFragment, "Chat");
+        adapter.addFragment(qaListFragment, "Q&A"); //wrote by Thianchai
         adapter.addFragment(dashBoardListFragment, "DashBorad");  //wrote by Thianchai
         adapter.addFragment(SettingsListFragment.newInstance(), "Settings");
         viewPager.setAdapter(adapter);
@@ -275,7 +282,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
 
                 @Override
                 public void run() {
-                    if(count < 4) {  //change 3 -> 4 by Thianchai
+                    if(count < 5) {  //change 3 -> 5 by Thianchai
                         count++;
                         tabMapFragment.setText(tabMapFragment.getText()+".");
                         handler.postDelayed(runnable, 400);
@@ -318,16 +325,21 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
         tablayout.getTabAt(1).setCustomView(tabChat);
 
         //wrote by Thianchai
+        TextView messageSetting = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_menu_icon_and_text, null);
+        messageSetting.setText("Q&A");
+        messageSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_qa, 0, 0);
+        tablayout.getTabAt(2).setCustomView(messageSetting);
+
         TextView dashboardSetting = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_menu_icon_and_text, null);
-        dashboardSetting.setText("Dashboard");
+        dashboardSetting.setText("DB");
         dashboardSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_dashboard, 0, 0);
-        tablayout.getTabAt(2).setCustomView(dashboardSetting);
+        tablayout.getTabAt(3).setCustomView(dashboardSetting);
         //
 
         TextView tabSetting = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_menu_icon_and_text, null);
         tabSetting.setText("Settings");
         tabSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_settings, 0, 0);
-        tablayout.getTabAt(3).setCustomView(tabSetting);
+        tablayout.getTabAt(4).setCustomView(tabSetting);
 
     }
 

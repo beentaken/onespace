@@ -27,7 +27,7 @@ android {
 
     sourceSets {
         main {
-            res.srcDirs = ['src/main/res', 'src/main/res/layouts/dashboard', 'src/main/res/layouts/dashboard/notification', 'src/main/res/layouts/dashboard/tweets', 'src/main/res/menus/dashboard', 'src/main/res/menus/dashboard/toolbar', 'src/main/res/drawables/dashboard', 'src/main/res/drawables/dashboard/icon', 'src/main/res/drawables/dashboard/shape', 'src/main/res/layouts/dialog', 'src/main/res/layouts/dialog/dialogActivity']
+            res.srcDirs = ['src/main/res', 'src/main/res/layouts/dashboard', 'src/main/res/layouts/dashboard/notification', 'src/main/res/layouts/dashboard/tweets', 'src/main/res/menus/dashboard', 'src/main/res/menus/dashboard/toolbar', 'src/main/res/drawables/dashboard', 'src/main/res/drawables/dashboard/icon', 'src/main/res/drawables/dashboard/shape', 'src/main/res/layouts/dialog', 'src/main/res/layouts/dialog/dialogActivity', 'src/main/res/layouts/flickr', 'src/main/res/layouts/instagram', 'src/main/res/layouts/youtube', 'src/main/res/drawables/map', 'src/main/res/drawables/map/icon', 'src/main/res/layouts/dialog/dialog', 'src/main/res/layouts/dashboard/flickr', 'src/main/res/layouts/dashboard/instagram', 'src/main/res/layouts/dashboard/youtube', 'src/main/res/layouts/dashboard/twitter', 'src/main/res/layouts/dashboard/main', 'src/main/res/layouts/dashboard/oldDashboard', 'src/main/res/drawables/q&a', 'src/main/res/drawables/q&a/icon', 'src/main/res/layouts/q&a']
         }
     }
 }

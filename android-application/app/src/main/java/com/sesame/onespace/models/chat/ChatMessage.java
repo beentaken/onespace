@@ -10,6 +10,9 @@ import org.json.JSONObject;
 /**
  * Created by chongos on 9/4/15 AD.
  */
+
+// Modified code by Thianchai on 10/12/16
+
 public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage> {
 
     public static final String KEY_MESSAGE_TYPE = "message-type";

@@ -19,6 +19,8 @@ public abstract class UserLocationManager {
     //  ATTRIBUTE                                                                                   ATTRIBUTE
     //===========================================================================================================//
 
+    private static Boolean isReady = false;
+
     private static double latitude = 0;
     private static double longitude = 0;
 
@@ -26,13 +28,23 @@ public abstract class UserLocationManager {
     //  METHOD                                                                                      METHOD
     //===========================================================================================================//
 
+    public static Boolean isReady(){
+
+        return isReady;
+
+    }
+
     public static void setLatitude(double latitude1){
+
+        isReady = true;
 
         latitude = latitude1;
 
     }
 
     public static void setLongitude(double longitude1){
+
+        isReady = true;
 
         longitude = longitude1;
 

@@ -1,23 +1,47 @@
 package com.sesame.onespace.activities.dashboardActivities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.location.Location;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.activities.MapActivity;
-import com.sesame.onespace.fragments.dashboardFragments.lastTweetsFragment.LastTweetsListFragment;
-import com.sesame.onespace.managers.dashboard.DashboardRecentPlaceManager;
+import com.sesame.onespace.fragments.dashboardFragments.twitterFragment.LastTweetsListFragment;
+import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.CanNotConnectedToServerFragment;
+import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.DoNotHaveLocationFragment;
+import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.InternetNotAvailableFragment;
+import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.NoDataFragment;
+import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.WaitingFragment;
+import com.sesame.onespace.interfaces.activityInterfaces.SimpleGestureFilter;
 import com.sesame.onespace.managers.location.UserLocationManager;
 import com.sesame.onespace.models.map.Place;
-import com.sesame.onespace.utils.connectToServer.MyConnect;
-import com.sesame.onespace.utils.date.MyDateConvert;
+import com.sesame.onespace.network.OneSpaceApi;
+import com.sesame.onespace.utils.connect.Connection;
+import com.sesame.onespace.utils.date.DateConvert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,258 +52,266 @@ import java.util.concurrent.CountDownLatch;
 
 import retrofit.Call;
 import retrofit.Callback;
+import retrofit.GsonConverterFactory;
 import retrofit.Response;
 
 /**
- * Created by Thian on 12/12/2559.
+ * Created by Thian on 19/12/2559.
  */
 
-public class TwitterActivity
-        extends DashBoardActivity{
+public final class TwitterActivity
+        extends AppCompatActivity
+        implements SimpleGestureFilter.SimpleGestureListener,
+                   NavigationView.OnNavigationItemSelectedListener{
 
     //===========================================================================================================//
     //  ATTRIBUTE                                                                                   ATTRIBUTE
     //===========================================================================================================//
 
-    private final static int LAST_TWEETS_FRAGMENT = 0;
+    //for menu ------------------------------------------------------------------------------------------
+    private String idFragment;
+
+    private final static String LAST_TWITTER_FRAGMENT = "last twitter fragment";
+
+    //for start ------------------------------------------------------------------------------------
+    private boolean result;
+    private String caseFail;
+
+    private final static String EVERYTHING_OK = "everything ok";
+    private final static String DO_NOT_HAVE_LOCATION = "do not have location";
+    private final static String INTERNET_NOT_AVAILABLE = "internet not available";
+    private final static String CAN_NOT_CONNECT_TO_SERVER = "can not connect to server";
+    private final static String NO_DATA = "no data";
+    private final static String END = "end";
+
+    private OneSpaceApi.Service api;
+    private Call call;
+    private boolean callResponse;  //bad code
 
     private final static double DISTANCE_AROUND_USER = 0.001;
 
-    private String url;
-
     private Place placeNearest;
+    private String url;
     private ArrayList<Parcelable> items;
 
-    private ArrayList<Place> placeRecentlyArrayList;
-    private int placeRecentlyselectItem;
+    private TwitterActivity.OpenFragmentTask openFragmentTask;
+    private CountDownLatch countDownLatch; //bad code
+
+    //for dialog ------------------------------------------------------------------------------------
+
+    private AlertDialog alertDialog;
+
+    //for SimpleGestureFilter.SimpleGestureListener-------------------------------------------------
+    private SimpleGestureFilter detector;
+
+    //for GPSBroadcastReceiver
+    private TwitterActivity.GPSBroadcastReceiver gpsBroadcastReceiver;
 
     //===========================================================================================================//
-    //  MAIN BLOCK                                                                                  MAIN BLOCK
+    //  ACTIVITY LIFECYCLE                                                                          ACTIVITY LIFECYCLE
     //===========================================================================================================//
 
     @Override
-    protected void initContentView() {
-        TwitterActivity.super.setContentView(R.layout.activity_dashboard_tweets);
+    protected void onCreate(Bundle savedInstanceState) {
+
+        //forced to action
+        TwitterActivity.super.onCreate(savedInstanceState);
+
+        //main
+        TwitterActivity.super.setContentView(R.layout.activity_dashboard_twitter);
+
+        //sub
+        TwitterActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
 
     }
 
     @Override
-    protected void initDefaultValue() {
-        TwitterActivity.super.initDefaultValue();
+    protected void onStart(){
 
-        TwitterActivity.this.initDefaultValueForConnectToServer();
-        TwitterActivity.this.initDefaultValueForOpenLastTweets();
+        //forced to action
+        TwitterActivity.super.onStart();
 
-    }
-
-    @Override
-    protected void initView() {
-        TwitterActivity.super.initView();
-
-        TwitterActivity.this.initToolbar();
-        TwitterActivity.this.initTextDistance();
+        //main
+        TwitterActivity.this.setDefault();
+        TwitterActivity.this.start();
 
     }
 
     @Override
-    protected void doBeforeCreate() {
+    protected void onResume() {
+
+        //forced to action
+        TwitterActivity.super.onResume();
+
+        TwitterActivity.super.registerReceiver(TwitterActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
 
     }
 
     @Override
-    protected void doInCreate() {
+    public void onBackPressed() {
+
+        //init
+        DrawerLayout drawerLayout = (DrawerLayout) TwitterActivity.super.findViewById(R.id.drawer_layout);
+
+        //forced to action
+        if (drawerLayout.isDrawerOpen(GravityCompat.END) == true){
+
+            drawerLayout.closeDrawer(GravityCompat.END);
+
+        }
+        else{
+
+            TwitterActivity.this.close();
+
+        }
 
     }
 
     @Override
-    protected void doAfterCreate() {
-        TwitterActivity.super.doAfterCreate();
+    public void onPause(){
 
-        TwitterActivity.this.startFragment(TwitterActivity.this.LAST_TWEETS_FRAGMENT);
+        //forced to action
+        TwitterActivity.super.onPause();
 
-    }
-
-    @Override
-    protected void doBeforeStart() {
+        TwitterActivity.super.unregisterReceiver(TwitterActivity.this.gpsBroadcastReceiver);
 
     }
 
     @Override
-    protected void doInStart() {
+    protected void onStop(){
+
+        //forced to action
+        TwitterActivity.super.onStop();
+
+        if (TwitterActivity.this.alertDialog != null){
+
+            TwitterActivity.this.alertDialog.dismiss();
+
+        }
+
+        if (TwitterActivity.this.call != null){
+
+            TwitterActivity.this.call.cancel();
+
+        }
+
+        TwitterActivity.this.openFragmentTask.cancel(true);
+
+//        if (TwitterActivity.this.countDownLatch != null){
+//
+//            TwitterActivity.this.countDownLatch.countDown();
+//
+//        }
+
+        TwitterActivity.this.setDefault();
 
     }
 
     @Override
-    protected void doAfterStart() {
+    protected void onRestart(){
+
+        //forced to action
+        TwitterActivity.super.onRestart();
 
     }
 
     @Override
-    protected void doBeforeResume() {
-        TwitterActivity.super.doBeforeResume();
+    protected void onDestroy(){
+
+        //forced to action
+        TwitterActivity.super.onDestroy();
 
     }
 
-    @Override
-    protected void doInResume() {
+    //===========================================================================================================//
+    //  ON ACTION                                                                                   ON ACTION
+    //===========================================================================================================//
 
+    @Override
+    public final boolean onCreateOptionsMenu(Menu menu) {
+
+        //forced to action
+        TwitterActivity.super.getMenuInflater().inflate(R.menu.menu_dashboard_toolbar, menu);
+
+        return true;
     }
 
     @Override
-    protected void doAfterResume() {
+    public final boolean onOptionsItemSelected(MenuItem item) {
 
+        //init
+        DrawerLayout drawerLayout = (DrawerLayout) TwitterActivity.super.findViewById(R.id.drawer_layout);
+        final int id = item.getItemId();
+
+        //forced to action
+        if (id == R.id.action_openRight) {
+
+            drawerLayout.openDrawer(GravityCompat.END);
+
+        }
+
+        return TwitterActivity.super.onOptionsItemSelected(item);
     }
 
     @Override
-    protected void doBeforeStop() {
-        TwitterActivity.super.doBeforeStop();
+    public boolean onNavigationItemSelected(MenuItem item) {
 
-    }
-
-    @Override
-    protected void doInStop() {
-
-    }
-
-    @Override
-    protected void doAfterStop() {
-
-    }
-
-    @Override
-    protected void doBeforeClose() {
-
-    }
-
-    @Override
-    protected void doAfterClose() {
-        TwitterActivity.super.doAfterClose();
-
-    }
-
-    @Override
-    protected void doInSensitiveDestroy() {
-
-    }
-
-    @Override
-    protected void doInBackToPreviousStep(String stepName) {
-        TwitterActivity.super.doInBackToPreviousStep(stepName);
-
-    }
-
-    @Override
-    protected void doInSwipeRight() {
-        TwitterActivity.super.doInSwipeRight();
-
-    }
-
-    @Override
-    protected void doInSwipeLeft() {
-
-    }
-
-    @Override
-    protected void doInSwipeUp() {
-
-    }
-
-    @Override
-    protected void doInSwipeDown() {
-
-    }
-
-    @Override
-    protected void doInDoubleTap() {
-
-    }
-
-    @Override
-    protected void doWhenSelectNavigation(int id) {
+        DrawerLayout drawerLayout = (DrawerLayout) TwitterActivity.super.findViewById(R.id.drawer_layout);
+        final int id = item.getItemId();
 
         switch (id) {
 
-            case  R.id.nav_lastTweets:
-                TwitterActivity.super.startFragment(TwitterActivity.this.LAST_TWEETS_FRAGMENT);
+            case R.id.nav_twitter_list:
+
+                TwitterActivity.this.idFragment = TwitterActivity.LAST_TWITTER_FRAGMENT;
+                TwitterActivity.this.prepareToStart();
+                TwitterActivity.this.start();
+
                 break;
 
-            case  R.id.nav_goToChat:
-
-                break;
-
-            case  R.id.nav_goToMap:
-                Intent intent = new Intent(TwitterActivity.this, MapActivity.class);
-                TwitterActivity.super.startActivity(intent);
-                break;
 
             case  R.id.nav_place_nearest:
+
                 TwitterActivity.this.placeNearest = null;
-                TwitterActivity.super.startFragment(TwitterActivity.super.idFragment);
+                TwitterActivity.this.prepareToStart();
+                TwitterActivity.this.start();
+
                 break;
 
             case  R.id.nav_recently:
-                this.placeRecentlyArrayList = DashboardRecentPlaceManager.getPlaceArrayList();
 
-                String[] placesTextArray = new String[this.placeRecentlyArrayList.size()];
-
-                this.placeRecentlyselectItem = 0;
-
-                int index = 0;
-                while (index < this.placeRecentlyArrayList.size()){
-
-                    placesTextArray[index] = this.placeRecentlyArrayList.get((this.placeRecentlyArrayList.size() - 1) - index).getName();
-
-                    index = index + 1;
-
-                }
-
-                android.app.AlertDialog.Builder builder = new AlertDialog.Builder(TwitterActivity.this, R.style.MyAlertDialogStyle);
-                builder.setTitle("The place recently .(Please select)");
-                builder.setSingleChoiceItems(placesTextArray, -1, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int item) {
-
-                        placeRecentlyselectItem = item;
-
-                    }
-
-                });
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        TwitterActivity.this.placeNearest = placeRecentlyArrayList.get((placeRecentlyArrayList.size() - 1) - placeRecentlyselectItem);
-
-                        dialog.dismiss();
-
-                        TwitterActivity.super.startFragment(TwitterActivity.super.idFragment);
-
-                    }
-
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        dialog.dismiss();
-
-                    }
-
-                });
-
-                AlertDialog alert = builder.create();
-                alert.setCanceledOnTouchOutside(false);
-                alert.show();
-
-                alert.getListView().setItemChecked(this.placeRecentlyselectItem, true);
                 break;
 
             case  R.id.nav_backToMainMenu:
-                TwitterActivity.super.close();
+
+                TwitterActivity.this.close();
+
+                break;
+
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.END);
+
+        return false;
+    }
+
+    @Override
+    public final boolean dispatchTouchEvent(MotionEvent me){
+
+        TwitterActivity.this.detector.onTouchEvent(me);
+
+        return TwitterActivity.super.dispatchTouchEvent(me);
+    }
+
+    @Override
+    public void onSwipe(int direction) {
+
+        switch (direction) {
+
+            case SimpleGestureFilter.SWIPE_RIGHT :
+
+                TwitterActivity.this.close();
+
                 break;
 
         }
@@ -287,188 +319,324 @@ public class TwitterActivity
     }
 
     @Override
-    protected void doWhenLocationChange() {
+    public void onDoubleTap() {
 
-        TwitterActivity.this.changeTextDistance();
 
-    }
-
-    @Override
-    protected void doInPrepareForOpenFragment() {
-
-        TwitterActivity.this.searchPlaceNearest();
-        TwitterActivity.this.searchURL();
-        TwitterActivity.this.searchItems();
-
-    }
-
-    @Override
-    protected void doInFailToOpenFragment() {
-
-        TwitterActivity.this.changeViewForFailToOpenFragment();
-
-    }
-
-    @Override
-    protected void doInSuccessToOpenFragment() {
-
-        TwitterActivity.this.changeViewForSuccessToOpenFragment();
 
     }
 
     //===========================================================================================================//
-    //  INIT                                                                                        INIT
+    //  SET DEFAULT                                                                                 SET DEFAULT
     //===========================================================================================================//
-    //  method  ------------------------------------------------------------------------------------****method****
 
-    private void initDefaultValueForConnectToServer(){
+    private void setDefault(){
 
-        //init
+        TwitterActivity.this.setDefaultValue();
+        TwitterActivity.this.setDefaultView();
+
+    }
+
+    private void setDefaultValue(){
+
+        //for menu
+        TwitterActivity.this.idFragment = TwitterActivity.LAST_TWITTER_FRAGMENT;
+
+        //for start
+        TwitterActivity.this.result = true;
+        TwitterActivity.this.caseFail = TwitterActivity.EVERYTHING_OK;
+        TwitterActivity.this.api = new OneSpaceApi.Builder(getApplicationContext()).addConverterFactory(GsonConverterFactory.create()).build();
+        TwitterActivity.this.call = null;
+        TwitterActivity.this.callResponse = false;
+
+        Intent intent = getIntent();
+        if (intent != null){
+
+            Bundle bundle = intent.getBundleExtra("bundle");
+
+            if (bundle.getString("Name") != null){
+
+                Place place = new Place();
+                place.setName(bundle.getString("Name"));
+                place.setVloc(bundle.getString("Vloc"));
+                place.setLat(bundle.getDouble("Lat"));
+                place.setLng(bundle.getDouble("Lng"));
+
+                TwitterActivity.this.placeNearest = place;
+
+            }
+            else{
+
+                TwitterActivity.this.placeNearest = null;
+
+            }
+
+        }
+        else{
+
+            TwitterActivity.this.placeNearest = null;
+
+        }
+
         TwitterActivity.this.url = null;
-
-        //before
-
-
-        //main
-
-
-        //after
-
-    }
-
-    private void initDefaultValueForOpenLastTweets(){
-
-        //init
-        TwitterActivity.this.placeNearest = null;
         TwitterActivity.this.items = new ArrayList<Parcelable>();
 
-        //before
+        //for dialog
+        TwitterActivity.this.alertDialog = null;
 
+        //for SimpleGestureFilter.SimpleGestureListener
+        TwitterActivity.this.detector = new SimpleGestureFilter(this, this);
 
-        //main
-
-
-        //after
+        //
+        TwitterActivity.this.gpsBroadcastReceiver = new TwitterActivity.GPSBroadcastReceiver();
 
     }
 
-    //===========================================================================================================//
-    //  SET VIEW                                                                                    SET VIEW
-    //===========================================================================================================//
-    //  method  ------------------------------------------------------------------------------------****method****
+    private void setDefaultView(){
 
-    private void initToolbar(){
+        TwitterActivity.this.setDefaultStatusBar();
+        TwitterActivity.this.setDefaultAppBarLayout();
+        TwitterActivity.this.setDefaultDrawerLayout();
+        TwitterActivity.this.setDefaultNavigationView();
+        TwitterActivity.this.setDefaultToolbar();
+        TwitterActivity.this.setDefaultDistance();
+
+    }
+
+    // sub method ----------------------------------------------------------------------------------sub method
+
+    //setDefaultView()--------------------------------------------------
+
+    private void setDefaultStatusBar(){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            Window window = TwitterActivity.super.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.BLACK);
+
+        }
+
+    }
+
+    private void setDefaultAppBarLayout(){
+
+        //init
+        AppBarLayout appBarLayout = (AppBarLayout) TwitterActivity.super.findViewById(R.id.app_bar_layout);
+
+        //main
+        appBarLayout.setExpanded(true, true);
+
+    }
+
+    private void setDefaultDrawerLayout(){
+
+        //init
+        Toolbar toolbar = (Toolbar) TwitterActivity.super.findViewById(R.id.toolbar);
+        DrawerLayout drawerLayout = (DrawerLayout) TwitterActivity.super.findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(TwitterActivity.this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
+            }
+
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+
+            }
+
+        };
+
+        //main
+        TwitterActivity.super.setSupportActionBar(toolbar);
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+    }
+
+    private void setDefaultNavigationView(){
+
+        //init
+        NavigationView navigationView = (NavigationView) TwitterActivity.super.findViewById(R.id.nav_view);
+
+        //main
+        navigationView.setNavigationItemSelectedListener(TwitterActivity.this);
+        navigationView.setItemIconTintList(null);
+
+    }
+
+    private void setDefaultToolbar(){
 
         //init
         Toolbar toolbar = (Toolbar) TwitterActivity.super.findViewById(R.id.toolbar);
 
-        //before
-
-
         //main
-        toolbar.setSubtitle(R.string.default_subTitle_activity_dash_board);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+
+            }
+        });
+
         toolbar.setLogo(R.drawable.ic_dashboard_twitter);
-
-        //after
-
+        toolbar.setSubtitle(R.string.default_subTitle_activity_dash_board);
 
     }
 
-    private void initTextDistance(){
+    private void setDefaultDistance(){
 
         //init
         TextView textView = (TextView) TwitterActivity.super.findViewById(R.id.text_distance);
 
-        //before
-
         //main
-        if (placeNearest != null){
-
-            Location location = new Location("placeNearly");
-            location.setLatitude(placeNearest.getLat());
-            location.setLongitude(placeNearest.getLng());
-
-            textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
-
-        }
-        else{
-
-            textView.setText("NO DISTANCE TO SHOW");
-
-        }
-
-        //after
-
+        textView.setText("NO DISTANCE TO SHOW");
 
     }
 
     //===========================================================================================================//
-    //  LOCATION CHANGE                                                                             LOCATION CHANGE
+    //  PREPARE TO START                                                                            PREPARE TO START
     //===========================================================================================================//
-    //  method  ------------------------------------------------------------------------------------****method****
 
-    private void changeTextDistance(){
+    private void prepareToStart(){
+
+        //id fragment
+        TwitterActivity.this.result = true;
+        TwitterActivity.this.caseFail = TwitterActivity.EVERYTHING_OK;
+        TwitterActivity.this.call = null;
+        TwitterActivity.this.callResponse = false;
+        //placenearest
+        TwitterActivity.this.url = null;
+        TwitterActivity.this.items = new ArrayList<Parcelable>();
+
+        TwitterActivity.this.alertDialog = null;
+
+    }
+
+    //===========================================================================================================//
+    //  START                                                                                       START
+    //===========================================================================================================//
+
+    private void start(){
+
+        if (TwitterActivity.this.caseFail == TwitterActivity.EVERYTHING_OK){
+
+            TwitterActivity.this.openWaitingFragment();
+
+            TwitterActivity.this.openFragmentTask = new TwitterActivity.OpenFragmentTask();
+
+            TwitterActivity.this.openFragmentTask.execute();
+
+        }
+
+    }
+
+    // sub method ----------------------------------------------------------------------------------sub method
+    // waiting process------------------------------------------------------------------------------
+
+    private void openWaitingFragment(){
 
         //init
-        TextView textView = (TextView) TwitterActivity.super.findViewById(R.id.text_distance);
-
-        //before
+        WaitingFragment waitingFragment = new WaitingFragment();
 
         //main
-        if (placeNearest != null){
-
-            Location location = new Location("placeNearly");
-            location.setLatitude(placeNearest.getLat());
-            location.setLongitude(placeNearest.getLng());
-
-            textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
-
-        }
-        else{
-
-            textView.setText("NO DISTANCE TO SHOW");
-
-        }
-
-        //after
-
+        TwitterActivity.super.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, waitingFragment, waitingFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
     }
 
-    //===========================================================================================================//
-    //  START FRAGMENT                                                                              START FRAGMENT
-    //===========================================================================================================//
-    //  method  ------------------------------------------------------------------------------------****method****
+    // prepare process------------------------------------------------------------------------------
+
+    private class OpenFragmentTask extends AsyncTask<Void, Void, Void> {
+
+        protected Void doInBackground(Void... voids) {
+
+            //prepare
+            TwitterActivity.this.checkUserLocation();
+            TwitterActivity.this.searchPlaceNearest();
+
+            switch (TwitterActivity.this.idFragment){
+
+                case TwitterActivity.LAST_TWITTER_FRAGMENT :
+
+                    TwitterActivity.this.getURLLastTwitter();
+                    TwitterActivity.this.getItemsLastTwitter();
+
+                    break;
+
+            }
+
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+
+
+
+        }
+
+        protected void onPostExecute(Void result) {
+
+            //main
+            TwitterActivity.this.openFragment();
+
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+    }
+
+    private void checkUserLocation(){
+
+        if (UserLocationManager.isReady() == false){
+
+            TwitterActivity.this.result = false;
+            TwitterActivity.this.caseFail = TwitterActivity.DO_NOT_HAVE_LOCATION;
+
+        }
+
+    }
 
     private void searchPlaceNearest(){
 
         //init
         final Location userLocation = UserLocationManager.getLocation();
-        final CountDownLatch countDownLatch = new CountDownLatch(1);
-        final Call call = TwitterActivity.super.api.getPlaces(userLocation.getLatitude()+ TwitterActivity.DISTANCE_AROUND_USER,
+        TwitterActivity.this.countDownLatch = new CountDownLatch(1);
+        TwitterActivity.this.call = TwitterActivity.this.api.getPlaces(userLocation.getLatitude()+ TwitterActivity.DISTANCE_AROUND_USER,
                 userLocation.getLongitude() + TwitterActivity.DISTANCE_AROUND_USER,
                 userLocation.getLatitude() - TwitterActivity.DISTANCE_AROUND_USER,
                 userLocation.getLongitude() - TwitterActivity.DISTANCE_AROUND_USER,
                 10);
+        TwitterActivity.this.callResponse = false;
 
         //before
+        if (TwitterActivity.this.result == false){
+
+            return;
+
+        }
+
         if (TwitterActivity.this.placeNearest != null){
 
             return;
 
         }
 
-        if (MyConnect.isInternetAvailable() == false){
+        if (Connection.isInternetAvailable() == false){
 
-            TwitterActivity.super.result = false;
-            TwitterActivity.super.caseFail = TwitterActivity.super.INTERNET_NOT_AVAILABLE;
+            TwitterActivity.this.result = false;
+            TwitterActivity.this.caseFail = TwitterActivity.INTERNET_NOT_AVAILABLE;
 
             return;
 
         }
 
         //main
-        call.enqueue(new Callback<ArrayList<Place>>() {
+        TwitterActivity.this.call.enqueue(new Callback<ArrayList<Place>>() {
 
             private ArrayList<Place> placesNearlyList;
             private Place placeMin;
@@ -490,11 +658,10 @@ public class TwitterActivity
 
                 this.selectItem = 0;
 
-                //before
-
-
                 //main
                 if (response.isSuccess()) {
+
+                    TwitterActivity.this.callResponse = true;
 
                     for (Place place : response.body()) {
 
@@ -535,14 +702,19 @@ public class TwitterActivity
                 }
                 else{
 
-                    TwitterActivity.super.caseFail = TwitterActivity.CAN_NOT_CONNECT_TO_SERVER;
+                    TwitterActivity.this.callResponse = true;
+                    TwitterActivity.this.result = false;
+                    TwitterActivity.this.caseFail = TwitterActivity.CAN_NOT_CONNECT_TO_SERVER;
 
                 }
 
                 //after
                 if (this.placesNearlyList.size() == 0){
 
-                    TwitterActivity.this.placeNearest = null;
+                    TwitterActivity.this.placeNearest = this.placeMin;
+                    TwitterActivity.this.result = false;
+                    TwitterActivity.this.caseFail = TwitterActivity.NO_DATA;
+                    TwitterActivity.this.countDownLatch.countDown();
 
                 }
                 else{
@@ -551,7 +723,7 @@ public class TwitterActivity
 
                         TwitterActivity.this.placeNearest = this.placeMin;
 
-                        countDownLatch.countDown();
+                        TwitterActivity.this.countDownLatch.countDown();
 
                     }
                     else{
@@ -590,19 +762,37 @@ public class TwitterActivity
 
                                 TwitterActivity.this.placeNearest = placesNearlyList.get(selectItem);
 
-                                countDownLatch.countDown();
+                                TwitterActivity.this.countDownLatch.countDown();
 
                                 dialog.dismiss();
+                                TwitterActivity.this.alertDialog = null;
 
                             }
 
                         });
 
-                        AlertDialog alert = builder.create();
-                        alert.setCanceledOnTouchOutside(false);
-                        alert.show();
+                        TwitterActivity.this.alertDialog = builder.create();
+                        TwitterActivity.this.alertDialog.setCanceledOnTouchOutside(false);
+                        TwitterActivity.this.alertDialog.setOnKeyListener(new Dialog.OnKeyListener() {
 
-                        alert.getListView().setItemChecked(this.selectItem, true);
+                            @Override
+                            public boolean onKey(DialogInterface arg0, int keyCode, KeyEvent event) {
+
+                                // TODO Auto-generated method stub
+                                if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                                    TwitterActivity.this.alertDialog.dismiss();
+                                    TwitterActivity.this.alertDialog = null;
+                                    TwitterActivity.this.close();
+
+                                }
+                                return true;
+                            }
+                        });
+
+                        TwitterActivity.this.alertDialog.show();
+
+                        TwitterActivity.this.alertDialog.getListView().setItemChecked(selectItem, true);
 
                     }
 
@@ -611,87 +801,114 @@ public class TwitterActivity
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("GetPlace", t.toString());
+
             }
 
         });
 
+        Thread thread = new Thread(){
+
+            @Override
+            public void run(){
+
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (TwitterActivity.this.callResponse == false && TwitterActivity.this.call != null){
+
+                    TwitterActivity.this.call.cancel();
+                    TwitterActivity.this.countDownLatch.countDown();
+
+                }
+
+            }
+
+        };
+
+        thread.start();
+
         try {
-            countDownLatch.await();
+            TwitterActivity.this.countDownLatch.await();
+            TwitterActivity.this.countDownLatch = null;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        //after
-        if (TwitterActivity.this.placeNearest != null){
+        if (TwitterActivity.this.callResponse == false){
 
-            DashboardRecentPlaceManager.addPlace(TwitterActivity.this.placeNearest);
+            if (Connection.isInternetAvailable() == false){
 
-        }
+                TwitterActivity.this.result = false;
+                TwitterActivity.this.caseFail = TwitterActivity.INTERNET_NOT_AVAILABLE;
 
-    }
+                return;
 
-    private void searchURL(){
+            }
+            else{
 
-        //init
+                TwitterActivity.this.result = false;
+                TwitterActivity.this.caseFail = TwitterActivity.CAN_NOT_CONNECT_TO_SERVER;
 
-
-        //before
-
-
-        //main
-        if (TwitterActivity.this.placeNearest != null){
-
-            TwitterActivity.this.url = "http://172.29.33.45:11090/data/?tabid=0&type=twitter&vloc=" + TwitterActivity.this.placeNearest.getVloc() + "&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10";
-
-        }
-        else{
-
-            TwitterActivity.this.url = null;
-
-            TwitterActivity.super.result = false;
-
-            if (TwitterActivity.super.caseFail == TwitterActivity.EVERYTHING_OK){
-
-                TwitterActivity.super.caseFail = TwitterActivity.NO_DATA;
+                return;
 
             }
 
         }
 
         //after
-
+        TwitterActivity.this.call = null;
+        TwitterActivity.this.callResponse = false;
 
     }
 
-    private void searchItems(){
+    //url
 
-        //init
+    //items
 
+    // last twitter process------------------------------------------------
+
+    private void getURLLastTwitter(){
 
         //before
-        if (TwitterActivity.this.url == null){
-
-            return;
-
-        }
-
-        if (MyConnect.isInternetAvailable() == false){
-
-            TwitterActivity.super.result = false;
-            TwitterActivity.super.caseFail = TwitterActivity.INTERNET_NOT_AVAILABLE;
+        if (TwitterActivity.this.result == false){
 
             return;
 
         }
 
         //main
-        JSONObject jsonObject = MyConnect.getJSON(TwitterActivity.this.url);
+        TwitterActivity.this.url = "http://172.29.33.45:11090/data/?tabid=0&type=twitter&vloc=" + TwitterActivity.this.placeNearest.getVloc() + "&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10";
+
+    }
+
+    private void getItemsLastTwitter(){
+
+        //before
+        if (TwitterActivity.this.result == false){
+
+            return;
+
+        }
+
+        if (Connection.isInternetAvailable() == false){
+
+            TwitterActivity.this.result = false;
+            TwitterActivity.this.caseFail = TwitterActivity.INTERNET_NOT_AVAILABLE;
+
+            return;
+
+        }
+
+        //main
+        JSONObject jsonObject = Connection.getJSON(TwitterActivity.this.url);
 
         if (jsonObject.length() == 0){
 
-            TwitterActivity.super.result = false;
-            TwitterActivity.super.caseFail = TwitterActivity.CAN_NOT_CONNECT_TO_SERVER;
+            TwitterActivity.this.result = false;
+            TwitterActivity.this.caseFail = TwitterActivity.CAN_NOT_CONNECT_TO_SERVER;
 
             return;
 
@@ -711,8 +928,8 @@ public class TwitterActivity
 
         if (jsonArray.length() == 0){
 
-            TwitterActivity.super.result = false;
-            TwitterActivity.super.caseFail = TwitterActivity.NO_DATA;
+            TwitterActivity.this.result = false;
+            TwitterActivity.this.caseFail = TwitterActivity.NO_DATA;
 
             return;
 
@@ -727,11 +944,7 @@ public class TwitterActivity
 
                 JSONObject object = jsonArray.getJSONObject(index);
 
-                if (TwitterActivity.this.idFragment == TwitterActivity.LAST_TWEETS_FRAGMENT) {
-
-                    TwitterActivity.this.items.add(new LastTweetsListFragment.LastTweetsItem(String.valueOf(object.get("tweet_screen_name")), MyDateConvert.convertTimeStampToDate(String.valueOf(object.get("tweet_timestamp")), "EEE, dd MMM yyyy HH:mm:ss"), String.valueOf(object.get("tweet_text")), R.drawable.ic_dashboard_twitter));
-
-                }
+                TwitterActivity.this.items.add(new LastTweetsListFragment.LastTweetsItem(String.valueOf(object.get("tweet_screen_name")), DateConvert.convertTimeStampToDate(String.valueOf(object.get("tweet_timestamp")), "EEE, dd MMM yyyy HH:mm:ss"), String.valueOf(object.get("tweet_text")), R.drawable.ic_dashboard_twitter));
 
 
             } catch (JSONException e) {
@@ -745,105 +958,209 @@ public class TwitterActivity
 
         }
 
-        //after
-
     }
 
-    private void changeViewForFailToOpenFragment(){
+    // open fragment process------------------------------------------------------------------------
+
+    private void openFragment(){
 
         //init
+        DoNotHaveLocationFragment doNotHaveLocationFragment = new DoNotHaveLocationFragment();
+        InternetNotAvailableFragment internetNotAvailableFragment = new InternetNotAvailableFragment();
+        CanNotConnectedToServerFragment notConnectingToServerFragment = new CanNotConnectedToServerFragment();
+        NoDataFragment noDataFragment = new NoDataFragment();
 
-
-        //before
-
-
-        //main
-        TwitterActivity.super.handler.post(new Runnable() {
-            @Override
-            public void run() {
-
-                //init
-                Toolbar toolbar = (Toolbar) TwitterActivity.super.findViewById(R.id.toolbar);
-                TextView textView = (TextView) TwitterActivity.super.findViewById(R.id.text_distance);
-
-                Location location = new Location("placeNearly");
-                location.setLatitude(TwitterActivity.this.placeNearest.getLat());
-                location.setLongitude(TwitterActivity.this.placeNearest.getLng());
-
-                //before
-
-
-                //main
-                if (TwitterActivity.this.placeNearest == null){
-
-                    toolbar.setSubtitle(R.string.default_subTitle_activity_dash_board);
-                    textView.setText("NO DISTANCE TO SHOW");
-
-                }
-                else{
-
-
-                    toolbar.setSubtitle(TwitterActivity.this.placeNearest.getName());
-                    textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
-
-                }
-
-                //after
-
-            }
-
-        });
-
-        //after
-
-    }
-
-    private void changeViewForSuccessToOpenFragment(){
-
-        //init
         LastTweetsListFragment lastTweetsListFragment = new LastTweetsListFragment();
 
-        //before
-
-
         //main
-        TwitterActivity.super.handler.post(new Runnable() {
-            @Override
-            public void run() {
+        if (TwitterActivity.this.result == false) {
 
-                //init
-                Toolbar toolbar = (Toolbar) TwitterActivity.super.findViewById(R.id.toolbar);
-                TextView textView = (TextView) TwitterActivity.super.findViewById(R.id.text_distance);
+            Toolbar toolbar = (Toolbar) TwitterActivity.super.findViewById(R.id.toolbar);
+            TextView textView = (TextView) TwitterActivity.super.findViewById(R.id.text_distance);
+
+            if (TwitterActivity.this.placeNearest == null){
+
+                toolbar.setSubtitle(R.string.default_subTitle_activity_dash_board);
+                textView.setText("NO DISTANCE TO SHOW");
+
+            }
+            else{
 
                 Location location = new Location("placeNearly");
                 location.setLatitude(TwitterActivity.this.placeNearest.getLat());
                 location.setLongitude(TwitterActivity.this.placeNearest.getLng());
 
-                //before
-
-
-                //main
                 toolbar.setSubtitle(TwitterActivity.this.placeNearest.getName());
                 textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
 
-                //after
+            }
+
+            if (TwitterActivity.this.caseFail == TwitterActivity.DO_NOT_HAVE_LOCATION){
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_main, doNotHaveLocationFragment, doNotHaveLocationFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+                Thread thread = new Thread() {
+
+                    @Override
+                    public void run() {
+
+                        try {
+                            Thread.sleep(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        TwitterActivity.this.start();
+
+                    }
+
+                };
+
+                TwitterActivity.this.prepareToStart();
+                thread.start();
 
             }
 
-        });
+            if (TwitterActivity.this.caseFail == TwitterActivity.INTERNET_NOT_AVAILABLE) {
 
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_main, internetNotAvailableFragment, internetNotAvailableFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
-        if (TwitterActivity.super.idFragment == TwitterActivity.LAST_TWEETS_FRAGMENT){
+                Thread thread = new Thread() {
 
-            Bundle bundle = new Bundle();
-            bundle.putString("url", TwitterActivity.this.url);
-            bundle.putParcelableArrayList("items", TwitterActivity.this.items);
-            lastTweetsListFragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_main, lastTweetsListFragment, lastTweetsListFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+                    @Override
+                    public void run() {
+
+                        try {
+                            Thread.sleep(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        TwitterActivity.this.prepareToStart();
+                        TwitterActivity.this.start();
+
+                    }
+
+                };
+
+                thread.start();
+
+            }
+
+            if (TwitterActivity.this.caseFail == TwitterActivity.CAN_NOT_CONNECT_TO_SERVER) {
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_main, notConnectingToServerFragment, notConnectingToServerFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+                Thread thread = new Thread() {
+
+                    @Override
+                    public void run() {
+
+                        try {
+                            Thread.sleep(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        TwitterActivity.this.start();
+
+                    }
+
+                };
+
+                TwitterActivity.this.prepareToStart();
+                thread.start();
+
+            }
+
+            if (TwitterActivity.this.caseFail == TwitterActivity.NO_DATA) {
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_main, noDataFragment, noDataFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+            }
+
+            TwitterActivity.this.caseFail = TwitterActivity.END;
+
+        }
+        else{
+
+            Toolbar toolbar = (Toolbar) TwitterActivity.super.findViewById(R.id.toolbar);
+            TextView textView = (TextView) TwitterActivity.super.findViewById(R.id.text_distance);
+
+            Location location = new Location("placeNearly");
+            location.setLatitude(TwitterActivity.this.placeNearest.getLat());
+            location.setLongitude(TwitterActivity.this.placeNearest.getLng());
+
+            toolbar.setSubtitle(TwitterActivity.this.placeNearest.getName());
+            textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+
+            switch (TwitterActivity.this.idFragment){
+
+                case TwitterActivity.LAST_TWITTER_FRAGMENT:
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("url", TwitterActivity.this.url);
+                    bundle.putParcelableArrayList("items", TwitterActivity.this.items);
+                    lastTweetsListFragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, lastTweetsListFragment, lastTweetsListFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+
+                    break;
+
+            }
+
+            TwitterActivity.this.caseFail = TwitterActivity.END;
 
         }
 
-        //after
+    }
+
+    //===========================================================================================================//
+    //  CLOSE                                                                                       CLOSE
+    //===========================================================================================================//
+
+    private void close(){
+
+        TwitterActivity.super.finish();
+
+        TwitterActivity.super.overridePendingTransition(R.anim.nothing, R.anim.slide_out_to_right);
+
+    }
+
+    //===========================================================================================================//
+    //  CLASS GPSBroadcastReceiver                                                                  CLASS GPSBroadcastReceiver
+    //===========================================================================================================//
+
+    private class GPSBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            //init
+            Bundle b = intent.getExtras();
+
+            //before
+            UserLocationManager.setLatitude(b.getDouble("latitude", 0));
+            UserLocationManager.setLongitude(b.getDouble("longitude", 0));
+
+            //main
+            TextView textView = (TextView) TwitterActivity.super.findViewById(R.id.text_distance);
+
+            if (TwitterActivity.this.placeNearest != null){
+
+                Location location = new Location("placeNearly");
+                location.setLatitude(TwitterActivity.this.placeNearest.getLat());
+                location.setLongitude(TwitterActivity.this.placeNearest.getLng());
+
+                textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+
+            }
+            else{
+
+                textView.setText("NO DISTANCE TO SHOW");
+
+            }
+
+        }
 
     }
 
@@ -851,5 +1168,6 @@ public class TwitterActivity
     //  NOTE                                                                                        NOTE
     //===========================================================================================================//
 
+    //countdownlacth
 
 }

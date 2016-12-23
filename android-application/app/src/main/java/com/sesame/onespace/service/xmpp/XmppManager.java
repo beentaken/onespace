@@ -47,6 +47,9 @@ import java.util.Map;
 /**
  * Created by chongos on 10/22/15 AD.
  */
+
+// Modified code by Thianchai on 29/10/16
+
 public class XmppManager {
 
     // my first measuring showed that the disconnect in fact does not hang

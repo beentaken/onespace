@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="@string/title_activity_tweets">
+        <menu>
+            <item
+                android:id="@+id/nav_flickr_list"
+                android:icon="@drawable/ic_dashboard_flickr"
+                android:title="Flickr" />
+            <item
+                android:id="@+id/nav_place_nearest"
+                android:icon="@drawable/ic_dashboard_place_nearest"
+                android:title="The place nearest" />
+            <item
+                android:id="@+id/nav_recently"
+                android:icon="@drawable/ic_dashboard_place_recently"
+                android:title="The place recently" />
+            <item
+                android:id="@+id/nav_backToMainMenu"
+                android:icon="@drawable/ic_arrow_back"
+                android:title="Back to main menu" />
+        </menu>
+    </item>
+
+</menu>

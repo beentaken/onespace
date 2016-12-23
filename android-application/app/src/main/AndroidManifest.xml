@@ -65,7 +65,7 @@
 
         <!-- Thianchai (Dashboard) -->
         <activity
-            android:name=".activities.dashboardActivity.TweetsListActivity"
+            android:name=".activities.dashboardActivities.oldDashboardActivities.TweetsListActivity"
             android:label="@string/title_activity_tweets"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
@@ -73,40 +73,52 @@
             android:label="@string/title_activity_tweets"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivity.YoutubeListActivity"
+            android:name=".activities.dashboardActivities.oldDashboardActivities.YoutubeListActivity"
             android:label="@string/title_activity_youtube"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivity.FlickrListActivity"
+            android:name=".activities.dashboardActivities.YoutubeActivity"
+            android:label="@string/title_activity_youtube"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
+            android:name=".activities.dashboardActivities.oldDashboardActivities.FlickrListActivity"
             android:label="@string/title_activity_flickr"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivity.InstagramListActivity"
+            android:name=".activities.dashboardActivities.FlickrActivity"
+            android:label="@string/title_activity_flickr"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
+            android:name=".activities.dashboardActivities.oldDashboardActivities.InstagramListActivity"
             android:label="@string/title_activity_instagram"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivity.weatherActivity.WeatherNEAListActivity"
+            android:name=".activities.dashboardActivities.InstagramActivity"
+            android:label="@string/title_activity_instagram"
+            android:theme="@style/AppTheme.NoTitleBar" />
+        <activity
+            android:name=".activities.dashboardActivities.oldDashboardActivities.WeatherNEAListActivity"
             android:label="@string/title_activity_weatherNEA"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivity.weatherActivity.WeatherGraphListActivity"
+            android:name=".activities.dashboardActivities.oldDashboardActivities.WeatherGraphListActivity"
             android:label="@string/title_activity_weatherGraph"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivity.CarparksLTAActivity"
+            android:name=".activities.dashboardActivities.oldDashboardActivities.CarparksLTAActivity"
             android:label="@string/title_activity_carparksLTA"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivity.BusInfoLTAActivity"
+            android:name=".activities.dashboardActivities.oldDashboardActivities.BusInfoLTAActivity"
             android:label="@string/title_activity_busInfoLTA"
             android:theme="@style/AppTheme.NoTitleBar" />
 
         <!-- **** -->
 
-        <!-- Thianchai (QuestionMessageDialogActivity) -->
+        <!-- Thianchai (QAMessageDialogActivity) -->
 
         <activity
-            android:name=".activities.dialogActivities.QuestionMessageDialogActivity"
+            android:name=".activities.dialogActivities.QAMessageDialogActivity"
             android:label=""
             android:excludeFromRecents="true"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>
