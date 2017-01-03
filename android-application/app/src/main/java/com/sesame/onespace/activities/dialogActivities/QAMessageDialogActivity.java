@@ -15,7 +15,6 @@ import android.widget.TextView;;
 
 import com.sesame.onespace.R;
 import com.sesame.onespace.databases.qaMessageDatabases.QAMessageHelper;
-import com.sesame.onespace.models.activity.SaveInstanceStateParcelable;
 import com.sesame.onespace.models.chat.ChatMessage;
 import com.sesame.onespace.models.chat.QueryMessage;
 import com.sesame.onespace.models.qaMessage.QAMessage;
@@ -38,14 +37,10 @@ public final class QAMessageDialogActivity
     //  ATTRIBUTE                                                                                   ATTRIBUTE
     //===========================================================================================================//
 
-    // State -------------------------------------------------------
-
-    private Boolean bRemoveQAMessage;
-
     // QAMessage ---------------------------------------------------
     private QAMessage qaMessage;
 
-    private int id;
+    private Integer id;
     private String msgFrom;
     private String questionID;
     private String questionStr;
@@ -72,9 +67,8 @@ public final class QAMessageDialogActivity
     protected void onCreate(Bundle savedInstanceState) {
         QAMessageDialogActivity.super.onCreate(savedInstanceState);
 
-        QAMessageDialogActivity.super.setContentView(R.layout.activity_dialog_question_message);
-        QAMessageDialogActivity.this.initDefaultValue(savedInstanceState);
-        QAMessageDialogActivity.this.removeQAMessage();
+        QAMessageDialogActivity.super.setContentView(R.layout.activity_dialog_qa);
+        QAMessageDialogActivity.this.initDefaultValue();
 
     }
 
@@ -99,39 +93,12 @@ public final class QAMessageDialogActivity
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState){
-
-        outState.putParcelable("SIS", new QAMessageDialogActivity.QAMessageSISParcelable(QAMessageDialogActivity.this.bRemoveQAMessage));
-        QAMessageDialogActivity.super.onSaveInstanceState(outState);
-
-    }
-
     //===========================================================================================================//
     //  ON CREATE                                                                                   ON CREATE
     //===========================================================================================================//
     //  method  ------------------------------------------------------------------------------------****method****
 
-    private void initDefaultValue(Bundle savedInstanceState){
-
-        QAMessageDialogActivity.QAMessageSISParcelable qaMessageSISParcelable = null;
-
-        if (savedInstanceState != null){
-
-            qaMessageSISParcelable = savedInstanceState.getParcelable("SIS");
-
-        }
-
-        if (savedInstanceState != null){
-
-            QAMessageDialogActivity.this.bRemoveQAMessage = qaMessageSISParcelable.getbRemoveQAMessage();
-
-        }
-        else{
-
-            QAMessageDialogActivity.this.bRemoveQAMessage = false;
-
-        }
+    private void initDefaultValue(){
 
         Intent intent = getIntent();
         QAMessageDialogActivity.this.id = intent.getIntExtra("id", 0);
@@ -149,6 +116,8 @@ public final class QAMessageDialogActivity
                                                                QAMessageDialogActivity.this.answerIdList,
                                                                QAMessageDialogActivity.this.answerStrList,
                                                                QAMessageDialogActivity.this.date);
+
+        //
 
         QAMessageDialogActivity.this.alertDialog = null;
 
@@ -181,19 +150,6 @@ public final class QAMessageDialogActivity
 
     }
 
-    private void removeQAMessage(){
-
-        if (QAMessageDialogActivity.this.bRemoveQAMessage == false){
-
-            QAMessageHelper qaMessageHelper = new QAMessageHelper(QAMessageDialogActivity.this.getApplicationContext());
-            qaMessageHelper.deleteQAMessage(QAMessageDialogActivity.this.qaMessage);
-
-            QAMessageDialogActivity.this.bRemoveQAMessage = true;
-
-        }
-
-    }
-
     //===========================================================================================================//
     //  ON START                                                                                    ON START
     //===========================================================================================================//
@@ -203,8 +159,9 @@ public final class QAMessageDialogActivity
 
         QAMessageDialogActivity.this.select = 0;
 
-        QAAlertDialogBuilder qaAlertDialogBuilder = new QAAlertDialogBuilder(QAMessageDialogActivity.this, R.style.MyAlertDialogStyle2);
+        QAAlertDialogBuilder qaAlertDialogBuilder = new QAAlertDialogBuilder(QAMessageDialogActivity.this, R.style.QAMessageDialogStyle);
 
+        qaAlertDialogBuilder.setSender(QAMessageDialogActivity.this.msgFrom.split("@")[0] + " send message.");
         qaAlertDialogBuilder.setTitle(QAMessageDialogActivity.this.questionStr);
         qaAlertDialogBuilder.setIcon(R.mipmap.ic_launcher_trim);
 
@@ -218,7 +175,7 @@ public final class QAMessageDialogActivity
 
         });
 
-        qaAlertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        qaAlertDialogBuilder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int id) {
@@ -259,6 +216,8 @@ public final class QAMessageDialogActivity
                     e.printStackTrace();
                 }
 
+                QAMessageDialogActivity.this.removeQAMessage();
+
                 QAMessageDialogActivity.super.finish();
                 QAMessageDialogActivity.this.alertDialog.dismiss();
                 QAMessageDialogActivity.this.alertDialog = null;
@@ -267,10 +226,25 @@ public final class QAMessageDialogActivity
 
         });
 
-        qaAlertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        qaAlertDialogBuilder.setNeutralButton("Later", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int id) {
+
+                QAMessageDialogActivity.super.finish();
+                QAMessageDialogActivity.this.alertDialog.dismiss();
+                QAMessageDialogActivity.this.alertDialog = null;
+
+            }
+
+        });
+
+        qaAlertDialogBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+
+                QAMessageDialogActivity.this.removeQAMessage();
 
                 QAMessageDialogActivity.super.finish();
                 QAMessageDialogActivity.this.alertDialog.dismiss();
@@ -318,68 +292,65 @@ public final class QAMessageDialogActivity
 
     //  private class  -----------------------------------------------------------------------------****private class****
 
-    private final class QAAlertDialogBuilder extends AlertDialog.Builder {
+    private final class QAAlertDialogBuilder
+            extends AlertDialog.Builder {
 
-        private final Context context;
-        private TextView title;
+        private Context context;
         private ImageView icon;
+        private TextView sender;
+        private TextView title;
 
         public QAAlertDialogBuilder(Context context, int theme) {
             super(context, theme);
-            this.context = context;
 
-            View customTitle = View.inflate(this.context, R.layout.alert_dialog_question_message_title, null);
-            this.title = (TextView) customTitle.findViewById(R.id.alertTitle);
-            this.icon = (ImageView) customTitle.findViewById(R.id.icon);
+            QAAlertDialogBuilder.this.context = context;
+
+            View customTitle = View.inflate(QAAlertDialogBuilder.this.context, R.layout.alert_dialog_qa_title, null);
+            QAAlertDialogBuilder.this.icon = (ImageView) customTitle.findViewById(R.id.icon_onespace);
+            QAAlertDialogBuilder.this.sender = (TextView) customTitle.findViewById(R.id.text_sender_name);
+            QAAlertDialogBuilder.this.title = (TextView) customTitle.findViewById(R.id.text_title_message);
             setCustomTitle(customTitle);
 
         }
 
         @Override
         public QAAlertDialogBuilder setTitle(int textResId) {
-            this.title.setText(textResId);
-            return this;
+            QAAlertDialogBuilder.this.title.setText(textResId);
+            return QAAlertDialogBuilder.this;
         }
         @Override
-        public QAAlertDialogBuilder setTitle(CharSequence text) {
-            this.title.setText(text);
-            return this;
+        public QAAlertDialogBuilder setTitle(CharSequence title) {
+            QAAlertDialogBuilder.this.title.setText(title);
+            return QAAlertDialogBuilder.this;
+        }
+
+        public QAAlertDialogBuilder setSender(CharSequence sender) {
+            QAAlertDialogBuilder.this.sender.setText(sender);
+            return QAAlertDialogBuilder.this;
         }
 
         @Override
         public QAAlertDialogBuilder setIcon(int drawableResId) {
-            this.icon.setImageResource(drawableResId);
-            return this;
+            QAAlertDialogBuilder.this.icon.setImageResource(drawableResId);
+            return QAAlertDialogBuilder.this;
         }
 
         @Override
         public QAAlertDialogBuilder setIcon(Drawable icon) {
-            this.icon.setImageDrawable(icon);
-            return this;
+            QAAlertDialogBuilder.this.icon.setImageDrawable(icon);
+            return QAAlertDialogBuilder.this;
         }
 
     }
 
     //===========================================================================================================//
-    //  ON SAVE INSTANCE STATE                                                                      ON SAVE INSTANCE STATE
+    //  OTHER METHOD                                                                                OTHER METHOD
     //===========================================================================================================//
-    //  private class  -----------------------------------------------------------------------------****private class****
 
-    private final class QAMessageSISParcelable extends SaveInstanceStateParcelable {
+    private void removeQAMessage(){
 
-        private Boolean bRemoveQAMessage;
-
-        public QAMessageSISParcelable(Boolean bRemoveQAMessage){
-
-            QAMessageSISParcelable.this.bRemoveQAMessage = bRemoveQAMessage;
-
-        }
-
-        public Boolean getbRemoveQAMessage(){
-
-            return QAMessageSISParcelable.this.bRemoveQAMessage;
-
-        }
+        QAMessageHelper qaMessageHelper = new QAMessageHelper(QAMessageDialogActivity.this.getApplicationContext());
+        qaMessageHelper.deleteQAMessage(QAMessageDialogActivity.this.qaMessage);
 
     }
 

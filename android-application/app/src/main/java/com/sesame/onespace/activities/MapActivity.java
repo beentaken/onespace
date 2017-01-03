@@ -7,8 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -77,7 +75,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.nlopez.smartlocation.OnReverseGeocodingListener;
 import io.nlopez.smartlocation.SmartLocation;
 import retrofit.GsonConverterFactory;
 import retrofit.RxJavaCallAdapterFactory;
@@ -90,9 +87,13 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 
 // Modified code by Thianchai on 11/10/16
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnCameraChangeListener,
-        ClusterManager.OnClusterItemClickListener, SlidingUpPanelLayout.PanelSlideListener,
-        View.OnClickListener{
+public class MapActivity
+        extends AppCompatActivity
+        implements OnMapReadyCallback,
+                   GoogleMap.OnCameraChangeListener,
+                   ClusterManager.OnClusterItemClickListener,
+                   SlidingUpPanelLayout.PanelSlideListener,
+                   View.OnClickListener {
 
     //Thianchai (I delete OnLocationUpdatedListener) : I think it is not necessary to use it.
     //OnLocationUpdatedListener
@@ -241,9 +242,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             super.onBackPressed();
     }
 
+    //Thianchai (I add this)
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause(){
+        super.onPause();
 
         //Thianchai (I add this)
         mWalkerLoader.stopThread();
@@ -257,6 +259,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         unregisterReceiver(this.broadcastReceiver);
         //**
 
+    }
+    //**
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
 
         //Thianchai (I delete this)
@@ -265,28 +274,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //              .stop();
         //**
 
-//        //Thianchai (I add this)
-//        SmartLocation.with(this).location().stop();
-//
-//        if(Geocoder.isPresent())
-//            SmartLocation.with(this).geocoding().stop();
-//        //**
-
         mPreferencesManager.saveFilterCategoryStates(mRootFilterMarkerNode);
-        mPreferencesManager.saveLocation(new LatLng(UserLocationManager.getLatitude(), UserLocationManager.getLongitude()));
+        mPreferencesManager.saveLocation(new LatLng(UserLocationManager.getLatitude(), UserLocationManager.getLongitude()));  //Thianchai (I modified this)
     }
 
     @Override
     protected void onDestroy() {
         MapMarkerLoader.Bus.getInstance().unregister(this);
         super.onDestroy();
-
-        //Thianchai (I add this)
-//        SmartLocation.with(this).location().stop();
-//
-//        if(Geocoder.isPresent())
-//            SmartLocation.with(this).geocoding().stop();
-        //**
     }
 
     //===========================================================================================================//
@@ -479,7 +474,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map.setMyLocationEnabled(true);
         map.getUiSettings().setMyLocationButtonEnabled(false);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(UserLocationManager.getLatitude(), UserLocationManager.getLongitude()), 11f));
+                new LatLng(UserLocationManager.getLatitude(), UserLocationManager.getLongitude()), 11f));  //Thianchai (I modified this)
     }
 
     //Thianchai (I delete this)
@@ -518,7 +513,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 break;
             case R.id.fab_current_location:
                 mOneSpaceMap.animateCamera(CameraUpdateFactory.newLatLng(
-                        new LatLng(UserLocationManager.getLatitude(), UserLocationManager.getLongitude())));
+                        new LatLng(UserLocationManager.getLatitude(), UserLocationManager.getLongitude())));  //Thianchai (I modified this)
                 break;
         }
     }
@@ -605,7 +600,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void collapseMap() {
         if (mOneSpaceMap != null) {
-            mOneSpaceMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(UserLocationManager.getLatitude(), UserLocationManager.getLongitude()), 18f), 1000, null);
+            mOneSpaceMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(UserLocationManager.getLatitude(), UserLocationManager.getLongitude()), 18f), 1000, null);  //Thianchai (I modified this)
         }
     }
 
@@ -659,7 +654,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             .addCorner(userID, username,
                                     username + "@" + mSettingManager.xmppServer,
                                     mSettingManager.xmppRecource, name, description,
-                                    UserLocationManager.getLatitude(), UserLocationManager.getLongitude());
+                                    UserLocationManager.getLatitude(), UserLocationManager.getLongitude());  //Thianchai (I modified this)
 
                     observable.observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Subscriber<String>() {
@@ -785,7 +780,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private String getLocationAsString() {
-        return UserLocationManager.getLatitude() + ", " + UserLocationManager.getLongitude();
+        return UserLocationManager.getLatitude() + ", " + UserLocationManager.getLongitude(); //Thianchai (I modified this)
     }
 
     @Override
@@ -891,7 +886,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     //  PRIVATE CLASS                                                                               PRIVATE CLASS
     //===========================================================================================================//
 
-    private class GPSBroadcastReceiver extends BroadcastReceiver {
+    private final class GPSBroadcastReceiver
+            extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {

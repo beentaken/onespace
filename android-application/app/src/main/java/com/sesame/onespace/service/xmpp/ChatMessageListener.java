@@ -5,9 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.support.v7.app.NotificationCompat;
 
 import com.sesame.onespace.R;
@@ -33,6 +31,9 @@ import java.util.ArrayList;
  */
 
 // Modified code by Thianchai for QAMessage
+    // Last Update 27/12/2016
+    // 1. Show notification message
+    // 2. Save Q&A message into database
 
 public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMessageListener {
 
@@ -57,6 +58,7 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                             JSONObject jsonObject = new JSONObject(msgBody);
                             String messageType = jsonObject.getString(ChatMessage.KEY_MESSAGE_TYPE);
 
+                            //----------------------------------------------------------------------
                             //Thianchai (I add this for QAMessage)
 
                             String questionId = jsonObject.getJSONObject("question").get("id") + "";
@@ -114,7 +116,7 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                             PendingIntent pi = PendingIntent.getActivity(mContext, 0, dialogIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                             Notification notification = new NotificationCompat.Builder(mContext)
                                     .setSmallIcon(R.mipmap.ic_launcher_trim)
-                                    .setContentTitle("A new OneSpace query")
+                                    .setContentTitle(msgFrom.split("@")[0] + " send message.")
                                     .setContentText(jsonObject.getJSONObject("question").get("str") + "")
                                     .setContentIntent(pi)
                                     .setAutoCancel(true)
@@ -123,7 +125,7 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                             NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
                             notificationManager.notify(0, notification);
 
-                            //
+                            //----------------------------------------------------------------------
 
                             if(messageType.equals("chat")) {
                                 return new ChatMessage.Builder()

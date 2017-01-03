@@ -121,6 +121,7 @@
             android:name=".activities.dialogActivities.QAMessageDialogActivity"
             android:label=""
             android:excludeFromRecents="true"
+            android:noHistory="true"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>
 
         <!-- **** -->

@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.sesame.onespace.network.OneSpaceApi;
 
@@ -22,7 +23,8 @@ import rx.Subscriber;
  * Created by Thian on 12/11/2559.
  */
 
-public class GPSTrackerService extends Service {
+public final class GPSTrackerService
+        extends Service {
 
     //===========================================================================================================//
     //  ATTRIBUTE                                                                                   ATTRIBUTE
@@ -45,7 +47,7 @@ public class GPSTrackerService extends Service {
     private double longitude;
 
     //===========================================================================================================//
-    //  SERVICE LIFECYCLE                                                                           SERVICE LIFECYCLE
+    //  ON ACTION                                                                                   ON ACTION
     //===========================================================================================================//
 
     @Override
@@ -94,11 +96,49 @@ public class GPSTrackerService extends Service {
         intentFilter.addAction("GPSTrackerService2");
         registerReceiver(this.receiver, intentFilter);
 
+        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+
+        Observable<String> observable = new OneSpaceApi.Builder(getApplicationContext())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build()
+                .updateGeoLocationRx(userid,
+                        location.getLatitude(),
+                        location.getLongitude());
+
+        observable.subscribe(new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                com.sesame.onespace.utils.Log.i("PutLocation completed");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(String s) {
+
+            }
+        });
+
+        Intent intent = new Intent();
+        intent.setAction("GPSTrackerService");
+        intent.putExtra("latitude", latitude);
+        intent.putExtra("longitude", longitude);
+        sendBroadcast(intent);
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        unregisterReceiver(this.receiver);
 
         if (mLocationManager != null) {
             for (int i = 0; i < mLocationListeners.length; i++) {
@@ -130,7 +170,8 @@ public class GPSTrackerService extends Service {
     //  PRIVATE CLASS                                                                               PRIVATE CLASS
     //===========================================================================================================//
 
-    private class LocationListener implements android.location.LocationListener {
+    private final class LocationListener
+            implements android.location.LocationListener {
 
         Location mLastLocation;
 
@@ -198,12 +239,15 @@ public class GPSTrackerService extends Service {
 
     //------------------------------------------------------------------------------------------------------------//
 
-    private class MyReceiver extends BroadcastReceiver {
+    private final class MyReceiver
+            extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context arg0, Intent arg1) {
 
             if (arg1.getStringExtra("want location again!!!").equals(new String("yes"))){
+
+                //Toast.makeText(arg0, "Your Message", Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent("GPSTrackerService");
                 intent.putExtra("latitude", latitude);

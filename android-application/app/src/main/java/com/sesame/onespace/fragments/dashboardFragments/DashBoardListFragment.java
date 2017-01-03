@@ -34,7 +34,8 @@ import java.util.List;
  * Created by Thian on 2/11/2559.
  */
 
-public class DashBoardListFragment extends Fragment {
+public final class DashBoardListFragment
+        extends Fragment {
 
     private RecyclerView recyclerView;
     private DashBoardListAdapter adapter;
@@ -64,13 +65,13 @@ public class DashBoardListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dashboard_main, container, false);
 
         List<DashBoardListFragment.DashboardItem> items = new ArrayList<>();
-        items.add(new DashBoardListFragment.DashboardItem("Latest Tweets", R.drawable.ic_dashboard_twitter, ACTIVITY_LastTweets, 0));
+        items.add(new DashBoardListFragment.DashboardItem("Twitter", R.drawable.ic_dashboard_twitter, ACTIVITY_LastTweets, 0));
         items.add(new DashBoardListFragment.DashboardItem("Youtube", R.drawable.ic_dashboard_youtube, ACTIVITY_Youtube, 1));
         items.add(new DashBoardListFragment.DashboardItem("Flickr", R.drawable.ic_dashboard_flickr, ACTIVITY_Flickr, 2));
         items.add(new DashBoardListFragment.DashboardItem("Instagram", R.drawable.ic_dashboard_instagram, ACTIVITY_Instagram, 2));
-        items.add(new DashBoardListFragment.DashboardItem("Weather(NEA)", R.drawable.ic_dashboard_weather, ACTIVITY_WeatherNEA, 3));
-        items.add(new DashBoardListFragment.DashboardItem("Carparks(LTA)", R.drawable.ic_dashboard_carpark, ACTIVITY_CarparksLTA, 3));
-        items.add(new DashBoardListFragment.DashboardItem("Bus Info(LTA)", R.drawable.ic_dashboard_bus_info, ACTIVITY_BusOnfoLTA, 3));
+        items.add(new DashBoardListFragment.DashboardItem("Weather", R.drawable.ic_dashboard_weather, ACTIVITY_WeatherNEA, 3));
+        items.add(new DashBoardListFragment.DashboardItem("Carparks", R.drawable.ic_dashboard_carpark, ACTIVITY_CarparksLTA, 3));
+        items.add(new DashBoardListFragment.DashboardItem("Bus Info", R.drawable.ic_dashboard_bus_info, ACTIVITY_BusOnfoLTA, 3));
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
 

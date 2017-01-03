@@ -5,12 +5,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.customtabs.CustomTabsCallback;
@@ -20,15 +17,10 @@ import android.support.customtabs.CustomTabsServiceConnection;
 import android.support.customtabs.CustomTabsSession;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.sesame.onespace.R;
@@ -59,10 +51,11 @@ import rx.Subscriber;
 
 // Modified code by Thianchai on 16/10/16
 
-public class MainActivity extends AppCompatActivity implements
-        MainMenuFragment.OnNewMenuFragmentInteractionListener,
-        ChatListFragment.OnChatListInteractionListener,
-        ChatRoomFragment.OnChatFragmentInteractionListener {
+public class MainActivity
+        extends AppCompatActivity
+        implements MainMenuFragment.OnNewMenuFragmentInteractionListener,
+                   ChatListFragment.OnChatListInteractionListener,
+                   ChatRoomFragment.OnChatFragmentInteractionListener {
 
     //Thianchai (I delete this listener) : I think it is not necessary to use it.
     //OnLocationUpdatedListener
@@ -95,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements
 
     //Thianchai (I add this)
     private GPSBroadcastReceiver broadcastReceiver = new GPSBroadcastReceiver();
-    private GPSBroadcastReceiver broadcastReceiver2 =  new GPSBroadcastReceiver();
     //**
 
     private boolean fromMap;
@@ -121,21 +113,6 @@ public class MainActivity extends AppCompatActivity implements
 
         //Thianchai (I add this)
         this.myInit();
-        //**
-
-        //Thianchai (I add this)
-        registerReceiver(this.broadcastReceiver2, new IntentFilter("GPSTrackerService"));
-        //**
-
-        //Thianchai (I add this)
-        if (GPSServiceManager.isGPSServiceRunning(this.context)){
-
-            Intent intent = new Intent();
-            intent.setAction("GPSTrackerService2");
-            intent.putExtra("want location again!!!", "yes");
-            sendBroadcast(intent);
-
-        }
         //**
 
     }
@@ -203,6 +180,17 @@ public class MainActivity extends AppCompatActivity implements
         }
         //**
 
+        //Thianchai (I add this)
+        if (GPSServiceManager.isGPSServiceRunning(this.context)){
+
+            Intent intent = new Intent();
+            intent.setAction("GPSTrackerService2");
+            intent.putExtra("want location again!!!", "yes");
+            sendBroadcast(intent);
+
+        }
+        //**
+
     }
 
     @Override
@@ -218,13 +206,21 @@ public class MainActivity extends AppCompatActivity implements
         super.onBackPressed();
     }
 
+    //Thianchai (I add this)
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause(){
+        super.onPause();
 
         //Thianchai (I add this)
         unregisterReceiver(this.broadcastReceiver);
         //**
+
+    }
+    //**
+
+    @Override
+    protected void onStop() {
+        super.onStop();
 
         //Thianchai (I delete this)
         //SmartLocation.with(this).location().stop();
@@ -235,17 +231,13 @@ public class MainActivity extends AppCompatActivity implements
 //            SmartLocation.with(this).geocoding().stop();
         //**
 
-        preferencesManager.saveLocation(new LatLng(UserLocationManager.getLatitude(), UserLocationManager.getLongitude()));
+        preferencesManager.saveLocation(new LatLng(UserLocationManager.getLatitude(), UserLocationManager.getLongitude())); //Thianchai (I modified this)
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        //Thianchai (I add this)
-        unregisterReceiver(this.broadcastReceiver2);
-        //**
 
         if (customTabsConnection != null)
             unbindService(customTabsConnection);
@@ -548,7 +540,8 @@ public class MainActivity extends AppCompatActivity implements
     //  PRIVATE CLASS                                                                               PRIVATE CLASS
     //===========================================================================================================//
 
-    private class GPSBroadcastReceiver extends BroadcastReceiver {
+    private final class GPSBroadcastReceiver
+            extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {

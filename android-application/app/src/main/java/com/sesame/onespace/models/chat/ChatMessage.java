@@ -11,7 +11,8 @@ import org.json.JSONObject;
  * Created by chongos on 9/4/15 AD.
  */
 
-// Modified code by Thianchai on 10/12/16
+// Modified code by Thianchai for QAMessage
+    // Last Update 27/12/2016
 
 public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage> {
 
@@ -19,9 +20,7 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
     public static final String KEY_MEDIA_TYPE = "media";
 
     //Thianchai (I add this)
-
     public static final String KEY_PRIMATIVE_TYPE = "primitive";
-
     //
 
     private static final String KEY_ID = "id";
@@ -215,18 +214,20 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
 
             }
 
+            //Thianchai (I add this)
             if(this.type.equals(Type.QUERY.getString())) {
 
-                return new ImageMessage(bundle);
+                return new QueryMessage(bundle);
 
             }
+            //
 
             return new TextMessage(bundle);
         }
     }
 
     public enum Type {
-        TEXT("text"), IMAGE("image"), VIDEO("video"), AUDIO("audio"), QUERY("query");
+        TEXT("text"), IMAGE("image"), VIDEO("video"), AUDIO("audio"), QUERY("query"); //Thianchai (I add QUERY("query"))
 
         private String str;
 

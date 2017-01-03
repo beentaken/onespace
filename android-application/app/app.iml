@@ -18,7 +18,7 @@
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/main/res/layouts/dashboard;file://$MODULE_DIR$/src/main/res/layouts/dashboard/notification;file://$MODULE_DIR$/src/main/res/menus/dashboard;file://$MODULE_DIR$/src/main/res/drawables/dashboard;file://$MODULE_DIR$/src/main/res/drawables/dashboard/icon;file://$MODULE_DIR$/src/main/res/drawables/dashboard/shape;file://$MODULE_DIR$/src/main/res/layouts/dialog;file://$MODULE_DIR$/src/main/res/layouts/dialog/dialogActivity;file://$MODULE_DIR$/src/main/res/drawables/map;file://$MODULE_DIR$/src/main/res/drawables/map/icon;file://$MODULE_DIR$/src/main/res/layouts/dialog/dialog;file://$MODULE_DIR$/src/main/res/layouts/dashboard/flickr;file://$MODULE_DIR$/src/main/res/layouts/dashboard/instagram;file://$MODULE_DIR$/src/main/res/layouts/dashboard/youtube;file://$MODULE_DIR$/src/main/res/layouts/dashboard/twitter;file://$MODULE_DIR$/src/main/res/layouts/dashboard/main;file://$MODULE_DIR$/src/main/res/layouts/dashboard/oldDashboard;file://$MODULE_DIR$/src/main/res/drawables/q&amp;a;file://$MODULE_DIR$/src/main/res/drawables/q&amp;a/icon;file://$MODULE_DIR$/src/main/res/layouts/q&amp;a;file://$MODULE_DIR$/src/debug/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/main/res/layouts/dashboard;file://$MODULE_DIR$/src/main/res/layouts/dashboard/notification;file://$MODULE_DIR$/src/main/res/menus/dashboard;file://$MODULE_DIR$/src/main/res/drawables/dashboard;file://$MODULE_DIR$/src/main/res/drawables/dashboard/icon;file://$MODULE_DIR$/src/main/res/drawables/dashboard/shape;file://$MODULE_DIR$/src/main/res/layouts/dialog;file://$MODULE_DIR$/src/main/res/drawables/map;file://$MODULE_DIR$/src/main/res/drawables/map/icon;file://$MODULE_DIR$/src/main/res/layouts/dialog/dialog;file://$MODULE_DIR$/src/main/res/layouts/dashboard/flickr;file://$MODULE_DIR$/src/main/res/layouts/dashboard/instagram;file://$MODULE_DIR$/src/main/res/layouts/dashboard/youtube;file://$MODULE_DIR$/src/main/res/layouts/dashboard/twitter;file://$MODULE_DIR$/src/main/res/layouts/dashboard/main;file://$MODULE_DIR$/src/main/res/layouts/dashboard/oldDashboard;file://$MODULE_DIR$/src/main/res/layouts/qaMessage;file://$MODULE_DIR$/src/main/res/layouts/qaMessage/main;file://$MODULE_DIR$/src/main/res/layouts/qaMessage/dialogActivities;file://$MODULE_DIR$/src/main/res/drawables/qaMessage;file://$MODULE_DIR$/src/main/res/drawables/qaMessage/icon;file://$MODULE_DIR$/src/debug/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -84,6 +84,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/res/drawables/q&amp;a" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/res/drawables/q&amp;a/icon" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/res/layouts/q&amp;a" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/res/layouts/qaMessage" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/res/layouts/qaMessage/main" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/res/layouts/dialogActivities" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/res/layouts/qaMessage/dialogActivities" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/res/drawables/qaMessage" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/res/drawables/qaMessage/icon" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/assets" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/aidl" isTestSource="false" />

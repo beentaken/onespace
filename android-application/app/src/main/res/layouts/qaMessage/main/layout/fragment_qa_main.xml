@@ -10,20 +10,20 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_100"
             android:scrollbars="vertical"
             android:clipToPadding="false"
-            android:scrollbarStyle="outsideOverlay"
-            android:background="@color/grey_100"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:scrollbarStyle="outsideOverlay" />
 
         <LinearLayout
+            android:id="@+id/empty_chat_state_view"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:id="@+id/empty_chat_state_view"
-            android:gravity="center"
             android:layout_marginBottom="?attr/actionBarSize"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="@dimen/action_icon_xlarge"
@@ -34,8 +34,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="You don't have any message yet"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/grey_400" />

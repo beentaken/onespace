@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.sesame.onespace"
         minSdkVersion 16
-        targetSdkVersion 20
+        targetSdkVersion 22
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
@@ -27,7 +27,7 @@ android {
 
     sourceSets {
         main {
-            res.srcDirs = ['src/main/res', 'src/main/res/layouts/dashboard', 'src/main/res/layouts/dashboard/notification', 'src/main/res/layouts/dashboard/tweets', 'src/main/res/menus/dashboard', 'src/main/res/menus/dashboard/toolbar', 'src/main/res/drawables/dashboard', 'src/main/res/drawables/dashboard/icon', 'src/main/res/drawables/dashboard/shape', 'src/main/res/layouts/dialog', 'src/main/res/layouts/dialog/dialogActivity', 'src/main/res/layouts/flickr', 'src/main/res/layouts/instagram', 'src/main/res/layouts/youtube', 'src/main/res/drawables/map', 'src/main/res/drawables/map/icon', 'src/main/res/layouts/dialog/dialog', 'src/main/res/layouts/dashboard/flickr', 'src/main/res/layouts/dashboard/instagram', 'src/main/res/layouts/dashboard/youtube', 'src/main/res/layouts/dashboard/twitter', 'src/main/res/layouts/dashboard/main', 'src/main/res/layouts/dashboard/oldDashboard', 'src/main/res/drawables/q&a', 'src/main/res/drawables/q&a/icon', 'src/main/res/layouts/q&a']
+            res.srcDirs = ['src/main/res', 'src/main/res/layouts/dashboard', 'src/main/res/layouts/dashboard/notification', 'src/main/res/layouts/dashboard/tweets', 'src/main/res/menus/dashboard', 'src/main/res/menus/dashboard/toolbar', 'src/main/res/drawables/dashboard', 'src/main/res/drawables/dashboard/icon', 'src/main/res/drawables/dashboard/shape', 'src/main/res/layouts/dialog', 'src/main/res/layouts/dialog/dialogActivity', 'src/main/res/layouts/flickr', 'src/main/res/layouts/instagram', 'src/main/res/layouts/youtube', 'src/main/res/drawables/map', 'src/main/res/drawables/map/icon', 'src/main/res/layouts/dialog/dialog', 'src/main/res/layouts/dashboard/flickr', 'src/main/res/layouts/dashboard/instagram', 'src/main/res/layouts/dashboard/youtube', 'src/main/res/layouts/dashboard/twitter', 'src/main/res/layouts/dashboard/main', 'src/main/res/layouts/dashboard/oldDashboard', 'src/main/res/drawables/q&a', 'src/main/res/drawables/q&a/icon', 'src/main/res/layouts/q&a', 'src/main/res/layouts/qaMessage', 'src/main/res/layouts/qaMessage/main', 'src/main/res/layouts/dialogActivities', 'src/main/res/layouts/qaMessage/dialogActivities', 'src/main/res/drawables/qaMessage', 'src/main/res/drawables/qaMessage/icon']
         }
     }
 }

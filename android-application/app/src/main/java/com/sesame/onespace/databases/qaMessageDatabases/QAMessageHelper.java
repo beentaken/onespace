@@ -89,9 +89,10 @@ public final class QAMessageHelper
 
     public Long getCount(){
 
-        SQLiteDatabase db = this.getReadableDatabase();
-        long cnt  = DatabaseUtils.queryNumEntries(db, QAMessageHelper.TABLE_QAMESSAGES);
-        db.close();
+        SQLiteDatabase sqLiteDatabase = QAMessageHelper.this.getReadableDatabase();
+        long cnt  = DatabaseUtils.queryNumEntries(sqLiteDatabase, QAMessageHelper.TABLE_QAMESSAGES);
+        sqLiteDatabase.close();
+
         return cnt;
 
     }
