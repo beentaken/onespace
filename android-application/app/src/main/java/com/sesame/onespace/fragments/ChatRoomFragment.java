@@ -695,8 +695,6 @@ public class ChatRoomFragment extends Fragment {
                             jsonObject.put(ImageMessage.KEY_CAPTION, body[2]);
                     }
 
-                    Log.i("test", chat.getId());
-
                     return new ChatMessage.Builder()
                             .setChatID(chat.getId())
                             .setBody(jsonObject.toString())
