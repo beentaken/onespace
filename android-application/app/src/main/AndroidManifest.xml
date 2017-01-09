@@ -65,52 +65,32 @@
 
         <!-- Thianchai (Dashboard) -->
         <activity
-            android:name=".activities.dashboardActivities.oldDashboardActivities.TweetsListActivity"
-            android:label="@string/title_activity_tweets"
-            android:theme="@style/AppTheme.NoTitleBar" />
-        <activity
             android:name=".activities.dashboardActivities.TwitterActivity"
-            android:label="@string/title_activity_tweets"
-            android:theme="@style/AppTheme.NoTitleBar" />
-        <activity
-            android:name=".activities.dashboardActivities.oldDashboardActivities.YoutubeListActivity"
-            android:label="@string/title_activity_youtube"
+            android:label="Twitter"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
             android:name=".activities.dashboardActivities.YoutubeActivity"
-            android:label="@string/title_activity_youtube"
-            android:theme="@style/AppTheme.NoTitleBar" />
-        <activity
-            android:name=".activities.dashboardActivities.oldDashboardActivities.FlickrListActivity"
-            android:label="@string/title_activity_flickr"
+            android:label="Youtube"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
             android:name=".activities.dashboardActivities.FlickrActivity"
-            android:label="@string/title_activity_flickr"
-            android:theme="@style/AppTheme.NoTitleBar" />
-        <activity
-            android:name=".activities.dashboardActivities.oldDashboardActivities.InstagramListActivity"
-            android:label="@string/title_activity_instagram"
+            android:label="Flickr"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
             android:name=".activities.dashboardActivities.InstagramActivity"
-            android:label="@string/title_activity_instagram"
+            android:label="Instagram"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivities.oldDashboardActivities.WeatherNEAListActivity"
-            android:label="@string/title_activity_weatherNEA"
+            android:name=".activities.dashboardActivities.WeatherActivity"
+            android:label="Weather"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivities.oldDashboardActivities.WeatherGraphListActivity"
-            android:label="@string/title_activity_weatherGraph"
+            android:name=".activities.dashboardActivities.CarparkActivity"
+            android:label="Car Park"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivities.oldDashboardActivities.CarparksLTAActivity"
-            android:label="@string/title_activity_carparksLTA"
-            android:theme="@style/AppTheme.NoTitleBar" />
-        <activity
-            android:name=".activities.dashboardActivities.oldDashboardActivities.BusInfoLTAActivity"
-            android:label="@string/title_activity_busInfoLTA"
+            android:name=".activities.dashboardActivities.BusInfoActivity"
+            android:label="Bus Info"
             android:theme="@style/AppTheme.NoTitleBar" />
 
         <!-- **** -->

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -243,6 +244,42 @@ public final class QAMessageDialogActivity
 
             @Override
             public void onClick(DialogInterface dialog, int id) {
+
+                String answerID = "-1";
+                String answerStr = "";
+
+                JSONObject jsonObject = new JSONObject();
+                JSONObject responseJsonObject = new JSONObject();
+                JSONObject questionJsonObject = new JSONObject();
+                JSONObject answerJsonObject = new JSONObject();
+
+                try {
+
+                    jsonObject.put(ChatMessage.KEY_MESSAGE_TYPE, "query");
+                    jsonObject.put(ChatMessage.KEY_PRIMATIVE_TYPE, "response");
+
+                    questionJsonObject.put("id", QAMessageDialogActivity.this.questionID);
+                    questionJsonObject.put("str", QAMessageDialogActivity.this.questionStr);
+
+                    answerJsonObject.put("id", answerID);
+                    answerJsonObject.put("str", answerStr);
+
+                    responseJsonObject.put("question", questionJsonObject);
+                    responseJsonObject.put("answer", answerJsonObject);
+
+                    jsonObject.put(QueryMessage.KEY_RESPONSE, responseJsonObject);
+
+                    ChatMessage chatMessage = new ChatMessage.Builder().setChatID(QAMessageDialogActivity.this.msgFrom).setBody(jsonObject.toString()).setFromMe(true).setTimestamp(DateTimeUtil.getCurrentTimeStamp()).build();
+
+                    if (chatMessage != null) {
+
+                        QAMessageDialogActivity.this.xmppManager.broadcastMessageSent(chatMessage);
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 QAMessageDialogActivity.this.removeQAMessage();
 

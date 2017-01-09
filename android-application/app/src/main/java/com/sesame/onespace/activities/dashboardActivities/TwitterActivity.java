@@ -30,12 +30,12 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.fragments.dashboardFragments.twitterFragment.LastTweetsListFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.CanNotConnectedToServerFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.DoNotHaveLocationFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.InternetNotAvailableFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.NoDataFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.WaitingFragment;
+import com.sesame.onespace.fragments.dashboardFragments.twitterFragment.LastTweetsFragment;
 import com.sesame.onespace.interfaces.activityInterfaces.SimpleGestureFilter;
 import com.sesame.onespace.managers.location.UserLocationManager;
 import com.sesame.onespace.models.map.Place;
@@ -68,7 +68,7 @@ public final class TwitterActivity
     //  ATTRIBUTE                                                                                   ATTRIBUTE
     //===========================================================================================================//
 
-    //for menu ------------------------------------------------------------------------------------------
+    //for menu -------------------------------------------------------------------------------------
     private String idFragment;
 
     private final static String LAST_TWITTER_FRAGMENT = "last twitter fragment";
@@ -97,7 +97,7 @@ public final class TwitterActivity
     private TwitterActivity.OpenFragmentTask openFragmentTask;
     private CountDownLatch countDownLatch; //bad code
 
-    //for dialog ------------------------------------------------------------------------------------
+    //for dialog -----------------------------------------------------------------------------------
 
     private AlertDialog alertDialog;
 
@@ -108,7 +108,7 @@ public final class TwitterActivity
     private TwitterActivity.GPSBroadcastReceiver gpsBroadcastReceiver;
 
     //===========================================================================================================//
-    //  ACTIVITY LIFECYCLE                                                                          ACTIVITY LIFECYCLE
+    //  ON ACTION                                                                                   ON ACTION
     //===========================================================================================================//
 
     @Override
@@ -119,8 +119,6 @@ public final class TwitterActivity
 
         //main
         TwitterActivity.super.setContentView(R.layout.activity_dashboard_twitter);
-
-        //sub
         TwitterActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
 
     }
@@ -135,6 +133,8 @@ public final class TwitterActivity
         TwitterActivity.this.setDefault();
         TwitterActivity.this.start();
 
+        TwitterActivity.super.registerReceiver(TwitterActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
+
     }
 
     @Override
@@ -143,17 +143,14 @@ public final class TwitterActivity
         //forced to action
         TwitterActivity.super.onResume();
 
-        TwitterActivity.super.registerReceiver(TwitterActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
-
     }
 
     @Override
     public void onBackPressed() {
 
-        //init
+        //forced to action
         DrawerLayout drawerLayout = (DrawerLayout) TwitterActivity.super.findViewById(R.id.drawer_layout);
 
-        //forced to action
         if (drawerLayout.isDrawerOpen(GravityCompat.END) == true){
 
             drawerLayout.closeDrawer(GravityCompat.END);
@@ -173,8 +170,6 @@ public final class TwitterActivity
         //forced to action
         TwitterActivity.super.onPause();
 
-        TwitterActivity.super.unregisterReceiver(TwitterActivity.this.gpsBroadcastReceiver);
-
     }
 
     @Override
@@ -182,6 +177,9 @@ public final class TwitterActivity
 
         //forced to action
         TwitterActivity.super.onStop();
+
+        //main
+        TwitterActivity.super.unregisterReceiver(TwitterActivity.this.gpsBroadcastReceiver);
 
         if (TwitterActivity.this.alertDialog != null){
 
@@ -196,12 +194,6 @@ public final class TwitterActivity
         }
 
         TwitterActivity.this.openFragmentTask.cancel(true);
-
-//        if (TwitterActivity.this.countDownLatch != null){
-//
-//            TwitterActivity.this.countDownLatch.countDown();
-//
-//        }
 
         TwitterActivity.this.setDefault();
 
@@ -223,10 +215,6 @@ public final class TwitterActivity
 
     }
 
-    //===========================================================================================================//
-    //  ON ACTION                                                                                   ON ACTION
-    //===========================================================================================================//
-
     @Override
     public final boolean onCreateOptionsMenu(Menu menu) {
 
@@ -239,11 +227,10 @@ public final class TwitterActivity
     @Override
     public final boolean onOptionsItemSelected(MenuItem item) {
 
-        //init
+        //forced to action
         DrawerLayout drawerLayout = (DrawerLayout) TwitterActivity.super.findViewById(R.id.drawer_layout);
         final int id = item.getItemId();
 
-        //forced to action
         if (id == R.id.action_openRight) {
 
             drawerLayout.openDrawer(GravityCompat.END);
@@ -256,12 +243,13 @@ public final class TwitterActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
+        //forced to action
         DrawerLayout drawerLayout = (DrawerLayout) TwitterActivity.super.findViewById(R.id.drawer_layout);
         final int id = item.getItemId();
 
         switch (id) {
 
-            case R.id.nav_twitter_list:
+            case R.id.nav_last_tweets:
 
                 TwitterActivity.this.idFragment = TwitterActivity.LAST_TWITTER_FRAGMENT;
                 TwitterActivity.this.prepareToStart();
@@ -278,13 +266,7 @@ public final class TwitterActivity
 
                 break;
 
-            case  R.id.nav_recently:
-
-                break;
-
-            case  R.id.nav_backToMainMenu:
-
-                TwitterActivity.this.close();
+            case  R.id.nav_back:
 
                 break;
 
@@ -306,13 +288,19 @@ public final class TwitterActivity
     @Override
     public void onSwipe(int direction) {
 
-        switch (direction) {
+        DrawerLayout drawerLayout = (DrawerLayout) TwitterActivity.super.findViewById(R.id.drawer_layout);
 
-            case SimpleGestureFilter.SWIPE_RIGHT :
+        if (drawerLayout.isDrawerOpen(GravityCompat.END) == false){
 
-                TwitterActivity.this.close();
+            switch (direction) {
 
-                break;
+                case SimpleGestureFilter.SWIPE_RIGHT :
+
+                    TwitterActivity.this.close();
+
+                    break;
+
+            }
 
         }
 
@@ -386,7 +374,7 @@ public final class TwitterActivity
         //for SimpleGestureFilter.SimpleGestureListener
         TwitterActivity.this.detector = new SimpleGestureFilter(this, this);
 
-        //
+        //for gpsBroadcastReceiver
         TwitterActivity.this.gpsBroadcastReceiver = new TwitterActivity.GPSBroadcastReceiver();
 
     }
@@ -420,17 +408,13 @@ public final class TwitterActivity
 
     private void setDefaultAppBarLayout(){
 
-        //init
         AppBarLayout appBarLayout = (AppBarLayout) TwitterActivity.super.findViewById(R.id.app_bar_layout);
-
-        //main
         appBarLayout.setExpanded(true, true);
 
     }
 
     private void setDefaultDrawerLayout(){
 
-        //init
         Toolbar toolbar = (Toolbar) TwitterActivity.super.findViewById(R.id.toolbar);
         DrawerLayout drawerLayout = (DrawerLayout) TwitterActivity.super.findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(TwitterActivity.this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
@@ -447,7 +431,6 @@ public final class TwitterActivity
 
         };
 
-        //main
         TwitterActivity.super.setSupportActionBar(toolbar);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -456,10 +439,30 @@ public final class TwitterActivity
 
     private void setDefaultNavigationView(){
 
-        //init
         NavigationView navigationView = (NavigationView) TwitterActivity.super.findViewById(R.id.nav_view);
 
-        //main
+        navigationView.getMenu().clear();
+
+        Intent intent = getIntent();
+
+        if (intent != null){
+
+            String enterFrom = intent.getStringExtra("enter from");
+
+            if (enterFrom.equals("main screen") == true){
+
+                navigationView.inflateMenu(R.menu.menu_dashboard_navright_twitter_main);
+
+            }
+
+            if (enterFrom.equals("map") == true){
+
+                navigationView.inflateMenu(R.menu.menu_dashboard_navright_twitter_map);
+
+            }
+
+        }
+
         navigationView.setNavigationItemSelectedListener(TwitterActivity.this);
         navigationView.setItemIconTintList(null);
 
@@ -467,10 +470,7 @@ public final class TwitterActivity
 
     private void setDefaultToolbar(){
 
-        //init
         Toolbar toolbar = (Toolbar) TwitterActivity.super.findViewById(R.id.toolbar);
-
-        //main
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -482,16 +482,14 @@ public final class TwitterActivity
         });
 
         toolbar.setLogo(R.drawable.ic_dashboard_twitter);
+        toolbar.setTitle("Twitter");
         toolbar.setSubtitle(R.string.default_subTitle_activity_dash_board);
 
     }
 
     private void setDefaultDistance(){
 
-        //init
         TextView textView = (TextView) TwitterActivity.super.findViewById(R.id.text_distance);
-
-        //main
         textView.setText("NO DISTANCE TO SHOW");
 
     }
@@ -548,7 +546,8 @@ public final class TwitterActivity
 
     // prepare process------------------------------------------------------------------------------
 
-    private class OpenFragmentTask extends AsyncTask<Void, Void, Void> {
+    private final class OpenFragmentTask
+            extends AsyncTask<Void, Void, Void> {
 
         protected Void doInBackground(Void... voids) {
 
@@ -944,7 +943,7 @@ public final class TwitterActivity
 
                 JSONObject object = jsonArray.getJSONObject(index);
 
-                TwitterActivity.this.items.add(new LastTweetsListFragment.LastTweetsItem(String.valueOf(object.get("tweet_screen_name")), DateConvert.convertTimeStampToDate(String.valueOf(object.get("tweet_timestamp")), "EEE, dd MMM yyyy HH:mm:ss"), String.valueOf(object.get("tweet_text")), R.drawable.ic_dashboard_twitter));
+                TwitterActivity.this.items.add(new LastTweetsFragment.LastTweetsItem(String.valueOf(object.get("tweet_screen_name")), DateConvert.convertTimeStampToDate(String.valueOf(object.get("tweet_timestamp")), "EEE, dd MMM yyyy HH:mm:ss"), String.valueOf(object.get("tweet_text")), R.drawable.ic_dashboard_twitter));
 
 
             } catch (JSONException e) {
@@ -970,7 +969,7 @@ public final class TwitterActivity
         CanNotConnectedToServerFragment notConnectingToServerFragment = new CanNotConnectedToServerFragment();
         NoDataFragment noDataFragment = new NoDataFragment();
 
-        LastTweetsListFragment lastTweetsListFragment = new LastTweetsListFragment();
+        LastTweetsFragment lastTweetsFragment = new LastTweetsFragment();
 
         //main
         if (TwitterActivity.this.result == false) {
@@ -1101,8 +1100,8 @@ public final class TwitterActivity
                     Bundle bundle = new Bundle();
                     bundle.putString("url", TwitterActivity.this.url);
                     bundle.putParcelableArrayList("items", TwitterActivity.this.items);
-                    lastTweetsListFragment.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, lastTweetsListFragment, lastTweetsListFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+                    lastTweetsFragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, lastTweetsFragment, lastTweetsFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
                     break;
 

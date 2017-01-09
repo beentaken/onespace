@@ -10,9 +10,12 @@ import android.support.v7.app.AlertDialog;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.sesame.onespace.R;
+import com.sesame.onespace.activities.dashboardActivities.BusInfoActivity;
+import com.sesame.onespace.activities.dashboardActivities.CarparkActivity;
 import com.sesame.onespace.activities.dashboardActivities.FlickrActivity;
 import com.sesame.onespace.activities.dashboardActivities.InstagramActivity;
 import com.sesame.onespace.activities.dashboardActivities.TwitterActivity;
+import com.sesame.onespace.activities.dashboardActivities.WeatherActivity;
 import com.sesame.onespace.activities.dashboardActivities.YoutubeActivity;
 import com.sesame.onespace.dialogs.mapDialogs.SelectDashboardDialogBuilder;
 import com.sesame.onespace.models.map.Place;
@@ -106,6 +109,7 @@ public class PlaceBottomSheet implements DialogInterface.OnClickListener {
                                 bundle.putDouble("Lat", place.getLat());
                                 bundle.putDouble("Lng", place.getLng());
                                 intent.putExtra("bundle", bundle);
+                                intent.putExtra("enter from", "map");
                                 context.startActivity(intent);
 
                                 break;
@@ -119,6 +123,7 @@ public class PlaceBottomSheet implements DialogInterface.OnClickListener {
                                 bundle.putDouble("Lat", place.getLat());
                                 bundle.putDouble("Lng", place.getLng());
                                 intent.putExtra("bundle", bundle);
+                                intent.putExtra("enter from", "map");
                                 context.startActivity(intent);
 
                                 break;
@@ -132,6 +137,7 @@ public class PlaceBottomSheet implements DialogInterface.OnClickListener {
                                 bundle.putDouble("Lat", place.getLat());
                                 bundle.putDouble("Lng", place.getLng());
                                 intent.putExtra("bundle", bundle);
+                                intent.putExtra("enter from", "map");
                                 context.startActivity(intent);
 
                                 break;
@@ -145,6 +151,49 @@ public class PlaceBottomSheet implements DialogInterface.OnClickListener {
                                 bundle.putDouble("Lat", place.getLat());
                                 bundle.putDouble("Lng", place.getLng());
                                 intent.putExtra("bundle", bundle);
+                                intent.putExtra("enter from", "map");
+                                context.startActivity(intent);
+
+                                break;
+
+                            case 4:
+
+                                intent = new Intent(context, WeatherActivity.class);
+                                bundle = new Bundle();
+                                bundle.putString("Name", place.getName());
+                                bundle.putString("Vloc", place.getVloc());
+                                bundle.putDouble("Lat", place.getLat());
+                                bundle.putDouble("Lng", place.getLng());
+                                intent.putExtra("bundle", bundle);
+                                intent.putExtra("enter from", "map");
+                                context.startActivity(intent);
+
+                                break;
+
+                            case 5:
+
+                                intent = new Intent(context, CarparkActivity.class);
+                                bundle = new Bundle();
+                                bundle.putString("Name", place.getName());
+                                bundle.putString("Vloc", place.getVloc());
+                                bundle.putDouble("Lat", place.getLat());
+                                bundle.putDouble("Lng", place.getLng());
+                                intent.putExtra("bundle", bundle);
+                                intent.putExtra("enter from", "map");
+                                context.startActivity(intent);
+
+                                break;
+
+                            case 6:
+
+                                intent = new Intent(context, BusInfoActivity.class);
+                                bundle = new Bundle();
+                                bundle.putString("Name", place.getName());
+                                bundle.putString("Vloc", place.getVloc());
+                                bundle.putDouble("Lat", place.getLat());
+                                bundle.putDouble("Lng", place.getLng());
+                                intent.putExtra("bundle", bundle);
+                                intent.putExtra("enter from", "map");
                                 context.startActivity(intent);
 
                                 break;

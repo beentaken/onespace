@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Bus Info Menu">
+        <menu>
+            <item
+                android:id="@+id/nav_bus_info"
+                android:icon="@drawable/ic_dashboard_bus_info_menu"
+                android:title="Bus Info" />
+            <item
+                android:id="@+id/nav_place_nearest"
+                android:icon="@drawable/ic_dashboard_place_nearest"
+                android:title="The place nearest" />
+            <item
+                android:id="@+id/nav_back"
+                android:icon="@drawable/ic_arrow_back"
+                android:title="Back" />
+        </menu>
+    </item>
+
+</menu>

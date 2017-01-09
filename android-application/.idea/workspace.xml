@@ -7,31 +7,120 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17b69871-339d-4958-8b1e-06e4ed2c09ff" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/qaMessage/dialogActivities/layout/alert_dialog_qa_title.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/values/qaMessage.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dialog/dialogActivity/layout/alert_dialog_question_message_title.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/drawables/q&amp;a/icon/drawable/ic_qa_emtry_message.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/qaMessage/icon/drawable/ic_qa_emtry_message.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/drawables/q&amp;a/icon/drawable/ic_qa_message_row.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/qaMessage/icon/drawable/ic_qa_message_row.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/drawables/q&amp;a/icon/drawable/ic_tab_qa.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/qaMessage/icon/drawable/ic_tab_qa.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dialog/dialogActivity/layout/activity_dialog_question_message.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/qaMessage/dialogActivities/layout/activity_dialog_qa.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/q&amp;a/layout/fragment_qa_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/qaMessage/main/layout/fragment_qa_main.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/q&amp;a/layout/row_qa_main_menu.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/qaMessage/main/layout/row_qa_main.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/BusInfoActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/CarParkActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/WeatherActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/busInfoFragment/BusInfoFragment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/carparkFragment/CarparkFragment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/weatherFragment/WeatherForecastFragment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/weatherFragment/WeatherFragment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_bus_info_bus.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_bus_info_menu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_carpark_car.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_carpark_menu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_flickr_menu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_instagram_menu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_weather_forecast_menu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_weather_menu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_youtube_menu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/busInfo/layout/activity_dashboard_bus_info.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/busInfo/layout/fragment_dashboard_bus_info.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/busInfo/layout/row_dashboard_bus_info.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/carpark/layout/activity_dashboard_carpark.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/carpark/layout/fragment_dashboard_carpark.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/carpark/layout/row_dashboard_carpark.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/weather/layout/activity_dashboard_weather.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/weather/layout/fragment_dashboard_weather.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/weather/layout/fragment_dashboard_weather_forecast.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/weather/layout/row_dashboard_weather.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/weather/layout/row_dashboard_weather_forecast.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_bus_info_main.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_bus_info_map.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_carpark_main.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_carpark_map.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_flickr_map.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_instagram_map.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_twitter_map.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_weather_main.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_weather_map.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_youtube_map.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/BusInfoLTAActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/CarparksLTAActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/DashboardActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/FlickrListActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/InstagramListActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/TweetsListActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/WeatherGraphListActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/WeatherNEAListActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/YoutubeListActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/activity/SaveInstanceStateParcelable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/DashboardObject.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/Flickr.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/Instagram.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/MyLink.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/Tweet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/Youtube.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/activity_businfolta_list.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/activity_carparkslta_list.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/activity_flickr_list.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/activity_instagram_list.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/activity_tweets_list.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/activity_weather_graph_list.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/activity_weathernea_list.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/activity_youtube_list.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/row_flickr_item.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/row_instagram_item.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/row_weather_graph_item.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/row_weathernea_item.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/twitter/layout/row_dashboard_twitter_list.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/youtube/layout/row_dashboard_youtube_list.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/values/activity_tweets.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/values/string_activity_busInfoLTA.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/values/string_activity_carparksLTA.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/values/string_activity_flickr.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/values/string_activity_instagram.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/values/string_activity_weatherGraph.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/values/string_activity_weatherNEA.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/values/string_activity_youtube.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/values/style_dashboard_dialog.xml" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/DashBoardListFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/DashboardMainFragment.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/flickrFragment/FlickrListFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/flickrFragment/FlickrFragment.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/instagramFragment/InstagramListFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/instagramFragment/InstagramFragment.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/twitterFragment/LastTweetsListFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/twitterFragment/LastTweetsFragment.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/youtubeFragment/YoutubeListFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/youtubeFragment/YoutubeFragment.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/qaMessageFragments/QAListFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/qaMessageFragments/QAMainFragment.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/flickr/layout/row_dashboard_flickr_list.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/flickr/layout/row_dashboard_flickr.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/instagram/layout/row_dashboard_instagram_list.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/instagram/layout/row_dashboard_instagram.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/row_last_tweets_item2.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/twitter/layout/row_dashboard_twitter.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/row_youtube_item.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/youtube/layout/row_dashboard_youtube.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_flickr.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_flickr_main.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_instagram.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_instagram_main.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_twitter.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_twitter_main.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_youtube.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_youtube_main.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/values/activity_dashboard.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/dashboard.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/MapActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/MapActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/FlickrActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/FlickrActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/InstagramActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/InstagramActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/TwitterActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/TwitterActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/YoutubeActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/YoutubeActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dialogActivities/QAMessageDialogActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dialogActivities/QAMessageDialogActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/databases/qaMessageDatabases/QAMessageHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/databases/qaMessageDatabases/QAMessageHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/DashBoardListFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/DashBoardListFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/qaMessageFragments/QAListFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/qaMessageFragments/QAListFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/chat/ChatMessage.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/chat/ChatMessage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/chat/QueryMessage.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/chat/QueryMessage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/service/gps/GPSTrackerService.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/service/gps/GPSTrackerService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/service/xmpp/ChatMessageListener.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/service/xmpp/ChatMessageListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/utils/database/DatabaseConvert.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/utils/database/DatabaseConvert.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/utils/date/DateConvert.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/utils/date/DateConvert.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/ChatRoomFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/ChatRoomFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/MainMenuFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/MainMenuFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/CanNotConnectedToServerFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/CanNotConnectedToServerFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/DoNotHaveLocationFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/DoNotHaveLocationFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/InternetNotAvailableFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/InternetNotAvailableFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/NoDataFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/NoDataFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/WaitingFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/WaitingFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/views/PlaceBottomSheet.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/views/PlaceBottomSheet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/flickr/layout/activity_dashboard_flickr.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/flickr/layout/activity_dashboard_flickr.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/instagram/layout/activity_dashboard_instagram.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/instagram/layout/activity_dashboard_instagram.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/main/layout/fragment_dashboard_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/main/layout/fragment_dashboard_main.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/main/layout/row_dashboard_main_menu.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/main/layout/row_dashboard_main_menu.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/twitter/layout/activity_dashboard_twitter.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/twitter/layout/activity_dashboard_twitter.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/youtube/layout/activity_dashboard_youtube.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/youtube/layout/activity_dashboard_youtube.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
     </list>
     <ignored path="android-application.iws" />
@@ -66,15 +155,15 @@
     <favorites_list name="android-application" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450" />
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="resourceFile" />
+        <option value="valueResourceFile" />
         <option value="ASClass" />
         <option value="layoutResourceFile_vertical" />
-        <option value="valueResourceFile" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -1874,7 +1963,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application" value="4402153000465" />
+        <entry key="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application" value="4402700649884" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2140,57 +2229,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/BusInfoLTAActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/WeatherGraphListActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/WeatherNEAListActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/dialogs/mapDialogs/SelectDashboardDialogBuilder.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/managers/LogoutManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_weather_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_weather_map.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_weather_forecast_menu.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/weather/layout/activity_dashboard_weather.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/weather/layout/row_dashboard_weather.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/weather/layout/fragment_dashboard_weather.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/weather/layout/fragment_dashboard_weather_forecast.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/weather/layout/row_dashboard_weather_forecast.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_youtube_menu.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_instagram_menu.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawables/dashboard/icon/drawable/ic_dashboard_flickr_menu.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/service/xmpp/XmppManager.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/twitterFragment/LastTweetsListFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/twitter/layout/activity_dashboard_twitter.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_flickr.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_instagram.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_youtube.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/FlickrActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/InstagramActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/YoutubeActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_twitter.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/TwitterActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawables/q&amp;a/icon/drawable/ic_tab_q&amp;a.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawables/q&amp;a/icon/drawable/ic_tab_qa.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/MainMenuFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/qaFragment/QAListFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dialogActivities/QuestionMessageDialogActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/dialogs/qaDialogs/QADialog.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/activity/SaveInstanceStateParcelable.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawables/q&amp;a/icon/drawable/ic_qa_message_row.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layouts/q&amp;a/layout/row_qa_no_message.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawables/q&amp;a/icon/drawable/ic_qa_emtry_message.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layouts/q&amp;a/layout/fragment_qa_main.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/chat/ChatMessage.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/databases/qaMessageDatabases/QAMessageHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/ChatRoomFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/qaMessage/QAMessage.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layouts/q&amp;a/layout/row_qa_main_menu.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layouts/dialog/dialogActivity/layout/alert_dialog_question_message_title.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/utils/database/DatabaseConvert.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/utils/date/DateConvert.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/chat/QueryMessage.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layouts/qaMessage/dialogActivities/layout/alert_dialog_question_message_title.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/qaMessage.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layouts/qaMessage/main/layout/fragment_qa_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dialogActivities/QAMessageDialogActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/style_dashboard_dialog.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layouts/qaMessage/main/layout/row_qa_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawables/qaMessage/icon/drawable/ic_qa_message_row.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/service/xmpp/ChatMessageListener.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_twitter_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_twitter_map.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_instagram_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_instagram_map.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_flickr_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_flickr_map.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_youtube_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_youtube_map.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/BusInfoActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/WeatherActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/flickrFragment/FlickrListFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/instagramFragment/InstagramListFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/twitterFragment/LastTweetsListFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/CarparkActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/youtubeFragment/YoutubeListFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layouts/dashboard/twitter/layout/activity_dashboard_twitter.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/TwitterActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/carparkFragment/CarparkFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/busInfoFragment/BusInfoFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/flickrFragment/FlickrFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/instagramFragment/InstagramFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/weatherFragment/WeatherForecastFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/weatherFragment/WeatherFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/twitterFragment/LastTweetsFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/youtubeFragment/YoutubeFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/dashboard.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/CanNotConnectedToServerFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/DoNotHaveLocationFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/InternetNotAvailableFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/NoDataFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/WaitingFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/qaMessageFragments/QAListFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/service/gps/GPSTrackerService.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/MapActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/DashBoardListFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/InstagramActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/FlickrActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/YoutubeActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/views/PlaceBottomSheet.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/DashboardMainFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dialogActivities/QAMessageDialogActivity.java" />
       </list>
     </option>
   </component>
@@ -2225,6 +2314,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="AndroidView">
+        <subPane />
+      </pane>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2327,48 +2422,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-application" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-application" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="onespace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="activities" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="AndroidView">
-        <subPane />
-      </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2376,17 +2431,17 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="device.picker.selection" value="0516056c39d73202" />
-    <property name="VectorAssetImportPath" value="C:\Users\Thian\Desktop\NUS" />
+    <property name="VectorAssetImportPath" value="C:\Users" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Thian/Desktop/OneSpace_Thianchai_github/onespace/android-application/app/src/main/java/com/sesame/onespace/activities/dialogActivities/QuestionMessageDialogActivity.java" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\src\main\res\drawables\dashboard\icon\drawable" />
       <recent name="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\src\main\res\drawables\qaMessage\icon\drawable" />
       <recent name="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\src\main\res\layouts\qaMessage\dialogActivities\layout" />
       <recent name="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\src\main\res\layouts\qaMessage\main\layout" />
       <recent name="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\src\main\res\drawables\q&amp;a\icon\drawable" />
-      <recent name="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\src\main\res\layouts\dashboard\oldDashboard\layout" />
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
@@ -2700,38 +2755,38 @@
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="7" />
     <editor active="false" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.09394314" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.62422746" sideWeight="0.5054054" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.7268232" sideWeight="0.49783784" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.4945946" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11248455" sideWeight="0.50216216" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19783784" sideWeight="0.49567366" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27567568" sideWeight="0.49567366" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44128555" sideWeight="0.4962162" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18864866" sideWeight="0.50432634" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34857848" sideWeight="0.49783784" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2881081" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28756756" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2747,150 +2802,12 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="8" />
+      <option name="time" value="9" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_settings.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-21">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/row_settings_item.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/flickrFragment/FlickrListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="325" column="20" selection-start-line="325" selection-start-column="20" selection-end-line="325" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/InstagramActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="272" column="21" selection-start-line="272" selection-start-column="21" selection-end-line="272" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/TweetsListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/dashboard/notification/layout/fragment_dashboard_can_not_connected_to_server.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/q&amp;a/layout/row_qa_no_message.xml" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_chat_list.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/views/adapters/ChatListArrayAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3275">
-          <caret line="173" column="38" selection-start-line="173" selection-start-column="17" selection-end-line="173" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/ChatListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="88" column="32" selection-start-line="88" selection-start-column="32" selection-end-line="88" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_chat_bubble_outline.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="36" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/chat/Chat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/chat/TextMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/ChatRoomFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13142">
-          <caret line="106" column="23" selection-start-line="106" selection-start-column="12" selection-end-line="106" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/service/xmpp/XmppManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="299" column="54" selection-start-line="299" selection-start-column="54" selection-end-line="299" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/dashboard/main/layout/row_dashboard_main_menu.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/dashboard/main/layout/fragment_dashboard_main.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" column="43" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/dashboard/instagram/layout/fragment_dashboard_instagram.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_toolbar.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
@@ -2900,134 +2817,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/dashboard/instagram/layout/row_dashboard_instagram_list.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menus/dashboard/menu/menu_dashboard_navright_youtube_main.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-450">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="400">
+          <caret line="16" column="41" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/style_dashboard_dialog.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/views/PlaceBottomSheet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="72" column="110" selection-start-line="72" selection-start-column="110" selection-end-line="72" selection-end-column="110" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawables/qaMessage/icon/drawable/ic_tab_qa.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawables/qaMessage/icon/drawable/ic_qa_message_row.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/dashboard/twitter/layout/activity_dashboard_twitter.xml">
+      <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="123" column="36" selection-start-line="123" selection-start-column="36" selection-end-line="123" selection-end-column="36" />
+        <state relative-caret-position="165">
+          <caret line="102" column="118" selection-start-line="102" selection-start-column="118" selection-end-line="102" selection-end-column="118" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/MainMenuFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/chat/QueryMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="28" column="57" selection-start-line="28" selection-start-column="57" selection-end-line="28" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/chat/ChatMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/qaMessage/QAMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/service/xmpp/ChatMessageListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2107">
-          <caret line="113" column="86" selection-start-line="113" selection-start-column="86" selection-end-line="113" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/utils/date/DateConvert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-22">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/utils/database/DatabaseConvert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="34" column="51" selection-start-line="34" selection-start-column="51" selection-end-line="34" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/databases/qaMessageDatabases/QAMessageHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/qaMessageFragments/QAListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3028">
-          <caret line="442" column="115" selection-start-line="442" selection-start-column="115" selection-end-line="442" selection-end-column="115" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawables/qaMessage/icon/drawable/ic_qa_emtry_message.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/qaMessage.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="35" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/qaMessage/dialogActivities/layout/activity_dialog_qa.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/CarparksLTAActivity.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/BusInfoLTAActivity.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/oldDashboardActivities/WeatherGraphListActivity.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/dashboard/youtube/layout/row_dashboard_youtube.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
@@ -3038,126 +2853,293 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/qaMessage/dialogActivities/layout/alert_dialog_qa_title.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/dashboard/oldDashboard/layout/row_youtube_item.xml" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/activity_tweets.xml" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/string_activity_busInfoLTA.xml" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/string_activity_carparksLTA.xml" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/string_activity_flickr.xml" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/string_activity_instagram.xml" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/string_activity_weatherGraph.xml" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/string_activity_weatherNEA.xml" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/string_activity_youtube.xml" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings_activity_chat.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1000">
-          <caret line="40" column="57" selection-start-line="40" selection-start-column="57" selection-end-line="40" selection-end-column="57" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/qaMessage/main/layout/fragment_qa_main.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/style_dashboard_dialog.xml" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dashboard.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="35" column="52" selection-start-line="35" selection-start-column="52" selection-end-line="35" selection-end-column="52" />
+        <state relative-caret-position="350">
+          <caret line="14" column="99" selection-start-line="14" selection-start-column="99" selection-end-line="14" selection-end-column="99" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layouts/qaMessage/main/layout/row_qa_main.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/CanNotConnectedToServerFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1250">
-          <caret line="50" column="44" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="44" />
+        <state relative-caret-position="364">
+          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/network/SurferMarkerLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/network/WalkerMarkerLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5300">
-          <caret line="239" column="0" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/managers/LogoutManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dialogActivities/QAMessageDialogActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7550">
-          <caret line="350" column="0" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/managers/service/GPSServiceManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-425">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/MapActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4925">
-          <caret line="277" column="155" selection-start-line="277" selection-start-column="155" selection-end-line="277" selection-end-column="155" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/service/gps/GPSTrackerService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5700">
-          <caret line="249" column="18" selection-start-line="249" selection-start-column="18" selection-end-line="249" selection-end-column="18" />
-          <folding>
-            <element signature="e#1968#1969#0" expanded="false" />
-            <element signature="e#1995#1996#0" expanded="false" />
-            <element signature="e#4151#4152#0" expanded="false" />
-            <element signature="e#4239#4240#0" expanded="false" />
-            <element signature="e#6259#6260#0" expanded="false" />
-            <element signature="e#6321#6322#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/managers/location/UserLocationManager.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/DoNotHaveLocationFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
-          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
-          <folding />
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/InternetNotAvailableFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="28" column="34" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/NoDataFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="28" column="33" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/notificationFragment/WaitingFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="28" column="26" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12725">
-          <caret line="560" column="68" selection-start-line="560" selection-start-column="68" selection-end-line="560" selection-end-column="68" />
+        <state relative-caret-position="-2650">
+          <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/Tweet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/DashBoardListFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/Youtube.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/Flickr.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/Instagram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/views/PlaceBottomSheet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="78" column="88" selection-start-line="78" selection-start-column="88" selection-end-line="78" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/DashboardMainFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="80" column="68" selection-start-line="80" selection-start-column="68" selection-end-line="80" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/MyLink.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/dashboard/DashboardObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/models/activity/SaveInstanceStateParcelable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/BusInfoActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="637">
+          <caret line="553" column="0" selection-start-line="553" selection-start-column="0" selection-end-line="553" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/CarparkActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/FlickrActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="487" column="32" selection-start-line="487" selection-start-column="32" selection-end-line="487" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/InstagramActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="487" column="35" selection-start-line="487" selection-start-column="35" selection-end-line="487" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/TwitterActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-19050">
-          <caret line="261" column="21" selection-start-line="261" selection-start-column="21" selection-end-line="261" selection-end-column="21" />
+        <state relative-caret-position="430">
+          <caret line="1103" column="132" selection-start-line="1103" selection-start-column="132" selection-end-line="1103" selection-end-column="132" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/WeatherActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="570" column="17" selection-start-line="570" selection-start-column="17" selection-end-line="570" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dashboardActivities/YoutubeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="482" column="33" selection-start-line="482" selection-start-column="33" selection-end-line="482" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/instagramFragment/InstagramFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="637">
+          <caret line="349" column="17" selection-start-line="349" selection-start-column="17" selection-end-line="349" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/flickrFragment/FlickrFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="637">
+          <caret line="352" column="54" selection-start-line="352" selection-start-column="54" selection-end-line="352" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/carparkFragment/CarparkFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="637">
+          <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/busInfoFragment/BusInfoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="89" column="132" selection-start-line="89" selection-start-column="132" selection-end-line="89" selection-end-column="132" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/twitterFragment/LastTweetsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="370" column="0" selection-start-line="370" selection-start-column="0" selection-end-line="370" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/weatherFragment/WeatherForecastFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="88" column="172" selection-start-line="88" selection-start-column="172" selection-end-line="88" selection-end-column="172" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/weatherFragment/WeatherFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="87" column="132" selection-start-line="87" selection-start-column="132" selection-end-line="87" selection-end-column="132" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/fragments/dashboardFragments/youtubeFragment/YoutubeFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="253" column="106" selection-start-line="253" selection-start-column="106" selection-end-line="253" selection-end-column="106" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2375">
+          <caret line="95" column="21" selection-start-line="95" selection-start-column="21" selection-end-line="95" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sesame/onespace/activities/dialogActivities/QAMessageDialogActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5475">
+          <caret line="248" column="36" selection-start-line="248" selection-start-column="36" selection-end-line="248" selection-end-column="36" />
+          <folding>
+            <element signature="e#7331#9446#0" expanded="true" />
+            <element signature="e#9445#9446#0" expanded="true" />
+            <element signature="e#9505#9849#0" expanded="true" />
+            <element signature="e#9848#9849#0" expanded="true" />
+            <element signature="e#9911#11873#0" expanded="true" />
+            <element signature="e#11872#11873#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

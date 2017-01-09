@@ -12,7 +12,8 @@ import com.sesame.onespace.R;
  * Created by Thian on 4/12/2559.
  */
 
-public class NoDataFragment extends Fragment {
+public final class NoDataFragment
+        extends Fragment {
 
     //===========================================================================================================//
     //  ATTRIBUTE                                                                                   ATTRIBUTE
@@ -27,9 +28,9 @@ public class NoDataFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        this.view = inflater.inflate(R.layout.fragment_dashboard_no_data, container, false);
+        NoDataFragment.this.view = inflater.inflate(R.layout.fragment_dashboard_no_data, container, false);
 
-        return this.view;
+        return NoDataFragment.this.view;
 
     }
 

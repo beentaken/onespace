@@ -32,7 +32,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.fragments.dashboardFragments.flickrFragment.FlickrListFragment;
+import com.sesame.onespace.fragments.dashboardFragments.flickrFragment.FlickrFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.CanNotConnectedToServerFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.DoNotHaveLocationFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.InternetNotAvailableFragment;
@@ -72,7 +72,7 @@ public final class FlickrActivity
     //  ATTRIBUTE                                                                                   ATTRIBUTE
     //===========================================================================================================//
 
-    //for menu ------------------------------------------------------------------------------------------
+    //for menu -------------------------------------------------------------------------------------
     private String idFragment;
 
     private final static String FLICKR_FRAGMENT = "flickr fragment";
@@ -101,7 +101,7 @@ public final class FlickrActivity
     private FlickrActivity.OpenFragmentTask openFragmentTask;
     private CountDownLatch countDownLatch; //bad code
 
-    //for dialog ------------------------------------------------------------------------------------
+    //for dialog -----------------------------------------------------------------------------------
 
     private AlertDialog alertDialog;
 
@@ -112,7 +112,7 @@ public final class FlickrActivity
     private FlickrActivity.GPSBroadcastReceiver gpsBroadcastReceiver;
 
     //===========================================================================================================//
-    //  ACTIVITY LIFECYCLE                                                                          ACTIVITY LIFECYCLE
+    //  ON ACTION                                                                                   ON ACTION
     //===========================================================================================================//
 
     @Override
@@ -123,8 +123,6 @@ public final class FlickrActivity
 
         //main
         FlickrActivity.super.setContentView(R.layout.activity_dashboard_flickr);
-
-        //sub
         FlickrActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
 
     }
@@ -139,6 +137,8 @@ public final class FlickrActivity
         FlickrActivity.this.setDefault();
         FlickrActivity.this.start();
 
+        FlickrActivity.super.registerReceiver(FlickrActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
+
     }
 
     @Override
@@ -147,17 +147,14 @@ public final class FlickrActivity
         //forced to action
         FlickrActivity.super.onResume();
 
-        FlickrActivity.super.registerReceiver(FlickrActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
-
     }
 
     @Override
     public void onBackPressed() {
 
-        //init
+        //forced to action
         DrawerLayout drawerLayout = (DrawerLayout) FlickrActivity.super.findViewById(R.id.drawer_layout);
 
-        //forced to action
         if (drawerLayout.isDrawerOpen(GravityCompat.END) == true){
 
             drawerLayout.closeDrawer(GravityCompat.END);
@@ -177,8 +174,6 @@ public final class FlickrActivity
         //forced to action
         FlickrActivity.super.onPause();
 
-        FlickrActivity.super.unregisterReceiver(FlickrActivity.this.gpsBroadcastReceiver);
-
     }
 
     @Override
@@ -186,6 +181,9 @@ public final class FlickrActivity
 
         //forced to action
         FlickrActivity.super.onStop();
+
+        //main
+        FlickrActivity.super.unregisterReceiver(FlickrActivity.this.gpsBroadcastReceiver);
 
         if (FlickrActivity.this.alertDialog != null){
 
@@ -200,12 +198,6 @@ public final class FlickrActivity
         }
 
         FlickrActivity.this.openFragmentTask.cancel(true);
-
-//        if (TwitterActivity.this.countDownLatch != null){
-//
-//            TwitterActivity.this.countDownLatch.countDown();
-//
-//        }
 
         FlickrActivity.this.setDefault();
 
@@ -227,10 +219,6 @@ public final class FlickrActivity
 
     }
 
-    //===========================================================================================================//
-    //  ON ACTION                                                                                   ON ACTION
-    //===========================================================================================================//
-
     @Override
     public final boolean onCreateOptionsMenu(Menu menu) {
 
@@ -243,11 +231,10 @@ public final class FlickrActivity
     @Override
     public final boolean onOptionsItemSelected(MenuItem item) {
 
-        //init
+        //forced to action
         DrawerLayout drawerLayout = (DrawerLayout) FlickrActivity.super.findViewById(R.id.drawer_layout);
         final int id = item.getItemId();
 
-        //forced to action
         if (id == R.id.action_openRight) {
 
             drawerLayout.openDrawer(GravityCompat.END);
@@ -265,7 +252,7 @@ public final class FlickrActivity
 
         switch (id) {
 
-            case R.id.nav_flickr_list:
+            case R.id.nav_flickr:
 
                 FlickrActivity.this.idFragment = FlickrActivity.FLICKR_FRAGMENT;
                 FlickrActivity.this.prepareToStart();
@@ -281,13 +268,7 @@ public final class FlickrActivity
 
                 break;
 
-            case  R.id.nav_recently:
-
-                break;
-
-            case  R.id.nav_backToMainMenu:
-
-                FlickrActivity.this.close();
+            case  R.id.nav_back:
 
                 break;
 
@@ -309,13 +290,19 @@ public final class FlickrActivity
     @Override
     public void onSwipe(int direction) {
 
-        switch (direction) {
+        DrawerLayout drawerLayout = (DrawerLayout) FlickrActivity.super.findViewById(R.id.drawer_layout);
 
-            case SimpleGestureFilter.SWIPE_RIGHT :
+        if (drawerLayout.isDrawerOpen(GravityCompat.END) == false){
 
-                FlickrActivity.this.close();
+            switch (direction) {
 
-                break;
+                case SimpleGestureFilter.SWIPE_RIGHT :
+
+                    FlickrActivity.this.close();
+
+                    break;
+
+            }
 
         }
 
@@ -389,7 +376,7 @@ public final class FlickrActivity
         //for SimpleGestureFilter.SimpleGestureListener
         FlickrActivity.this.detector = new SimpleGestureFilter(this, this);
 
-        //
+        //for gpsBroadcastReceiver
         FlickrActivity.this.gpsBroadcastReceiver = new FlickrActivity.GPSBroadcastReceiver();
 
     }
@@ -423,10 +410,7 @@ public final class FlickrActivity
 
     private void setDefaultAppBarLayout(){
 
-        //init
         AppBarLayout appBarLayout = (AppBarLayout) FlickrActivity.super.findViewById(R.id.app_bar_layout);
-
-        //main
         appBarLayout.setBackgroundColor(Color.parseColor("#3F474A"));
         appBarLayout.setExpanded(true, true);
 
@@ -434,7 +418,6 @@ public final class FlickrActivity
 
     private void setDefaultDrawerLayout(){
 
-        //init
         Toolbar toolbar = (Toolbar) FlickrActivity.super.findViewById(R.id.toolbar);
         DrawerLayout drawerLayout = (DrawerLayout) FlickrActivity.super.findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(FlickrActivity.this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
@@ -451,7 +434,6 @@ public final class FlickrActivity
 
         };
 
-        //main
         FlickrActivity.super.setSupportActionBar(toolbar);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -460,10 +442,30 @@ public final class FlickrActivity
 
     private void setDefaultNavigationView(){
 
-        //init
         NavigationView navigationView = (NavigationView) FlickrActivity.super.findViewById(R.id.nav_view);
 
-        //main
+        navigationView.getMenu().clear();
+
+        Intent intent = getIntent();
+
+        if (intent != null){
+
+            String enterFrom = intent.getStringExtra("enter from");
+
+            if (enterFrom.equals("main screen") == true){
+
+                navigationView.inflateMenu(R.menu.menu_dashboard_navright_flickr_main);
+
+            }
+
+            if (enterFrom.equals("map") == true){
+
+                navigationView.inflateMenu(R.menu.menu_dashboard_navright_flickr_map);
+
+            }
+
+        }
+
         navigationView.setNavigationItemSelectedListener(FlickrActivity.this);
         navigationView.setItemIconTintList(null);
 
@@ -471,10 +473,7 @@ public final class FlickrActivity
 
     private void setDefaultToolbar(){
 
-        //init
         Toolbar toolbar = (Toolbar) FlickrActivity.super.findViewById(R.id.toolbar);
-
-        //main
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -486,6 +485,7 @@ public final class FlickrActivity
         });
 
         toolbar.setLogo(R.drawable.ic_dashboard_flickr);
+        toolbar.setTitle("Flickr");
         toolbar.setSubtitle(R.string.default_subTitle_activity_dash_board);
         toolbar.setBackgroundColor(Color.parseColor("#3F474A"));
 
@@ -493,10 +493,7 @@ public final class FlickrActivity
 
     private void setDefaultDistance(){
 
-        //init
         TextView textView = (TextView) FlickrActivity.super.findViewById(R.id.text_distance);
-
-        //main
         textView.setText("NO DISTANCE TO SHOW");
 
     }
@@ -553,7 +550,8 @@ public final class FlickrActivity
 
     // prepare process------------------------------------------------------------------------------
 
-    private class OpenFragmentTask extends AsyncTask<Void, Void, Void> {
+    private final class OpenFragmentTask
+            extends AsyncTask<Void, Void, Void> {
 
         protected Void doInBackground(Void... voids) {
 
@@ -565,8 +563,8 @@ public final class FlickrActivity
 
                 case FlickrActivity.FLICKR_FRAGMENT :
 
-                    FlickrActivity.this.getURLLastTwitter();
-                    FlickrActivity.this.getItemsLastTwitter();
+                    FlickrActivity.this.getURLFlickr();
+                    FlickrActivity.this.getItemsFlickr();
 
                     break;
 
@@ -873,9 +871,9 @@ public final class FlickrActivity
 
     //items
 
-    // last twitter process------------------------------------------------
+    // flickr process------------------------------------------------
 
-    private void getURLLastTwitter(){
+    private void getURLFlickr(){
 
         //before
         if (FlickrActivity.this.result == false){
@@ -889,7 +887,7 @@ public final class FlickrActivity
 
     }
 
-    private void getItemsLastTwitter(){
+    private void getItemsFlickr(){
 
         //before
         if (FlickrActivity.this.result == false){
@@ -963,7 +961,7 @@ public final class FlickrActivity
                     e.printStackTrace();
                 }
 
-                FlickrActivity.this.items.add(new FlickrListFragment.FlickrItem(String.valueOf(object.get("title")), bitmap));
+                FlickrActivity.this.items.add(new FlickrFragment.FlickrItem(String.valueOf(object.get("title")), bitmap));
 
 
             } catch (JSONException e) {
@@ -989,7 +987,7 @@ public final class FlickrActivity
         CanNotConnectedToServerFragment notConnectingToServerFragment = new CanNotConnectedToServerFragment();
         NoDataFragment noDataFragment = new NoDataFragment();
 
-        FlickrListFragment flickrListFragment = new FlickrListFragment();
+        FlickrFragment flickrFragment = new FlickrFragment();
 
         //main
         if (FlickrActivity.this.result == false) {
@@ -1120,8 +1118,8 @@ public final class FlickrActivity
                     Bundle bundle = new Bundle();
                     bundle.putString("url", FlickrActivity.this.url);
                     bundle.putParcelableArrayList("items", FlickrActivity.this.items);
-                    flickrListFragment.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, flickrListFragment, flickrListFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+                    flickrFragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, flickrFragment, flickrFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
                     break;
 

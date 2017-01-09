@@ -71,7 +71,6 @@
         android:layout_gravity="end"
         android:background="@color/grey_900"
         android:fitsSystemWindows="true"
-        app:menu="@menu/menu_dashboard_navright_twitter"
         app:itemTextColor="@color/white">
 
         <LinearLayout
@@ -101,7 +100,7 @@ app:menu="@menu/activity_dashboard_drawer"
 
             android:layout_below="@+id/toolbar"
 
-            <fragment android:name="com.sesame.onespace.activities.dashboardActivity.tweetsActivity.LastTweetsListFragment"
+            <fragment android:name="com.sesame.onespace.activities.dashboardActivity.tweetsActivity.LastTweetsFragment"
             android:id="@+id/fragment_dashboard_twitter"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

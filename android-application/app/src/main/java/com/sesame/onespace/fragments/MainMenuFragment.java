@@ -30,8 +30,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.fragments.dashboardFragments.DashBoardListFragment;
-import com.sesame.onespace.fragments.qaMessageFragments.QAListFragment;
+import com.sesame.onespace.fragments.dashboardFragments.DashboardMainFragment;
+import com.sesame.onespace.fragments.qaMessageFragments.QAMainFragment;
 import com.sesame.onespace.models.chat.Chat;
 import com.sesame.onespace.service.MessageService;
 import com.sesame.onespace.utils.DrawableUtil;
@@ -40,7 +40,9 @@ import com.sesame.onespace.views.MenuCoverLocationView;
 import java.util.ArrayList;
 import java.util.List;
 
-// Modified code by Thianchai on 16/10/16
+// Modified code by Thianchai
+    //1. Q&A Message tab
+    //2. Dashboard tab
 
 public class MainMenuFragment extends Fragment implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener,
         ChatListFragment.OnChatListInteractionListener {
@@ -71,8 +73,8 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
     private TabLayout mTabLayout;
     private ChatListFragment chatListFragment;
     private TabMapFragment tabMapFragment;
-    private QAListFragment qaListFragment; //wrote by Thianchai
-    private DashBoardListFragment dashBoardListFragment;  //wrote by Thianchai
+    private QAMainFragment qaMainFragment; //add by Thianchai
+    private DashboardMainFragment dashboardMainFragment;  //add by Thianchai
 
     private String name;
 
@@ -129,8 +131,8 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
 
         chatListFragment = ChatListFragment.newInstance(MessageService.getConnectionStatus());
         tabMapFragment = TabMapFragment.newInstance();
-        qaListFragment = QAListFragment.newInstance(); //wrote by Thianchai
-        dashBoardListFragment = DashBoardListFragment.newInstance();  //wrote by Thianchai
+        qaMainFragment = QAMainFragment.newInstance(); //add by Thianchai
+        dashboardMainFragment = DashboardMainFragment.newInstance();  //add by Thianchai
 
         mViewPager = (ViewPager) view.findViewById(R.id.pager);
         setupViewPager(mViewPager);
@@ -269,8 +271,8 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(tabMapFragment, "Map");
         adapter.addFragment(chatListFragment, "Chat");
-        adapter.addFragment(qaListFragment, "Q&A"); //wrote by Thianchai
-        adapter.addFragment(dashBoardListFragment, "DashBorad");  //wrote by Thianchai
+        adapter.addFragment(qaMainFragment, "Q&A Message"); //add by Thianchai
+        adapter.addFragment(dashboardMainFragment, "Dashborad");  //add by Thianchai
         adapter.addFragment(SettingsListFragment.newInstance(), "Settings");
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1, true);
@@ -325,15 +327,15 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
         tablayout.getTabAt(1).setCustomView(tabChat);
 
         //wrote by Thianchai
-        TextView messageSetting = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_menu_icon_and_text, null);
-        messageSetting.setText("Q&A");
-        messageSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_qa, 0, 0);
-        tablayout.getTabAt(2).setCustomView(messageSetting);
+        TextView qaTabView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_menu_icon_and_text, null);
+        qaTabView.setText("Q&A");
+        qaTabView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_qa, 0, 0);
+        tablayout.getTabAt(2).setCustomView(qaTabView);
 
-        TextView dashboardSetting = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_menu_icon_and_text, null);
-        dashboardSetting.setText("DB");
-        dashboardSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_dashboard, 0, 0);
-        tablayout.getTabAt(3).setCustomView(dashboardSetting);
+        TextView dashboardTabView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_menu_icon_and_text, null);
+        dashboardTabView.setText("DB");
+        dashboardTabView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_dashboard, 0, 0);
+        tablayout.getTabAt(3).setCustomView(dashboardTabView);
         //
 
         TextView tabSetting = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_menu_icon_and_text, null);

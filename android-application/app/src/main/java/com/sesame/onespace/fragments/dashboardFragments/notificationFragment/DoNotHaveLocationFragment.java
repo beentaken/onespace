@@ -12,7 +12,8 @@ import com.sesame.onespace.R;
  * Created by Thian on 19/12/2559.
  */
 
-public class DoNotHaveLocationFragment extends Fragment {
+public final class DoNotHaveLocationFragment
+        extends Fragment {
 
     //===========================================================================================================//
     //  ATTRIBUTE                                                                                   ATTRIBUTE
@@ -27,9 +28,9 @@ public class DoNotHaveLocationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        this.view = inflater.inflate(R.layout.fragment_dashboard_do_not_have_location, container, false);
+        DoNotHaveLocationFragment.this.view = inflater.inflate(R.layout.fragment_dashboard_do_not_have_location, container, false);
 
-        return this.view;
+        return DoNotHaveLocationFragment.this.view;
 
     }
 

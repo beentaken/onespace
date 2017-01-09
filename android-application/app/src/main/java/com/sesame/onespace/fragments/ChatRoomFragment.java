@@ -30,6 +30,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -693,6 +694,8 @@ public class ChatRoomFragment extends Fragment {
                         if(body.length > 2)
                             jsonObject.put(ImageMessage.KEY_CAPTION, body[2]);
                     }
+
+                    Log.i("test", chat.getId());
 
                     return new ChatMessage.Builder()
                             .setChatID(chat.getId())

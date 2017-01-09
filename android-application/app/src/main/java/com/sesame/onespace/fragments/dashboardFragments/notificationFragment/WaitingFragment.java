@@ -12,7 +12,8 @@ import com.sesame.onespace.R;
  * Created by Thian on 4/12/2559.
  */
 
-public class WaitingFragment extends Fragment {
+public final class WaitingFragment
+        extends Fragment {
 
     //===========================================================================================================//
     //  ATTRIBUTE                                                                                   ATTRIBUTE
@@ -27,9 +28,9 @@ public class WaitingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        this.view = inflater.inflate(R.layout.fragment_dashboard_waiting, container, false);
+        WaitingFragment.this.view = inflater.inflate(R.layout.fragment_dashboard_waiting, container, false);
 
-        return this.view;
+        return WaitingFragment.this.view;
 
     }
 

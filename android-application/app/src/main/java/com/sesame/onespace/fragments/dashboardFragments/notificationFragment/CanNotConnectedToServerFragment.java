@@ -12,7 +12,8 @@ import com.sesame.onespace.R;
  * Created by Thian on 4/12/2559.
  */
 
-public class CanNotConnectedToServerFragment extends Fragment {
+public final class CanNotConnectedToServerFragment
+        extends Fragment {
 
     //===========================================================================================================//
     //  ATTRIBUTE                                                                                   ATTRIBUTE
@@ -27,9 +28,9 @@ public class CanNotConnectedToServerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        this.view = inflater.inflate(R.layout.fragment_dashboard_can_not_connected_to_server, container, false);
+        CanNotConnectedToServerFragment.this.view = inflater.inflate(R.layout.fragment_dashboard_can_not_connected_to_server, container, false);
 
-        return this.view;
+        return CanNotConnectedToServerFragment.this.view;
 
     }
 

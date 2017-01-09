@@ -12,7 +12,8 @@ import com.sesame.onespace.R;
  * Created by Thian on 4/12/2559.
  */
 
-public class InternetNotAvailableFragment extends Fragment {
+public final class InternetNotAvailableFragment
+        extends Fragment {
 
     //===========================================================================================================//
     //  ATTRIBUTE                                                                                   ATTRIBUTE
@@ -27,9 +28,9 @@ public class InternetNotAvailableFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        this.view = inflater.inflate(R.layout.fragment_dashboard_not_connect_internet, container, false);
+        InternetNotAvailableFragment.this.view = inflater.inflate(R.layout.fragment_dashboard_not_connect_internet, container, false);
 
-        return this.view;
+        return InternetNotAvailableFragment.this.view;
 
     }
 

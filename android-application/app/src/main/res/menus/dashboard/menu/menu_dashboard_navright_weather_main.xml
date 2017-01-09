@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Weather Menu">
+        <menu>
+            <item
+                android:id="@+id/nav_weather"
+                android:icon="@drawable/ic_dashboard_weather_menu"
+                android:title="Weather" />
+            <item
+                android:id="@+id/nav_weather_forecast"
+                android:icon="@drawable/ic_dashboard_weather_forecast_menu"
+                android:title="Weather Forecast" />
+            <item
+                android:id="@+id/nav_place_nearest"
+                android:icon="@drawable/ic_dashboard_place_nearest"
+                android:title="The place nearest" />
+            <item
+                android:id="@+id/nav_back"
+                android:icon="@drawable/ic_arrow_back"
+                android:title="Back" />
+        </menu>
+    </item>
+
+</menu>

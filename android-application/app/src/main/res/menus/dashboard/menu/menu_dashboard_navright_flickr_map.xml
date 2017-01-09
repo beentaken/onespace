@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Flickr Menu">
+        <menu>
+            <item
+                android:id="@+id/nav_flickr"
+                android:icon="@drawable/ic_dashboard_flickr_menu"
+                android:title="Flickr" />
+            <item
+                android:id="@+id/nav_back"
+                android:icon="@drawable/ic_arrow_back"
+                android:title="Back" />
+        </menu>
+    </item>
+
+</menu>

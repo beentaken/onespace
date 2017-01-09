@@ -71,7 +71,7 @@
         android:layout_gravity="end"
         android:background="@color/grey_900"
         android:fitsSystemWindows="true"
-        app:menu="@menu/menu_dashboard_navright_flickr"
+        app:menu="@menu/menu_dashboard_navright_flickr_main"
         app:itemTextColor="@color/white">
 
         <LinearLayout

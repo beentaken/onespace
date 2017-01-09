@@ -32,7 +32,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.fragments.dashboardFragments.instagramFragment.InstagramListFragment;
+import com.sesame.onespace.fragments.dashboardFragments.instagramFragment.InstagramFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.CanNotConnectedToServerFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.DoNotHaveLocationFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.InternetNotAvailableFragment;
@@ -72,10 +72,7 @@ public final class InstagramActivity
     //  ATTRIBUTE                                                                                   ATTRIBUTE
     //===========================================================================================================//
 
-    //bad code
-    private Boolean isReadyToClose;
-
-    //for menu ------------------------------------------------------------------------------------------
+    //for menu -------------------------------------------------------------------------------------
     private String idFragment;
 
     private final static String INSTAGRAM_FRAGMENT = "instagram fragment";
@@ -104,7 +101,7 @@ public final class InstagramActivity
     private InstagramActivity.OpenFragmentTask openFragmentTask;
     private CountDownLatch countDownLatch; //bad code
 
-    //for dialog ------------------------------------------------------------------------------------
+    //for dialog -----------------------------------------------------------------------------------
 
     private AlertDialog alertDialog;
 
@@ -115,7 +112,7 @@ public final class InstagramActivity
     private InstagramActivity.GPSBroadcastReceiver gpsBroadcastReceiver;
 
     //===========================================================================================================//
-    //  ACTIVITY LIFECYCLE                                                                          ACTIVITY LIFECYCLE
+    //  ON ACTION                                                                                   ON ACTION
     //===========================================================================================================//
 
     @Override
@@ -126,8 +123,6 @@ public final class InstagramActivity
 
         //main
         InstagramActivity.super.setContentView(R.layout.activity_dashboard_instagram);
-
-        //sub
         InstagramActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
 
     }
@@ -142,6 +137,8 @@ public final class InstagramActivity
         InstagramActivity.this.setDefault();
         InstagramActivity.this.start();
 
+        InstagramActivity.super.registerReceiver(InstagramActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
+
     }
 
     @Override
@@ -150,17 +147,14 @@ public final class InstagramActivity
         //forced to action
         InstagramActivity.super.onResume();
 
-        InstagramActivity.super.registerReceiver(InstagramActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
-
     }
 
     @Override
     public void onBackPressed() {
 
-        //init
+        //forced to action
         DrawerLayout drawerLayout = (DrawerLayout) InstagramActivity.super.findViewById(R.id.drawer_layout);
 
-        //forced to action
         if (drawerLayout.isDrawerOpen(GravityCompat.END) == true){
 
             drawerLayout.closeDrawer(GravityCompat.END);
@@ -168,11 +162,7 @@ public final class InstagramActivity
         }
         else{
 
-            if (InstagramActivity.this.isReadyToClose == true){
-
-                InstagramActivity.this.close();
-
-            }
+            InstagramActivity.this.close();
 
         }
 
@@ -184,8 +174,6 @@ public final class InstagramActivity
         //forced to action
         InstagramActivity.super.onPause();
 
-        InstagramActivity.super.unregisterReceiver(InstagramActivity.this.gpsBroadcastReceiver);
-
     }
 
     @Override
@@ -193,6 +181,9 @@ public final class InstagramActivity
 
         //forced to action
         InstagramActivity.super.onStop();
+
+        //main
+        InstagramActivity.super.unregisterReceiver(InstagramActivity.this.gpsBroadcastReceiver);
 
         if (InstagramActivity.this.alertDialog != null){
 
@@ -207,12 +198,6 @@ public final class InstagramActivity
         }
 
         InstagramActivity.this.openFragmentTask.cancel(true);
-
-//        if (TwitterActivity.this.countDownLatch != null){
-//
-//            TwitterActivity.this.countDownLatch.countDown();
-//
-//        }
 
         InstagramActivity.this.setDefault();
 
@@ -234,10 +219,6 @@ public final class InstagramActivity
 
     }
 
-    //===========================================================================================================//
-    //  ON ACTION                                                                                   ON ACTION
-    //===========================================================================================================//
-
     @Override
     public final boolean onCreateOptionsMenu(Menu menu) {
 
@@ -250,11 +231,10 @@ public final class InstagramActivity
     @Override
     public final boolean onOptionsItemSelected(MenuItem item) {
 
-        //init
+        //forced to action
         DrawerLayout drawerLayout = (DrawerLayout) InstagramActivity.super.findViewById(R.id.drawer_layout);
         final int id = item.getItemId();
 
-        //forced to action
         if (id == R.id.action_openRight) {
 
             drawerLayout.openDrawer(GravityCompat.END);
@@ -272,7 +252,7 @@ public final class InstagramActivity
 
         switch (id) {
 
-            case R.id.nav_instagram_list:
+            case R.id.nav_instagram:
 
                 InstagramActivity.this.idFragment = InstagramActivity.INSTAGRAM_FRAGMENT;
                 InstagramActivity.this.prepareToStart();
@@ -288,13 +268,7 @@ public final class InstagramActivity
 
                 break;
 
-            case  R.id.nav_recently:
-
-                break;
-
-            case  R.id.nav_backToMainMenu:
-
-                InstagramActivity.this.close();
+            case  R.id.nav_back:
 
                 break;
 
@@ -316,13 +290,19 @@ public final class InstagramActivity
     @Override
     public void onSwipe(int direction) {
 
-        switch (direction) {
+        DrawerLayout drawerLayout = (DrawerLayout) InstagramActivity.super.findViewById(R.id.drawer_layout);
 
-            case SimpleGestureFilter.SWIPE_RIGHT :
+        if (drawerLayout.isDrawerOpen(GravityCompat.END) == false){
 
-                InstagramActivity.this.close();
+            switch (direction) {
 
-                break;
+                case SimpleGestureFilter.SWIPE_RIGHT :
+
+                    InstagramActivity.this.close();
+
+                    break;
+
+            }
 
         }
 
@@ -347,9 +327,6 @@ public final class InstagramActivity
     }
 
     private void setDefaultValue(){
-
-        //bad code
-        InstagramActivity.this.isReadyToClose = true;
 
         //for menu
         InstagramActivity.this.idFragment = InstagramActivity.INSTAGRAM_FRAGMENT;
@@ -399,7 +376,7 @@ public final class InstagramActivity
         //for SimpleGestureFilter.SimpleGestureListener
         InstagramActivity.this.detector = new SimpleGestureFilter(this, this);
 
-        //
+        //for gpsBroadcastReceiver
         InstagramActivity.this.gpsBroadcastReceiver = new InstagramActivity.GPSBroadcastReceiver();
 
     }
@@ -433,10 +410,7 @@ public final class InstagramActivity
 
     private void setDefaultAppBarLayout(){
 
-        //init
         AppBarLayout appBarLayout = (AppBarLayout) InstagramActivity.super.findViewById(R.id.app_bar_layout);
-
-        //main
         appBarLayout.setBackgroundColor(Color.parseColor("#C32A00"));
         appBarLayout.setExpanded(true, true);
 
@@ -444,26 +418,22 @@ public final class InstagramActivity
 
     private void setDefaultDrawerLayout(){
 
-        //init
         Toolbar toolbar = (Toolbar) InstagramActivity.super.findViewById(R.id.toolbar);
         DrawerLayout drawerLayout = (DrawerLayout) InstagramActivity.super.findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(InstagramActivity.this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
 
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                InstagramActivity.this.isReadyToClose = false;
 
             }
 
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                InstagramActivity.this.isReadyToClose = true;
 
             }
 
         };
 
-        //main
         InstagramActivity.super.setSupportActionBar(toolbar);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -472,10 +442,30 @@ public final class InstagramActivity
 
     private void setDefaultNavigationView(){
 
-        //init
         NavigationView navigationView = (NavigationView) InstagramActivity.super.findViewById(R.id.nav_view);
 
-        //main
+        navigationView.getMenu().clear();
+
+        Intent intent = getIntent();
+
+        if (intent != null){
+
+            String enterFrom = intent.getStringExtra("enter from");
+
+            if (enterFrom.equals("main screen") == true){
+
+                navigationView.inflateMenu(R.menu.menu_dashboard_navright_instagram_main);
+
+            }
+
+            if (enterFrom.equals("map") == true){
+
+                navigationView.inflateMenu(R.menu.menu_dashboard_navright_instagram_map);
+
+            }
+
+        }
+
         navigationView.setNavigationItemSelectedListener(InstagramActivity.this);
         navigationView.setItemIconTintList(null);
 
@@ -483,10 +473,7 @@ public final class InstagramActivity
 
     private void setDefaultToolbar(){
 
-        //init
         Toolbar toolbar = (Toolbar) InstagramActivity.super.findViewById(R.id.toolbar);
-
-        //main
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -498,6 +485,7 @@ public final class InstagramActivity
         });
 
         toolbar.setLogo(R.drawable.ic_dashboard_instagram);
+        toolbar.setTitle("Instagram");
         toolbar.setSubtitle(R.string.default_subTitle_activity_dash_board);
         toolbar.setBackgroundColor(Color.parseColor("#C32A00"));
 
@@ -505,10 +493,7 @@ public final class InstagramActivity
 
     private void setDefaultDistance(){
 
-        //init
         TextView textView = (TextView) InstagramActivity.super.findViewById(R.id.text_distance);
-
-        //main
         textView.setText("NO DISTANCE TO SHOW");
 
     }
@@ -565,7 +550,8 @@ public final class InstagramActivity
 
     // prepare process------------------------------------------------------------------------------
 
-    private class OpenFragmentTask extends AsyncTask<Void, Void, Void> {
+    private final class OpenFragmentTask
+            extends AsyncTask<Void, Void, Void> {
 
         protected Void doInBackground(Void... voids) {
 
@@ -577,8 +563,8 @@ public final class InstagramActivity
 
                 case InstagramActivity.INSTAGRAM_FRAGMENT :
 
-                    InstagramActivity.this.getURLLastTwitter();
-                    InstagramActivity.this.getItemsLastTwitter();
+                    InstagramActivity.this.getURLInstagram();
+                    InstagramActivity.this.getItemsInstagram();
 
                     break;
 
@@ -885,9 +871,9 @@ public final class InstagramActivity
 
     //items
 
-    // last twitter process------------------------------------------------
+    // instagram process------------------------------------------------
 
-    private void getURLLastTwitter(){
+    private void getURLInstagram(){
 
         //before
         if (InstagramActivity.this.result == false){
@@ -901,7 +887,7 @@ public final class InstagramActivity
 
     }
 
-    private void getItemsLastTwitter(){
+    private void getItemsInstagram(){
 
         //before
         if (InstagramActivity.this.result == false){
@@ -975,7 +961,7 @@ public final class InstagramActivity
                     e.printStackTrace();
                 }
 
-                InstagramActivity.this.items.add(new InstagramListFragment.InstagramItem(String.valueOf(object.get("title")), bitmap));
+                InstagramActivity.this.items.add(new InstagramFragment.InstagramItem(String.valueOf(object.get("title")), bitmap));
 
 
             } catch (JSONException e) {
@@ -1001,7 +987,7 @@ public final class InstagramActivity
         CanNotConnectedToServerFragment notConnectingToServerFragment = new CanNotConnectedToServerFragment();
         NoDataFragment noDataFragment = new NoDataFragment();
 
-        InstagramListFragment instagramListFragment = new InstagramListFragment();
+        InstagramFragment instagramFragment = new InstagramFragment();
 
         //main
         if (InstagramActivity.this.result == false) {
@@ -1132,8 +1118,8 @@ public final class InstagramActivity
                     Bundle bundle = new Bundle();
                     bundle.putString("url", InstagramActivity.this.url);
                     bundle.putParcelableArrayList("items", InstagramActivity.this.items);
-                    instagramListFragment.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, instagramListFragment, instagramListFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+                    instagramFragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, instagramFragment, instagramFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
                     break;
 

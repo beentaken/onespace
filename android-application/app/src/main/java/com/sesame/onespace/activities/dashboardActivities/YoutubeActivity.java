@@ -35,7 +35,7 @@ import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.DoN
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.InternetNotAvailableFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.NoDataFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.WaitingFragment;
-import com.sesame.onespace.fragments.dashboardFragments.youtubeFragment.YoutubeListFragment;
+import com.sesame.onespace.fragments.dashboardFragments.youtubeFragment.YoutubeFragment;
 import com.sesame.onespace.interfaces.activityInterfaces.SimpleGestureFilter;
 import com.sesame.onespace.managers.location.UserLocationManager;
 import com.sesame.onespace.models.map.Place;
@@ -67,7 +67,7 @@ public final class YoutubeActivity
     //  ATTRIBUTE                                                                                   ATTRIBUTE
     //===========================================================================================================//
 
-    //for menu ------------------------------------------------------------------------------------------
+    //for menu -------------------------------------------------------------------------------------
     private String idFragment;
 
     private final static String YOUTUBE_FRAGMENT = "youtube fragment";
@@ -96,7 +96,7 @@ public final class YoutubeActivity
     private YoutubeActivity.OpenFragmentTask openFragmentTask;
     private CountDownLatch countDownLatch; //bad code
 
-    //for dialog ------------------------------------------------------------------------------------
+    //for dialog -----------------------------------------------------------------------------------
 
     private AlertDialog alertDialog;
 
@@ -118,8 +118,6 @@ public final class YoutubeActivity
 
         //main
         YoutubeActivity.super.setContentView(R.layout.activity_dashboard_youtube);
-
-        //sub
         YoutubeActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
 
     }
@@ -134,6 +132,8 @@ public final class YoutubeActivity
         YoutubeActivity.this.setDefault();
         YoutubeActivity.this.start();
 
+        YoutubeActivity.super.registerReceiver(YoutubeActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
+
     }
 
     @Override
@@ -142,17 +142,14 @@ public final class YoutubeActivity
         //forced to action
         YoutubeActivity.super.onResume();
 
-        YoutubeActivity.super.registerReceiver(YoutubeActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
-
     }
 
     @Override
     public void onBackPressed() {
 
-        //init
+        //forced to action
         DrawerLayout drawerLayout = (DrawerLayout) YoutubeActivity.super.findViewById(R.id.drawer_layout);
 
-        //forced to action
         if (drawerLayout.isDrawerOpen(GravityCompat.END) == true){
 
             drawerLayout.closeDrawer(GravityCompat.END);
@@ -172,8 +169,6 @@ public final class YoutubeActivity
         //forced to action
         YoutubeActivity.super.onPause();
 
-        YoutubeActivity.super.unregisterReceiver(YoutubeActivity.this.gpsBroadcastReceiver);
-
     }
 
     @Override
@@ -181,6 +176,9 @@ public final class YoutubeActivity
 
         //forced to action
         YoutubeActivity.super.onStop();
+
+        //main
+        YoutubeActivity.super.unregisterReceiver(YoutubeActivity.this.gpsBroadcastReceiver);
 
         if (YoutubeActivity.this.alertDialog != null){
 
@@ -195,12 +193,6 @@ public final class YoutubeActivity
         }
 
         YoutubeActivity.this.openFragmentTask.cancel(true);
-
-//        if (TwitterActivity.this.countDownLatch != null){
-//
-//            TwitterActivity.this.countDownLatch.countDown();
-//
-//        }
 
         YoutubeActivity.this.setDefault();
 
@@ -222,10 +214,6 @@ public final class YoutubeActivity
 
     }
 
-    //===========================================================================================================//
-    //  ON ACTION                                                                                   ON ACTION
-    //===========================================================================================================//
-
     @Override
     public final boolean onCreateOptionsMenu(Menu menu) {
 
@@ -238,11 +226,10 @@ public final class YoutubeActivity
     @Override
     public final boolean onOptionsItemSelected(MenuItem item) {
 
-        //init
+        //forced to action
         DrawerLayout drawerLayout = (DrawerLayout) YoutubeActivity.super.findViewById(R.id.drawer_layout);
         final int id = item.getItemId();
 
-        //forced to action
         if (id == R.id.action_openRight) {
 
             drawerLayout.openDrawer(GravityCompat.END);
@@ -260,7 +247,7 @@ public final class YoutubeActivity
 
         switch (id) {
 
-            case R.id.nav_youtube_list:
+            case R.id.nav_youtube:
 
                 YoutubeActivity.this.idFragment = YoutubeActivity.YOUTUBE_FRAGMENT;
                 YoutubeActivity.this.prepareToStart();
@@ -276,13 +263,7 @@ public final class YoutubeActivity
 
                 break;
 
-            case  R.id.nav_recently:
-
-                break;
-
-            case  R.id.nav_backToMainMenu:
-
-                YoutubeActivity.this.close();
+            case  R.id.nav_back:
 
                 break;
 
@@ -304,13 +285,19 @@ public final class YoutubeActivity
     @Override
     public void onSwipe(int direction) {
 
-        switch (direction) {
+        DrawerLayout drawerLayout = (DrawerLayout) YoutubeActivity.super.findViewById(R.id.drawer_layout);
 
-            case SimpleGestureFilter.SWIPE_RIGHT :
+        if (drawerLayout.isDrawerOpen(GravityCompat.END) == false){
 
-                YoutubeActivity.this.close();
+            switch (direction) {
 
-                break;
+                case SimpleGestureFilter.SWIPE_RIGHT :
+
+                    YoutubeActivity.this.close();
+
+                    break;
+
+            }
 
         }
 
@@ -384,7 +371,7 @@ public final class YoutubeActivity
         //for SimpleGestureFilter.SimpleGestureListener
         YoutubeActivity.this.detector = new SimpleGestureFilter(this, this);
 
-        //
+        //for gpsBroadcastReceiver
         YoutubeActivity.this.gpsBroadcastReceiver = new YoutubeActivity.GPSBroadcastReceiver();
 
     }
@@ -418,10 +405,7 @@ public final class YoutubeActivity
 
     private void setDefaultAppBarLayout(){
 
-        //init
         AppBarLayout appBarLayout = (AppBarLayout) YoutubeActivity.super.findViewById(R.id.app_bar_layout);
-
-        //main
         appBarLayout.setBackgroundColor(Color.parseColor("#D40000"));
         appBarLayout.setExpanded(true, true);
 
@@ -429,7 +413,6 @@ public final class YoutubeActivity
 
     private void setDefaultDrawerLayout(){
 
-        //init
         Toolbar toolbar = (Toolbar) YoutubeActivity.super.findViewById(R.id.toolbar);
         DrawerLayout drawerLayout = (DrawerLayout) YoutubeActivity.super.findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(YoutubeActivity.this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
@@ -446,7 +429,6 @@ public final class YoutubeActivity
 
         };
 
-        //main
         YoutubeActivity.super.setSupportActionBar(toolbar);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -455,10 +437,30 @@ public final class YoutubeActivity
 
     private void setDefaultNavigationView(){
 
-        //init
         NavigationView navigationView = (NavigationView) YoutubeActivity.super.findViewById(R.id.nav_view);
 
-        //main
+        navigationView.getMenu().clear();
+
+        Intent intent = getIntent();
+
+        if (intent != null){
+
+            String enterFrom = intent.getStringExtra("enter from");
+
+            if (enterFrom.equals("main screen") == true){
+
+                navigationView.inflateMenu(R.menu.menu_dashboard_navright_youtube_main);
+
+            }
+
+            if (enterFrom.equals("map") == true){
+
+                navigationView.inflateMenu(R.menu.menu_dashboard_navright_youtube_map);
+
+            }
+
+        }
+
         navigationView.setNavigationItemSelectedListener(YoutubeActivity.this);
         navigationView.setItemIconTintList(null);
 
@@ -466,10 +468,7 @@ public final class YoutubeActivity
 
     private void setDefaultToolbar(){
 
-        //init
         Toolbar toolbar = (Toolbar) YoutubeActivity.super.findViewById(R.id.toolbar);
-
-        //main
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -481,6 +480,7 @@ public final class YoutubeActivity
         });
 
         toolbar.setLogo(R.drawable.ic_dashboard_youtube);
+        toolbar.setTitle("Youtube");
         toolbar.setSubtitle(R.string.default_subTitle_activity_dash_board);
         toolbar.setBackgroundColor(Color.parseColor("#D40000"));
 
@@ -488,10 +488,7 @@ public final class YoutubeActivity
 
     private void setDefaultDistance(){
 
-        //init
         TextView textView = (TextView) YoutubeActivity.super.findViewById(R.id.text_distance);
-
-        //main
         textView.setText("NO DISTANCE TO SHOW");
 
     }
@@ -548,7 +545,8 @@ public final class YoutubeActivity
 
     // prepare process------------------------------------------------------------------------------
 
-    private class OpenFragmentTask extends AsyncTask<Void, Void, Void> {
+    private final class OpenFragmentTask
+            extends AsyncTask<Void, Void, Void> {
 
         protected Void doInBackground(Void... voids) {
 
@@ -560,8 +558,8 @@ public final class YoutubeActivity
 
                 case YoutubeActivity.YOUTUBE_FRAGMENT :
 
-                    YoutubeActivity.this.getURLLastTwitter();
-                    YoutubeActivity.this.getItemsLastTwitter();
+                    YoutubeActivity.this.getURLYoutube();
+                    YoutubeActivity.this.getItemsYoutube();
 
                     break;
 
@@ -868,9 +866,9 @@ public final class YoutubeActivity
 
     //items
 
-    // last twitter process------------------------------------------------
+    // youtube process------------------------------------------------
 
-    private void getURLLastTwitter(){
+    private void getURLYoutube(){
 
         //before
         if (YoutubeActivity.this.result == false){
@@ -884,7 +882,7 @@ public final class YoutubeActivity
 
     }
 
-    private void getItemsLastTwitter(){
+    private void getItemsYoutube(){
 
         //before
         if (YoutubeActivity.this.result == false){
@@ -944,7 +942,7 @@ public final class YoutubeActivity
 
                 JSONObject object = jsonArray.getJSONObject(index);
 
-                YoutubeActivity.this.items.add(new YoutubeListFragment.YoutubeItem(String.valueOf(object.get("title")), String.valueOf(object.get("url"))));
+                YoutubeActivity.this.items.add(new YoutubeFragment.YoutubeItem(String.valueOf(object.get("title")), String.valueOf(object.get("url"))));
 
 
             } catch (JSONException e) {
@@ -970,7 +968,7 @@ public final class YoutubeActivity
         CanNotConnectedToServerFragment notConnectingToServerFragment = new CanNotConnectedToServerFragment();
         NoDataFragment noDataFragment = new NoDataFragment();
 
-        YoutubeListFragment youtubeListFragment = new YoutubeListFragment();
+        YoutubeFragment youtubeFragment = new YoutubeFragment();
 
         //main
         if (YoutubeActivity.this.result == false) {
@@ -1101,8 +1099,8 @@ public final class YoutubeActivity
                     Bundle bundle = new Bundle();
                     bundle.putString("url", YoutubeActivity.this.url);
                     bundle.putParcelableArrayList("items", YoutubeActivity.this.items);
-                    youtubeListFragment.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, youtubeListFragment, youtubeListFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+                    youtubeFragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main, youtubeFragment, youtubeFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
                     break;
 
