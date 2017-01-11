@@ -209,7 +209,7 @@ public final class QAMessageDialogActivity
 
                     if (chatMessage != null) {
 
-                        QAMessageDialogActivity.this.xmppManager.broadcastMessageSent(chatMessage);
+                        QAMessageDialogActivity.this.xmppManager.sendQAMessage(chatMessage);
 
                     }
 
@@ -273,7 +273,7 @@ public final class QAMessageDialogActivity
 
                     if (chatMessage != null) {
 
-                        QAMessageDialogActivity.this.xmppManager.broadcastMessageSent(chatMessage);
+                        QAMessageDialogActivity.this.xmppManager.sendQAMessage(chatMessage);
 
                     }
 

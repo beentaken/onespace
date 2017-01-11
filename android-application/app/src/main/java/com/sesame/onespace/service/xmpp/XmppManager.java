@@ -604,6 +604,23 @@ public class XmppManager {
         }
     }
 
+    public long sendQAMessage(ChatMessage chatMessage){
+
+        if (isConnected()) {
+            boolean isSent;
+            isSent = sendToPrivate(chatMessage);
+            long id = chatMessage.getId();
+            chatMessage.setNeedPush(!isSent);
+            broadcastMessageSent(chatMessage);
+            return id;
+        } else {
+            Log.d("Adding message: \"" + chatMessage.getBody() + "\" to offline queue, because  we are not connected. Status=" + statusString());
+            mOfflineMessageManager.addOfflineMessage(chatMessage);
+            return -1;
+        }
+
+    }
+
     public void received(ChatMessage msg) {
         mChatHistoryManager.addMessage(msg);
     }
