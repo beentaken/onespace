@@ -604,6 +604,7 @@ public class XmppManager {
         }
     }
 
+    //Thianchai (I add this)
     public long sendQAMessage(ChatMessage chatMessage){
 
         if (isConnected()) {
@@ -620,6 +621,7 @@ public class XmppManager {
         }
 
     }
+    //**
 
     public void received(ChatMessage msg) {
         mChatHistoryManager.addMessage(msg);
