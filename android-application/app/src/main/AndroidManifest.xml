@@ -85,7 +85,7 @@
             android:label="Weather"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity
-            android:name=".activities.dashboardActivities.CarparkActivity"
+            android:name=".activities.dashboardActivities.CarParkActivity"
             android:label="Car Park"
             android:theme="@style/AppTheme.NoTitleBar" />
         <activity

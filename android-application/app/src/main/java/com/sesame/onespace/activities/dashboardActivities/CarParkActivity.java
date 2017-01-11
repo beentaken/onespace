@@ -30,7 +30,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.fragments.dashboardFragments.carparkFragment.CarparkFragment;
+import com.sesame.onespace.fragments.dashboardFragments.carParkFragment.CarParkFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.CanNotConnectedToServerFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.DoNotHaveLocationFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.InternetNotAvailableFragment;
@@ -58,7 +58,7 @@ import retrofit.Response;
  * Created by Thian on 4/1/2560.
  */
 
-public final class CarparkActivity
+public final class CarParkActivity
         extends AppCompatActivity
         implements SimpleGestureFilter.SimpleGestureListener,
                    NavigationView.OnNavigationItemSelectedListener{
@@ -93,7 +93,7 @@ public final class CarparkActivity
     private String url;
     private ArrayList<Parcelable> items;
 
-    private CarparkActivity.OpenFragmentTask openFragmentTask;
+    private CarParkActivity.OpenFragmentTask openFragmentTask;
     private CountDownLatch countDownLatch; //bad code
 
     //for dialog -----------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ public final class CarparkActivity
     private SimpleGestureFilter detector;
 
     //for GPSBroadcastReceiver
-    private CarparkActivity.GPSBroadcastReceiver gpsBroadcastReceiver;
+    private CarParkActivity.GPSBroadcastReceiver gpsBroadcastReceiver;
 
     //===========================================================================================================//
     //  ON ACTION                                                                                   ON ACTION
@@ -114,11 +114,11 @@ public final class CarparkActivity
     protected void onCreate(Bundle savedInstanceState) {
 
         //forced to action
-        CarparkActivity.super.onCreate(savedInstanceState);
+        CarParkActivity.super.onCreate(savedInstanceState);
 
         //main
-        CarparkActivity.super.setContentView(R.layout.activity_dashboard_carpark);
-        CarparkActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
+        CarParkActivity.super.setContentView(R.layout.activity_dashboard_carpark);
+        CarParkActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
 
     }
 
@@ -126,13 +126,13 @@ public final class CarparkActivity
     protected void onStart(){
 
         //forced to action
-        CarparkActivity.super.onStart();
+        CarParkActivity.super.onStart();
 
         //main
-        CarparkActivity.this.setDefault();
-        CarparkActivity.this.start();
+        CarParkActivity.this.setDefault();
+        CarParkActivity.this.start();
 
-        CarparkActivity.super.registerReceiver(CarparkActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
+        CarParkActivity.super.registerReceiver(CarParkActivity.this.gpsBroadcastReceiver, new IntentFilter("GPSTrackerService"));
 
     }
 
@@ -140,7 +140,7 @@ public final class CarparkActivity
     protected void onResume() {
 
         //forced to action
-        CarparkActivity.super.onResume();
+        CarParkActivity.super.onResume();
 
     }
 
@@ -148,7 +148,7 @@ public final class CarparkActivity
     public void onBackPressed() {
 
         //forced to action
-        DrawerLayout drawerLayout = (DrawerLayout) CarparkActivity.super.findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = (DrawerLayout) CarParkActivity.super.findViewById(R.id.drawer_layout);
 
         if (drawerLayout.isDrawerOpen(GravityCompat.END) == true){
 
@@ -157,7 +157,7 @@ public final class CarparkActivity
         }
         else{
 
-            CarparkActivity.this.close();
+            CarParkActivity.this.close();
 
         }
 
@@ -167,7 +167,7 @@ public final class CarparkActivity
     public void onPause(){
 
         //forced to action
-        CarparkActivity.super.onPause();
+        CarParkActivity.super.onPause();
 
     }
 
@@ -175,26 +175,26 @@ public final class CarparkActivity
     protected void onStop(){
 
         //forced to action
-        CarparkActivity.super.onStop();
+        CarParkActivity.super.onStop();
 
         //main
-        CarparkActivity.super.unregisterReceiver(CarparkActivity.this.gpsBroadcastReceiver);
+        CarParkActivity.super.unregisterReceiver(CarParkActivity.this.gpsBroadcastReceiver);
 
-        if (CarparkActivity.this.alertDialog != null){
+        if (CarParkActivity.this.alertDialog != null){
 
-            CarparkActivity.this.alertDialog.dismiss();
-
-        }
-
-        if (CarparkActivity.this.call != null){
-
-            CarparkActivity.this.call.cancel();
+            CarParkActivity.this.alertDialog.dismiss();
 
         }
 
-        CarparkActivity.this.openFragmentTask.cancel(true);
+        if (CarParkActivity.this.call != null){
 
-        CarparkActivity.this.setDefault();
+            CarParkActivity.this.call.cancel();
+
+        }
+
+        CarParkActivity.this.openFragmentTask.cancel(true);
+
+        CarParkActivity.this.setDefault();
 
     }
 
@@ -202,7 +202,7 @@ public final class CarparkActivity
     protected void onRestart(){
 
         //forced to action
-        CarparkActivity.super.onRestart();
+        CarParkActivity.super.onRestart();
 
     }
 
@@ -210,7 +210,7 @@ public final class CarparkActivity
     protected void onDestroy(){
 
         //forced to action
-        CarparkActivity.super.onDestroy();
+        CarParkActivity.super.onDestroy();
 
     }
 
@@ -218,7 +218,7 @@ public final class CarparkActivity
     public final boolean onCreateOptionsMenu(Menu menu) {
 
         //forced to action
-        CarparkActivity.super.getMenuInflater().inflate(R.menu.menu_dashboard_toolbar, menu);
+        CarParkActivity.super.getMenuInflater().inflate(R.menu.menu_dashboard_toolbar, menu);
 
         return true;
     }
@@ -227,7 +227,7 @@ public final class CarparkActivity
     public final boolean onOptionsItemSelected(MenuItem item) {
 
         //forced to action
-        DrawerLayout drawerLayout = (DrawerLayout) CarparkActivity.super.findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = (DrawerLayout) CarParkActivity.super.findViewById(R.id.drawer_layout);
         final int id = item.getItemId();
 
         if (id == R.id.action_openRight) {
@@ -236,32 +236,32 @@ public final class CarparkActivity
 
         }
 
-        return CarparkActivity.super.onOptionsItemSelected(item);
+        return CarParkActivity.super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
         //forced to action
-        DrawerLayout drawerLayout = (DrawerLayout) CarparkActivity.super.findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = (DrawerLayout) CarParkActivity.super.findViewById(R.id.drawer_layout);
         final int id = item.getItemId();
 
         switch (id) {
 
             case R.id.nav_carpark:
 
-                CarparkActivity.this.idFragment = CarparkActivity.CARPARK_FRAGMENT;
-                CarparkActivity.this.prepareToStart();
-                CarparkActivity.this.start();
+                CarParkActivity.this.idFragment = CarParkActivity.CARPARK_FRAGMENT;
+                CarParkActivity.this.prepareToStart();
+                CarParkActivity.this.start();
 
                 break;
 
 
             case  R.id.nav_place_nearest:
 
-                CarparkActivity.this.placeNearest = null;
-                CarparkActivity.this.prepareToStart();
-                CarparkActivity.this.start();
+                CarParkActivity.this.placeNearest = null;
+                CarParkActivity.this.prepareToStart();
+                CarParkActivity.this.start();
 
                 break;
 
@@ -279,15 +279,15 @@ public final class CarparkActivity
     @Override
     public final boolean dispatchTouchEvent(MotionEvent me){
 
-        CarparkActivity.this.detector.onTouchEvent(me);
+        CarParkActivity.this.detector.onTouchEvent(me);
 
-        return CarparkActivity.super.dispatchTouchEvent(me);
+        return CarParkActivity.super.dispatchTouchEvent(me);
     }
 
     @Override
     public void onSwipe(int direction) {
 
-        DrawerLayout drawerLayout = (DrawerLayout) CarparkActivity.super.findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = (DrawerLayout) CarParkActivity.super.findViewById(R.id.drawer_layout);
 
         if (drawerLayout.isDrawerOpen(GravityCompat.END) == false){
 
@@ -295,7 +295,7 @@ public final class CarparkActivity
 
                 case SimpleGestureFilter.SWIPE_RIGHT :
 
-                    CarparkActivity.this.close();
+                    CarParkActivity.this.close();
 
                     break;
 
@@ -318,22 +318,22 @@ public final class CarparkActivity
 
     private void setDefault(){
 
-        CarparkActivity.this.setDefaultValue();
-        CarparkActivity.this.setDefaultView();
+        CarParkActivity.this.setDefaultValue();
+        CarParkActivity.this.setDefaultView();
 
     }
 
     private void setDefaultValue(){
 
         //for menu
-        CarparkActivity.this.idFragment = CarparkActivity.CARPARK_FRAGMENT;
+        CarParkActivity.this.idFragment = CarParkActivity.CARPARK_FRAGMENT;
 
         //for start
-        CarparkActivity.this.result = true;
-        CarparkActivity.this.caseFail = CarparkActivity.EVERYTHING_OK;
-        CarparkActivity.this.api = new OneSpaceApi.Builder(getApplicationContext()).addConverterFactory(GsonConverterFactory.create()).build();
-        CarparkActivity.this.call = null;
-        CarparkActivity.this.callResponse = false;
+        CarParkActivity.this.result = true;
+        CarParkActivity.this.caseFail = CarParkActivity.EVERYTHING_OK;
+        CarParkActivity.this.api = new OneSpaceApi.Builder(getApplicationContext()).addConverterFactory(GsonConverterFactory.create()).build();
+        CarParkActivity.this.call = null;
+        CarParkActivity.this.callResponse = false;
 
         Intent intent = getIntent();
         if (intent != null){
@@ -348,44 +348,44 @@ public final class CarparkActivity
                 place.setLat(bundle.getDouble("Lat"));
                 place.setLng(bundle.getDouble("Lng"));
 
-                CarparkActivity.this.placeNearest = place;
+                CarParkActivity.this.placeNearest = place;
 
             }
             else{
 
-                CarparkActivity.this.placeNearest = null;
+                CarParkActivity.this.placeNearest = null;
 
             }
 
         }
         else{
 
-            CarparkActivity.this.placeNearest = null;
+            CarParkActivity.this.placeNearest = null;
 
         }
 
-        CarparkActivity.this.url = null;
-        CarparkActivity.this.items = new ArrayList<Parcelable>();
+        CarParkActivity.this.url = null;
+        CarParkActivity.this.items = new ArrayList<Parcelable>();
 
         //for dialog
-        CarparkActivity.this.alertDialog = null;
+        CarParkActivity.this.alertDialog = null;
 
         //for SimpleGestureFilter.SimpleGestureListener
-        CarparkActivity.this.detector = new SimpleGestureFilter(this, this);
+        CarParkActivity.this.detector = new SimpleGestureFilter(this, this);
 
         //for gpsBroadcastReceiver
-        CarparkActivity.this.gpsBroadcastReceiver = new CarparkActivity.GPSBroadcastReceiver();
+        CarParkActivity.this.gpsBroadcastReceiver = new CarParkActivity.GPSBroadcastReceiver();
 
     }
 
     private void setDefaultView(){
 
-        CarparkActivity.this.setDefaultStatusBar();
-        CarparkActivity.this.setDefaultAppBarLayout();
-        CarparkActivity.this.setDefaultDrawerLayout();
-        CarparkActivity.this.setDefaultNavigationView();
-        CarparkActivity.this.setDefaultToolbar();
-        CarparkActivity.this.setDefaultDistance();
+        CarParkActivity.this.setDefaultStatusBar();
+        CarParkActivity.this.setDefaultAppBarLayout();
+        CarParkActivity.this.setDefaultDrawerLayout();
+        CarParkActivity.this.setDefaultNavigationView();
+        CarParkActivity.this.setDefaultToolbar();
+        CarParkActivity.this.setDefaultDistance();
 
     }
 
@@ -397,7 +397,7 @@ public final class CarparkActivity
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-            Window window = CarparkActivity.super.getWindow();
+            Window window = CarParkActivity.super.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.BLACK);
 
@@ -407,7 +407,7 @@ public final class CarparkActivity
 
     private void setDefaultAppBarLayout(){
 
-        AppBarLayout appBarLayout = (AppBarLayout) CarparkActivity.super.findViewById(R.id.app_bar_layout);
+        AppBarLayout appBarLayout = (AppBarLayout) CarParkActivity.super.findViewById(R.id.app_bar_layout);
         appBarLayout.setBackgroundColor(Color.parseColor("#629B41"));
         appBarLayout.setExpanded(true, true);
 
@@ -415,9 +415,9 @@ public final class CarparkActivity
 
     private void setDefaultDrawerLayout(){
 
-        Toolbar toolbar = (Toolbar) CarparkActivity.super.findViewById(R.id.toolbar);
-        DrawerLayout drawerLayout = (DrawerLayout) CarparkActivity.super.findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(CarparkActivity.this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+        Toolbar toolbar = (Toolbar) CarParkActivity.super.findViewById(R.id.toolbar);
+        DrawerLayout drawerLayout = (DrawerLayout) CarParkActivity.super.findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(CarParkActivity.this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
 
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -431,7 +431,7 @@ public final class CarparkActivity
 
         };
 
-        CarparkActivity.super.setSupportActionBar(toolbar);
+        CarParkActivity.super.setSupportActionBar(toolbar);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
@@ -439,7 +439,7 @@ public final class CarparkActivity
 
     private void setDefaultNavigationView(){
 
-        NavigationView navigationView = (NavigationView) CarparkActivity.super.findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) CarParkActivity.super.findViewById(R.id.nav_view);
 
         navigationView.getMenu().clear();
 
@@ -463,14 +463,14 @@ public final class CarparkActivity
 
         }
 
-        navigationView.setNavigationItemSelectedListener(CarparkActivity.this);
+        navigationView.setNavigationItemSelectedListener(CarParkActivity.this);
         navigationView.setItemIconTintList(null);
 
     }
 
     private void setDefaultToolbar(){
 
-        Toolbar toolbar = (Toolbar) CarparkActivity.super.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) CarParkActivity.super.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -490,7 +490,7 @@ public final class CarparkActivity
 
     private void setDefaultDistance(){
 
-        TextView textView = (TextView) CarparkActivity.super.findViewById(R.id.text_distance);
+        TextView textView = (TextView) CarParkActivity.super.findViewById(R.id.text_distance);
         textView.setText("NO DISTANCE TO SHOW");
 
     }
@@ -502,15 +502,15 @@ public final class CarparkActivity
     private void prepareToStart(){
 
         //id fragment
-        CarparkActivity.this.result = true;
-        CarparkActivity.this.caseFail = CarparkActivity.EVERYTHING_OK;
-        CarparkActivity.this.call = null;
-        CarparkActivity.this.callResponse = false;
+        CarParkActivity.this.result = true;
+        CarParkActivity.this.caseFail = CarParkActivity.EVERYTHING_OK;
+        CarParkActivity.this.call = null;
+        CarParkActivity.this.callResponse = false;
         //placenearest
-        CarparkActivity.this.url = null;
-        CarparkActivity.this.items = new ArrayList<Parcelable>();
+        CarParkActivity.this.url = null;
+        CarParkActivity.this.items = new ArrayList<Parcelable>();
 
-        CarparkActivity.this.alertDialog = null;
+        CarParkActivity.this.alertDialog = null;
 
     }
 
@@ -520,13 +520,13 @@ public final class CarparkActivity
 
     private void start(){
 
-        if (CarparkActivity.this.caseFail == CarparkActivity.EVERYTHING_OK){
+        if (CarParkActivity.this.caseFail == CarParkActivity.EVERYTHING_OK){
 
-            CarparkActivity.this.openWaitingFragment();
+            CarParkActivity.this.openWaitingFragment();
 
-            CarparkActivity.this.openFragmentTask = new CarparkActivity.OpenFragmentTask();
+            CarParkActivity.this.openFragmentTask = new CarParkActivity.OpenFragmentTask();
 
-            CarparkActivity.this.openFragmentTask.execute();
+            CarParkActivity.this.openFragmentTask.execute();
 
         }
 
@@ -541,7 +541,7 @@ public final class CarparkActivity
         WaitingFragment waitingFragment = new WaitingFragment();
 
         //main
-        CarparkActivity.super.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, waitingFragment, waitingFragment.getClass().getSimpleName()).addToBackStack(null).commit();
+        CarParkActivity.super.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, waitingFragment, waitingFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
     }
 
@@ -553,15 +553,15 @@ public final class CarparkActivity
         protected Void doInBackground(Void... voids) {
 
             //prepare
-            CarparkActivity.this.checkUserLocation();
-            CarparkActivity.this.searchPlaceNearest();
+            CarParkActivity.this.checkUserLocation();
+            CarParkActivity.this.searchPlaceNearest();
 
-            switch (CarparkActivity.this.idFragment){
+            switch (CarParkActivity.this.idFragment){
 
-                case CarparkActivity.CARPARK_FRAGMENT :
+                case CarParkActivity.CARPARK_FRAGMENT :
 
-                    CarparkActivity.this.getURLCarpark();
-                    CarparkActivity.this.getItemsCarpark();
+                    CarParkActivity.this.getURLCarpark();
+                    CarParkActivity.this.getItemsCarpark();
 
                     break;
 
@@ -579,7 +579,7 @@ public final class CarparkActivity
         protected void onPostExecute(Void result) {
 
             //main
-            CarparkActivity.this.openFragment();
+            CarParkActivity.this.openFragment();
 
         }
 
@@ -594,8 +594,8 @@ public final class CarparkActivity
 
         if (UserLocationManager.isReady() == false){
 
-            CarparkActivity.this.result = false;
-            CarparkActivity.this.caseFail = CarparkActivity.DO_NOT_HAVE_LOCATION;
+            CarParkActivity.this.result = false;
+            CarParkActivity.this.caseFail = CarParkActivity.DO_NOT_HAVE_LOCATION;
 
         }
 
@@ -605,22 +605,22 @@ public final class CarparkActivity
 
         //init
         final Location userLocation = UserLocationManager.getLocation();
-        CarparkActivity.this.countDownLatch = new CountDownLatch(1);
-        CarparkActivity.this.call = CarparkActivity.this.api.getPlaces(userLocation.getLatitude()+ CarparkActivity.DISTANCE_AROUND_USER,
-                userLocation.getLongitude() + CarparkActivity.DISTANCE_AROUND_USER,
-                userLocation.getLatitude() - CarparkActivity.DISTANCE_AROUND_USER,
-                userLocation.getLongitude() - CarparkActivity.DISTANCE_AROUND_USER,
+        CarParkActivity.this.countDownLatch = new CountDownLatch(1);
+        CarParkActivity.this.call = CarParkActivity.this.api.getPlaces(userLocation.getLatitude()+ CarParkActivity.DISTANCE_AROUND_USER,
+                userLocation.getLongitude() + CarParkActivity.DISTANCE_AROUND_USER,
+                userLocation.getLatitude() - CarParkActivity.DISTANCE_AROUND_USER,
+                userLocation.getLongitude() - CarParkActivity.DISTANCE_AROUND_USER,
                 10);
-        CarparkActivity.this.callResponse = false;
+        CarParkActivity.this.callResponse = false;
 
         //before
-        if (CarparkActivity.this.result == false){
+        if (CarParkActivity.this.result == false){
 
             return;
 
         }
 
-        if (CarparkActivity.this.placeNearest != null){
+        if (CarParkActivity.this.placeNearest != null){
 
             return;
 
@@ -628,15 +628,15 @@ public final class CarparkActivity
 
         if (Connection.isInternetAvailable() == false){
 
-            CarparkActivity.this.result = false;
-            CarparkActivity.this.caseFail = CarparkActivity.INTERNET_NOT_AVAILABLE;
+            CarParkActivity.this.result = false;
+            CarParkActivity.this.caseFail = CarParkActivity.INTERNET_NOT_AVAILABLE;
 
             return;
 
         }
 
         //main
-        CarparkActivity.this.call.enqueue(new Callback<ArrayList<Place>>() {
+        CarParkActivity.this.call.enqueue(new Callback<ArrayList<Place>>() {
 
             private ArrayList<Place> placesNearlyList;
             private Place placeMin;
@@ -661,7 +661,7 @@ public final class CarparkActivity
                 //main
                 if (response.isSuccess()) {
 
-                    CarparkActivity.this.callResponse = true;
+                    CarParkActivity.this.callResponse = true;
 
                     for (Place place : response.body()) {
 
@@ -702,28 +702,28 @@ public final class CarparkActivity
                 }
                 else{
 
-                    CarparkActivity.this.callResponse = true;
-                    CarparkActivity.this.result = false;
-                    CarparkActivity.this.caseFail = CarparkActivity.CAN_NOT_CONNECT_TO_SERVER;
+                    CarParkActivity.this.callResponse = true;
+                    CarParkActivity.this.result = false;
+                    CarParkActivity.this.caseFail = CarParkActivity.CAN_NOT_CONNECT_TO_SERVER;
 
                 }
 
                 //after
                 if (this.placesNearlyList.size() == 0){
 
-                    CarparkActivity.this.placeNearest = this.placeMin;
-                    CarparkActivity.this.result = false;
-                    CarparkActivity.this.caseFail = CarparkActivity.NO_DATA;
-                    CarparkActivity.this.countDownLatch.countDown();
+                    CarParkActivity.this.placeNearest = this.placeMin;
+                    CarParkActivity.this.result = false;
+                    CarParkActivity.this.caseFail = CarParkActivity.NO_DATA;
+                    CarParkActivity.this.countDownLatch.countDown();
 
                 }
                 else{
 
                     if (this.placesNearlyList.size() == 1){
 
-                        CarparkActivity.this.placeNearest = this.placeMin;
+                        CarParkActivity.this.placeNearest = this.placeMin;
 
-                        CarparkActivity.this.countDownLatch.countDown();
+                        CarParkActivity.this.countDownLatch.countDown();
 
                     }
                     else{
@@ -743,7 +743,7 @@ public final class CarparkActivity
 
                         }
 
-                        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(CarparkActivity.this, R.style.MyAlertDialogStyle);
+                        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(CarParkActivity.this, R.style.MyAlertDialogStyle);
                         builder.setTitle("The places near you.(Please select)");
                         builder.setSingleChoiceItems(placesTextArray, -1, new DialogInterface.OnClickListener() {
 
@@ -760,20 +760,20 @@ public final class CarparkActivity
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
 
-                                CarparkActivity.this.placeNearest = placesNearlyList.get(selectItem);
+                                CarParkActivity.this.placeNearest = placesNearlyList.get(selectItem);
 
-                                CarparkActivity.this.countDownLatch.countDown();
+                                CarParkActivity.this.countDownLatch.countDown();
 
                                 dialog.dismiss();
-                                CarparkActivity.this.alertDialog = null;
+                                CarParkActivity.this.alertDialog = null;
 
                             }
 
                         });
 
-                        CarparkActivity.this.alertDialog = builder.create();
-                        CarparkActivity.this.alertDialog.setCanceledOnTouchOutside(false);
-                        CarparkActivity.this.alertDialog.setOnKeyListener(new Dialog.OnKeyListener() {
+                        CarParkActivity.this.alertDialog = builder.create();
+                        CarParkActivity.this.alertDialog.setCanceledOnTouchOutside(false);
+                        CarParkActivity.this.alertDialog.setOnKeyListener(new Dialog.OnKeyListener() {
 
                             @Override
                             public boolean onKey(DialogInterface arg0, int keyCode, KeyEvent event) {
@@ -781,18 +781,18 @@ public final class CarparkActivity
                                 // TODO Auto-generated method stub
                                 if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-                                    CarparkActivity.this.alertDialog.dismiss();
-                                    CarparkActivity.this.alertDialog = null;
-                                    CarparkActivity.this.close();
+                                    CarParkActivity.this.alertDialog.dismiss();
+                                    CarParkActivity.this.alertDialog = null;
+                                    CarParkActivity.this.close();
 
                                 }
                                 return true;
                             }
                         });
 
-                        CarparkActivity.this.alertDialog.show();
+                        CarParkActivity.this.alertDialog.show();
 
-                        CarparkActivity.this.alertDialog.getListView().setItemChecked(selectItem, true);
+                        CarParkActivity.this.alertDialog.getListView().setItemChecked(selectItem, true);
 
                     }
 
@@ -817,10 +817,10 @@ public final class CarparkActivity
                     e.printStackTrace();
                 }
 
-                if (CarparkActivity.this.callResponse == false && CarparkActivity.this.call != null){
+                if (CarParkActivity.this.callResponse == false && CarParkActivity.this.call != null){
 
-                    CarparkActivity.this.call.cancel();
-                    CarparkActivity.this.countDownLatch.countDown();
+                    CarParkActivity.this.call.cancel();
+                    CarParkActivity.this.countDownLatch.countDown();
 
                 }
 
@@ -831,26 +831,26 @@ public final class CarparkActivity
         thread.start();
 
         try {
-            CarparkActivity.this.countDownLatch.await();
-            CarparkActivity.this.countDownLatch = null;
+            CarParkActivity.this.countDownLatch.await();
+            CarParkActivity.this.countDownLatch = null;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        if (CarparkActivity.this.callResponse == false){
+        if (CarParkActivity.this.callResponse == false){
 
             if (Connection.isInternetAvailable() == false){
 
-                CarparkActivity.this.result = false;
-                CarparkActivity.this.caseFail = CarparkActivity.INTERNET_NOT_AVAILABLE;
+                CarParkActivity.this.result = false;
+                CarParkActivity.this.caseFail = CarParkActivity.INTERNET_NOT_AVAILABLE;
 
                 return;
 
             }
             else{
 
-                CarparkActivity.this.result = false;
-                CarparkActivity.this.caseFail = CarparkActivity.CAN_NOT_CONNECT_TO_SERVER;
+                CarParkActivity.this.result = false;
+                CarParkActivity.this.caseFail = CarParkActivity.CAN_NOT_CONNECT_TO_SERVER;
 
                 return;
 
@@ -859,8 +859,8 @@ public final class CarparkActivity
         }
 
         //after
-        CarparkActivity.this.call = null;
-        CarparkActivity.this.callResponse = false;
+        CarParkActivity.this.call = null;
+        CarParkActivity.this.callResponse = false;
 
     }
 
@@ -873,21 +873,21 @@ public final class CarparkActivity
     private void getURLCarpark(){
 
         //before
-        if (CarparkActivity.this.result == false){
+        if (CarParkActivity.this.result == false){
 
             return;
 
         }
 
         //main
-        CarparkActivity.this.url = "http://172.29.33.45:11090/data/?tabid=0&type=lta&vloc=" + CarparkActivity.this.placeNearest.getVloc() + "&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10";
+        CarParkActivity.this.url = "http://172.29.33.45:11090/data/?tabid=0&type=lta&vloc=" + CarParkActivity.this.placeNearest.getVloc() + "&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10";
 
     }
 
     private void getItemsCarpark(){
 
         //before
-        if (CarparkActivity.this.result == false){
+        if (CarParkActivity.this.result == false){
 
             return;
 
@@ -895,20 +895,20 @@ public final class CarparkActivity
 
         if (Connection.isInternetAvailable() == false){
 
-            CarparkActivity.this.result = false;
-            CarparkActivity.this.caseFail = CarparkActivity.INTERNET_NOT_AVAILABLE;
+            CarParkActivity.this.result = false;
+            CarParkActivity.this.caseFail = CarParkActivity.INTERNET_NOT_AVAILABLE;
 
             return;
 
         }
 
         //main
-        JSONObject jsonObject = Connection.getJSON(CarparkActivity.this.url);
+        JSONObject jsonObject = Connection.getJSON(CarParkActivity.this.url);
 
         if (jsonObject.length() == 0){
 
-            CarparkActivity.this.result = false;
-            CarparkActivity.this.caseFail = CarparkActivity.CAN_NOT_CONNECT_TO_SERVER;
+            CarParkActivity.this.result = false;
+            CarParkActivity.this.caseFail = CarParkActivity.CAN_NOT_CONNECT_TO_SERVER;
 
             return;
 
@@ -928,8 +928,8 @@ public final class CarparkActivity
 
         if (jsonArray.length() == 0){
 
-            CarparkActivity.this.result = false;
-            CarparkActivity.this.caseFail = CarparkActivity.NO_DATA;
+            CarParkActivity.this.result = false;
+            CarParkActivity.this.caseFail = CarParkActivity.NO_DATA;
 
             return;
 
@@ -944,7 +944,7 @@ public final class CarparkActivity
 
                 JSONObject object = jsonArray.getJSONObject(index);
 
-                CarparkActivity.this.items.add(new CarparkFragment.CarparkItem(R.drawable.ic_dashboard_carpark_car, String.valueOf(object.get("area")), String.valueOf(object.get("development")), String.valueOf(object.get("available_lots")), String.valueOf(object.get("distance_in_km"))));
+                CarParkActivity.this.items.add(new CarParkFragment.CarparkItem(R.drawable.ic_dashboard_carpark_car, String.valueOf(object.get("area")), String.valueOf(object.get("development")), String.valueOf(object.get("available_lots")), String.valueOf(object.get("distance_in_km"))));
 
 
             } catch (JSONException e) {
@@ -970,15 +970,15 @@ public final class CarparkActivity
         CanNotConnectedToServerFragment notConnectingToServerFragment = new CanNotConnectedToServerFragment();
         NoDataFragment noDataFragment = new NoDataFragment();
 
-        CarparkFragment carparkFragment = new CarparkFragment();
+        CarParkFragment carparkFragment = new CarParkFragment();
 
         //main
-        if (CarparkActivity.this.result == false) {
+        if (CarParkActivity.this.result == false) {
 
-            Toolbar toolbar = (Toolbar) CarparkActivity.super.findViewById(R.id.toolbar);
-            TextView textView = (TextView) CarparkActivity.super.findViewById(R.id.text_distance);
+            Toolbar toolbar = (Toolbar) CarParkActivity.super.findViewById(R.id.toolbar);
+            TextView textView = (TextView) CarParkActivity.super.findViewById(R.id.text_distance);
 
-            if (CarparkActivity.this.placeNearest == null){
+            if (CarParkActivity.this.placeNearest == null){
 
                 toolbar.setSubtitle(R.string.default_subTitle_activity_dash_board);
                 textView.setText("NO DISTANCE TO SHOW");
@@ -987,15 +987,15 @@ public final class CarparkActivity
             else{
 
                 Location location = new Location("placeNearly");
-                location.setLatitude(CarparkActivity.this.placeNearest.getLat());
-                location.setLongitude(CarparkActivity.this.placeNearest.getLng());
+                location.setLatitude(CarParkActivity.this.placeNearest.getLat());
+                location.setLongitude(CarParkActivity.this.placeNearest.getLng());
 
-                toolbar.setSubtitle(CarparkActivity.this.placeNearest.getName());
+                toolbar.setSubtitle(CarParkActivity.this.placeNearest.getName());
                 textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
 
             }
 
-            if (CarparkActivity.this.caseFail == CarparkActivity.DO_NOT_HAVE_LOCATION){
+            if (CarParkActivity.this.caseFail == CarParkActivity.DO_NOT_HAVE_LOCATION){
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main, doNotHaveLocationFragment, doNotHaveLocationFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
@@ -1010,18 +1010,18 @@ public final class CarparkActivity
                             e.printStackTrace();
                         }
 
-                        CarparkActivity.this.start();
+                        CarParkActivity.this.start();
 
                     }
 
                 };
 
-                CarparkActivity.this.prepareToStart();
+                CarParkActivity.this.prepareToStart();
                 thread.start();
 
             }
 
-            if (CarparkActivity.this.caseFail == CarparkActivity.INTERNET_NOT_AVAILABLE) {
+            if (CarParkActivity.this.caseFail == CarParkActivity.INTERNET_NOT_AVAILABLE) {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main, internetNotAvailableFragment, internetNotAvailableFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
@@ -1036,8 +1036,8 @@ public final class CarparkActivity
                             e.printStackTrace();
                         }
 
-                        CarparkActivity.this.prepareToStart();
-                        CarparkActivity.this.start();
+                        CarParkActivity.this.prepareToStart();
+                        CarParkActivity.this.start();
 
                     }
 
@@ -1047,7 +1047,7 @@ public final class CarparkActivity
 
             }
 
-            if (CarparkActivity.this.caseFail == CarparkActivity.CAN_NOT_CONNECT_TO_SERVER) {
+            if (CarParkActivity.this.caseFail == CarParkActivity.CAN_NOT_CONNECT_TO_SERVER) {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main, notConnectingToServerFragment, notConnectingToServerFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
@@ -1062,45 +1062,45 @@ public final class CarparkActivity
                             e.printStackTrace();
                         }
 
-                        CarparkActivity.this.start();
+                        CarParkActivity.this.start();
 
                     }
 
                 };
 
-                CarparkActivity.this.prepareToStart();
+                CarParkActivity.this.prepareToStart();
                 thread.start();
 
             }
 
-            if (CarparkActivity.this.caseFail == CarparkActivity.NO_DATA) {
+            if (CarParkActivity.this.caseFail == CarParkActivity.NO_DATA) {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main, noDataFragment, noDataFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
             }
 
-            CarparkActivity.this.caseFail = CarparkActivity.END;
+            CarParkActivity.this.caseFail = CarParkActivity.END;
 
         }
         else{
 
-            Toolbar toolbar = (Toolbar) CarparkActivity.super.findViewById(R.id.toolbar);
-            TextView textView = (TextView) CarparkActivity.super.findViewById(R.id.text_distance);
+            Toolbar toolbar = (Toolbar) CarParkActivity.super.findViewById(R.id.toolbar);
+            TextView textView = (TextView) CarParkActivity.super.findViewById(R.id.text_distance);
 
             Location location = new Location("placeNearly");
-            location.setLatitude(CarparkActivity.this.placeNearest.getLat());
-            location.setLongitude(CarparkActivity.this.placeNearest.getLng());
+            location.setLatitude(CarParkActivity.this.placeNearest.getLat());
+            location.setLongitude(CarParkActivity.this.placeNearest.getLng());
 
-            toolbar.setSubtitle(CarparkActivity.this.placeNearest.getName());
+            toolbar.setSubtitle(CarParkActivity.this.placeNearest.getName());
             textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
 
-            switch (CarparkActivity.this.idFragment){
+            switch (CarParkActivity.this.idFragment){
 
-                case CarparkActivity.CARPARK_FRAGMENT:
+                case CarParkActivity.CARPARK_FRAGMENT:
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("url", CarparkActivity.this.url);
-                    bundle.putParcelableArrayList("items", CarparkActivity.this.items);
+                    bundle.putString("url", CarParkActivity.this.url);
+                    bundle.putParcelableArrayList("items", CarParkActivity.this.items);
                     carparkFragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction().replace(R.id.content_main, carparkFragment, carparkFragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
@@ -1108,7 +1108,7 @@ public final class CarparkActivity
 
             }
 
-            CarparkActivity.this.caseFail = CarparkActivity.END;
+            CarParkActivity.this.caseFail = CarParkActivity.END;
 
         }
 
@@ -1120,9 +1120,9 @@ public final class CarparkActivity
 
     private void close(){
 
-        CarparkActivity.super.finish();
+        CarParkActivity.super.finish();
 
-        CarparkActivity.super.overridePendingTransition(R.anim.nothing, R.anim.slide_out_to_right);
+        CarParkActivity.super.overridePendingTransition(R.anim.nothing, R.anim.slide_out_to_right);
 
     }
 
@@ -1143,13 +1143,13 @@ public final class CarparkActivity
             UserLocationManager.setLongitude(b.getDouble("longitude", 0));
 
             //main
-            TextView textView = (TextView) CarparkActivity.super.findViewById(R.id.text_distance);
+            TextView textView = (TextView) CarParkActivity.super.findViewById(R.id.text_distance);
 
-            if (CarparkActivity.this.placeNearest != null){
+            if (CarParkActivity.this.placeNearest != null){
 
                 Location location = new Location("placeNearly");
-                location.setLatitude(CarparkActivity.this.placeNearest.getLat());
-                location.setLongitude(CarparkActivity.this.placeNearest.getLng());
+                location.setLatitude(CarParkActivity.this.placeNearest.getLat());
+                location.setLongitude(CarParkActivity.this.placeNearest.getLng());
 
                 textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
 

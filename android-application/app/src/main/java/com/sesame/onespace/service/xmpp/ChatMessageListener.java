@@ -115,7 +115,7 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
 
                             PendingIntent pi = PendingIntent.getActivity(mContext, 0, dialogIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                             Notification notification = new NotificationCompat.Builder(mContext)
-                                    .setSmallIcon(R.mipmap.ic_launcher_trim)
+                                    .setSmallIcon(R.drawable.ic_app_notification)
                                     .setContentTitle(msgFrom.split("@")[0] + " send message.")
                                     .setContentText(jsonObject.getJSONObject("question").get("str") + "")
                                     .setContentIntent(pi)

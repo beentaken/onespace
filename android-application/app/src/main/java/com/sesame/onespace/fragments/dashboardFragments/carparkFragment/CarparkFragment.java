@@ -1,4 +1,4 @@
-package com.sesame.onespace.fragments.dashboardFragments.carparkFragment;
+package com.sesame.onespace.fragments.dashboardFragments.carParkFragment;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -32,7 +32,7 @@ import java.util.List;
  * Created by Thian on 4/1/2560.
  */
 
-public final class CarparkFragment
+public final class CarParkFragment
         extends Fragment {
 
     //===========================================================================================================//
@@ -44,8 +44,8 @@ public final class CarparkFragment
 
     private String url;
 
-    private CarparkFragment.CarparkAdapter adapter;
-    private List<CarparkFragment.CarparkItem> items;
+    private CarParkFragment.CarparkAdapter adapter;
+    private List<CarParkFragment.CarparkItem> items;
 
     //===========================================================================================================//
     //  ON ACTION                                                                                   ON ACTION
@@ -54,9 +54,9 @@ public final class CarparkFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        CarparkFragment.this.init(inflater, container);
+        CarParkFragment.this.init(inflater, container);
 
-        return CarparkFragment.this.view;
+        return CarParkFragment.this.view;
     }
 
     //===========================================================================================================//
@@ -66,41 +66,41 @@ public final class CarparkFragment
 
     private void init(LayoutInflater inflater, ViewGroup container){
 
-        CarparkFragment.this.initDefaultValue(inflater, container);
-        CarparkFragment.this.initRecyclerView();
+        CarParkFragment.this.initDefaultValue(inflater, container);
+        CarParkFragment.this.initRecyclerView();
 
     }
 
     private void initDefaultValue(LayoutInflater inflater, ViewGroup container){
 
-        CarparkFragment.this.context = CarparkFragment.this.getContext();
-        CarparkFragment.this.view = inflater.inflate(R.layout.fragment_dashboard_carpark, container, false);
+        CarParkFragment.this.context = CarParkFragment.this.getContext();
+        CarParkFragment.this.view = inflater.inflate(R.layout.fragment_dashboard_carpark, container, false);
 
-        CarparkFragment.this.url = CarparkFragment.this.getArguments().getString("url");
-        CarparkFragment.this.items = CarparkFragment.this.getArguments().getParcelableArrayList("items");
+        CarParkFragment.this.url = CarParkFragment.this.getArguments().getString("url");
+        CarParkFragment.this.items = CarParkFragment.this.getArguments().getParcelableArrayList("items");
 
     }
 
     private void initRecyclerView(){
 
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing_tweets_items);
-        CarparkFragment.SpacesItemDecoration spacesItemDecoration = new CarparkFragment.SpacesItemDecoration(spacingInPixels);
+        CarParkFragment.SpacesItemDecoration spacesItemDecoration = new CarParkFragment.SpacesItemDecoration(spacingInPixels);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CarparkFragment.this.context);
-        CarparkFragment.this.adapter = new CarparkFragment.CarparkAdapter(CarparkFragment.this.context, CarparkFragment.this.items);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CarParkFragment.this.context);
+        CarParkFragment.this.adapter = new CarParkFragment.CarparkAdapter(CarParkFragment.this.context, CarParkFragment.this.items);
 
-        RecyclerView recyclerView = (RecyclerView) CarparkFragment.this.view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) CarParkFragment.this.view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(spacesItemDecoration);
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setAdapter(CarparkFragment.this.adapter);
+        recyclerView.setAdapter(CarParkFragment.this.adapter);
 
         recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int current_page) {
 
-                CarparkFragment.this.addRecyclerView();
+                CarParkFragment.this.addRecyclerView();
 
             }
         });
@@ -139,14 +139,14 @@ public final class CarparkFragment
 
     private void addRecyclerView(){
 
-        new CarparkFragment.DownloadFilesTask().execute();
+        new CarParkFragment.DownloadFilesTask().execute();
 
     }
 
     private void loadData() {
 
-        JSONObject jsonObject = CarparkFragment.this.connectToServer();
-        JSONArray jsonArray = CarparkFragment.this.getData(jsonObject);
+        JSONObject jsonObject = CarParkFragment.this.connectToServer();
+        JSONArray jsonArray = CarParkFragment.this.getData(jsonObject);
 
         int length = jsonArray.length();
         int index = 0;
@@ -156,7 +156,7 @@ public final class CarparkFragment
             try {
 
                 JSONObject object = jsonArray.getJSONObject(index);
-                CarparkFragment.this.items.add(new CarparkFragment.CarparkItem(R.drawable.ic_dashboard_carpark_car, String.valueOf(object.get("area")), String.valueOf(object.get("development")), String.valueOf(object.get("available_lots")), String.valueOf(object.get("distance_in_km"))));
+                CarParkFragment.this.items.add(new CarParkFragment.CarparkItem(R.drawable.ic_dashboard_carpark_car, String.valueOf(object.get("area")), String.valueOf(object.get("development")), String.valueOf(object.get("available_lots")), String.valueOf(object.get("distance_in_km"))));
 
 
             } catch (JSONException e) {
@@ -173,7 +173,7 @@ public final class CarparkFragment
 
     private JSONObject connectToServer(){
 
-        JSONObject jsonObject = Connection.getJSON(CarparkFragment.this.url);
+        JSONObject jsonObject = Connection.getJSON(CarParkFragment.this.url);
 
         return jsonObject;
 
@@ -204,7 +204,7 @@ public final class CarparkFragment
 
         protected Boolean doInBackground(Void ... voids) {
 
-            CarparkFragment.this.loadData();
+            CarParkFragment.this.loadData();
 
             return true;
 
@@ -218,19 +218,19 @@ public final class CarparkFragment
 
         protected void onPostExecute(Boolean result) {
 
-            CarparkFragment.this.adapter.notifyDataSetChanged();
+            CarParkFragment.this.adapter.notifyDataSetChanged();
 
         }
 
     }
 
     public final class CarparkAdapter
-            extends RecyclerView.Adapter<CarparkFragment.ViewHolder> {
+            extends RecyclerView.Adapter<CarParkFragment.ViewHolder> {
 
-        private List<CarparkFragment.CarparkItem> items;
+        private List<CarParkFragment.CarparkItem> items;
         private Context mContext;
 
-        public CarparkAdapter(Context context, List<CarparkFragment.CarparkItem> settingItems) {
+        public CarparkAdapter(Context context, List<CarParkFragment.CarparkItem> settingItems) {
 
             CarparkAdapter.this.items = settingItems;
             CarparkAdapter.this.mContext = context;
@@ -238,17 +238,17 @@ public final class CarparkFragment
         }
 
         @Override
-        public CarparkFragment.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        public CarParkFragment.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_dashboard_carpark, null);
 
-            return new CarparkFragment.ViewHolder(view);
+            return new CarParkFragment.ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(CarparkFragment.ViewHolder viewHolder, int i) {
+        public void onBindViewHolder(CarParkFragment.ViewHolder viewHolder, int i) {
 
-            final CarparkFragment.CarparkItem item = items.get(i);
+            final CarParkFragment.CarparkItem item = items.get(i);
 
             String colorStart = "#B6B6B6";
             String colorEnd = "#FFFFFF";
@@ -301,15 +301,15 @@ public final class CarparkFragment
     public final static class CarparkItem
             implements Parcelable {
 
-        public static final Creator<CarparkFragment.CarparkItem> CREATOR = new Creator<CarparkFragment.CarparkItem>() {
+        public static final Creator<CarParkFragment.CarparkItem> CREATOR = new Creator<CarParkFragment.CarparkItem>() {
             @Override
-            public CarparkFragment.CarparkItem createFromParcel(Parcel in) {
-                return new CarparkFragment.CarparkItem(in.readBundle());
+            public CarParkFragment.CarparkItem createFromParcel(Parcel in) {
+                return new CarParkFragment.CarparkItem(in.readBundle());
             }
 
             @Override
-            public CarparkFragment.CarparkItem[] newArray(int size) {
-                return new CarparkFragment.CarparkItem[size];
+            public CarParkFragment.CarparkItem[] newArray(int size) {
+                return new CarParkFragment.CarparkItem[size];
             }
         };
 

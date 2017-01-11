@@ -11,7 +11,7 @@ import android.support.v7.app.AlertDialog;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.sesame.onespace.R;
 import com.sesame.onespace.activities.dashboardActivities.BusInfoActivity;
-import com.sesame.onespace.activities.dashboardActivities.CarparkActivity;
+import com.sesame.onespace.activities.dashboardActivities.CarParkActivity;
 import com.sesame.onespace.activities.dashboardActivities.FlickrActivity;
 import com.sesame.onespace.activities.dashboardActivities.InstagramActivity;
 import com.sesame.onespace.activities.dashboardActivities.TwitterActivity;
@@ -172,7 +172,7 @@ public class PlaceBottomSheet implements DialogInterface.OnClickListener {
 
                             case 5:
 
-                                intent = new Intent(context, CarparkActivity.class);
+                                intent = new Intent(context, CarParkActivity.class);
                                 bundle = new Bundle();
                                 bundle.putString("Name", place.getName());
                                 bundle.putString("Vloc", place.getVloc());

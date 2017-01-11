@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.sesame.onespace.R;
 import com.sesame.onespace.activities.dashboardActivities.BusInfoActivity;
-import com.sesame.onespace.activities.dashboardActivities.CarparkActivity;
+import com.sesame.onespace.activities.dashboardActivities.CarParkActivity;
 import com.sesame.onespace.activities.dashboardActivities.FlickrActivity;
 import com.sesame.onespace.activities.dashboardActivities.InstagramActivity;
 import com.sesame.onespace.activities.dashboardActivities.TwitterActivity;
@@ -208,7 +208,7 @@ public final class DashboardMainFragment
 
                     if (dashboardItem.getActivityID() == 6){
 
-                        intent = new Intent(getContext(), CarparkActivity.class);
+                        intent = new Intent(getContext(), CarParkActivity.class);
 
                     }
 
