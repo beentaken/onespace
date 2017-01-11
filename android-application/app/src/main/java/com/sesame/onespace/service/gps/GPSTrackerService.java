@@ -98,39 +98,49 @@ public final class GPSTrackerService
 
         Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
+        if (location == null){
 
-        Observable<String> observable = new OneSpaceApi.Builder(getApplicationContext())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build()
-                .updateGeoLocationRx(userid,
-                        location.getLatitude(),
-                        location.getLongitude());
+            location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-        observable.subscribe(new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-                com.sesame.onespace.utils.Log.i("PutLocation completed");
-            }
+        }
 
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-            }
+        if (location != null){
 
-            @Override
-            public void onNext(String s) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
 
-            }
-        });
+            Observable<String> observable = new OneSpaceApi.Builder(getApplicationContext())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .build()
+                    .updateGeoLocationRx(userid,
+                            location.getLatitude(),
+                            location.getLongitude());
 
-        Intent intent = new Intent();
-        intent.setAction("GPSTrackerService");
-        intent.putExtra("latitude", latitude);
-        intent.putExtra("longitude", longitude);
-        sendBroadcast(intent);
+            observable.subscribe(new Subscriber<String>() {
+                @Override
+                public void onCompleted() {
+                    com.sesame.onespace.utils.Log.i("PutLocation completed");
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onNext(String s) {
+
+                }
+            });
+
+            Intent intent = new Intent();
+            intent.setAction("GPSTrackerService");
+            intent.putExtra("latitude", latitude);
+            intent.putExtra("longitude", longitude);
+            sendBroadcast(intent);
+
+        }
 
     }
 
