@@ -67,46 +67,46 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                             //----------------------------------------------------------------------
                             //Thianchai (I add this for QAMessage)
 
+                            String questionId = jsonObject.getJSONObject("question").get("id") + "";
+                            String questionStr = jsonObject.getJSONObject("question").get("str") + "";
+                            ArrayList<String> answerIdList = new ArrayList<String>();
+                            ArrayList<String> answerStrList = new ArrayList<String>();
+
+                            Long tsLong = System.currentTimeMillis()/1000;
+                            String ts = tsLong.toString();
+                            String date = DateConvert.convertTimeStampToDate(ts, DateConvert.DATE_FORMAT1);
+
+                            JSONArray jsonArray = jsonObject.getJSONArray("answers");
+
+                            int index = 0;
+
+                            while(index < jsonArray.length()){
+
+                                answerIdList.add((String) ((JSONObject) jsonArray.get(index)).get("id"));
+
+                                index = index + 1;
+
+                            }
+
+                            index = 0;
+
+                            while(index < jsonArray.length()){
+
+                                answerStrList.add((String) ((JSONObject) jsonArray.get(index)).get("str"));
+
+                                index = index + 1;
+
+                            }
+
+                            QAMessageHelper qaMessageHelper = new QAMessageHelper(mContext);
+                            qaMessageHelper.addQAMessage(new QAMessage(msgFrom ,
+                                    questionId,
+                                    questionStr,
+                                    answerIdList,
+                                    answerStrList,
+                                    date));
+
                             if (isAppOnForeground(mContext) == false){
-
-                                String questionId = jsonObject.getJSONObject("question").get("id") + "";
-                                String questionStr = jsonObject.getJSONObject("question").get("str") + "";
-                                ArrayList<String> answerIdList = new ArrayList<String>();
-                                ArrayList<String> answerStrList = new ArrayList<String>();
-
-                                Long tsLong = System.currentTimeMillis()/1000;
-                                String ts = tsLong.toString();
-                                String date = DateConvert.convertTimeStampToDate(ts, DateConvert.DATE_FORMAT1);
-
-                                JSONArray jsonArray = jsonObject.getJSONArray("answers");
-
-                                int index = 0;
-
-                                while(index < jsonArray.length()){
-
-                                    answerIdList.add((String) ((JSONObject) jsonArray.get(index)).get("id"));
-
-                                    index = index + 1;
-
-                                }
-
-                                index = 0;
-
-                                while(index < jsonArray.length()){
-
-                                    answerStrList.add((String) ((JSONObject) jsonArray.get(index)).get("str"));
-
-                                    index = index + 1;
-
-                                }
-
-                                QAMessageHelper qaMessageHelper = new QAMessageHelper(mContext);
-                                qaMessageHelper.addQAMessage(new QAMessage(msgFrom ,
-                                        questionId,
-                                        questionStr,
-                                        answerIdList,
-                                        answerStrList,
-                                        date));
 
                                 ArrayList<QAMessage> list = qaMessageHelper.getAllQAMessages();
 
