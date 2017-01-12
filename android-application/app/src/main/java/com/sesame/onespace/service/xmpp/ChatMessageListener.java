@@ -1,16 +1,20 @@
 package com.sesame.onespace.service.xmpp;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.NotificationCompat;
 
 import com.sesame.onespace.R;
 import com.sesame.onespace.activities.dialogActivities.QAMessageDialogActivity;
 import com.sesame.onespace.databases.qaMessageDatabases.QAMessageHelper;
+import com.sesame.onespace.managers.SettingsManager;
 import com.sesame.onespace.models.chat.ChatMessage;
 import com.sesame.onespace.models.qaMessage.QAMessage;
 import com.sesame.onespace.service.MessageService;
@@ -25,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by chongos on 10/22/15 AD.
@@ -61,69 +67,88 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                             //----------------------------------------------------------------------
                             //Thianchai (I add this for QAMessage)
 
-                            String questionId = jsonObject.getJSONObject("question").get("id") + "";
-                            String questionStr = jsonObject.getJSONObject("question").get("str") + "";
-                            ArrayList<String> answerIdList = new ArrayList<String>();
-                            ArrayList<String> answerStrList = new ArrayList<String>();
+                            if (isAppOnForeground(mContext) == false){
 
-                            Long tsLong = System.currentTimeMillis()/1000;
-                            String ts = tsLong.toString();
-                            String date = DateConvert.convertTimeStampToDate(ts, DateConvert.DATE_FORMAT1);
+                                String questionId = jsonObject.getJSONObject("question").get("id") + "";
+                                String questionStr = jsonObject.getJSONObject("question").get("str") + "";
+                                ArrayList<String> answerIdList = new ArrayList<String>();
+                                ArrayList<String> answerStrList = new ArrayList<String>();
 
-                            JSONArray jsonArray = jsonObject.getJSONArray("answers");
+                                Long tsLong = System.currentTimeMillis()/1000;
+                                String ts = tsLong.toString();
+                                String date = DateConvert.convertTimeStampToDate(ts, DateConvert.DATE_FORMAT1);
 
-                            int index = 0;
+                                JSONArray jsonArray = jsonObject.getJSONArray("answers");
 
-                            while(index < jsonArray.length()){
+                                int index = 0;
 
-                                answerIdList.add((String) ((JSONObject) jsonArray.get(index)).get("id"));
+                                while(index < jsonArray.length()){
 
-                                index = index + 1;
+                                    answerIdList.add((String) ((JSONObject) jsonArray.get(index)).get("id"));
+
+                                    index = index + 1;
+
+                                }
+
+                                index = 0;
+
+                                while(index < jsonArray.length()){
+
+                                    answerStrList.add((String) ((JSONObject) jsonArray.get(index)).get("str"));
+
+                                    index = index + 1;
+
+                                }
+
+                                QAMessageHelper qaMessageHelper = new QAMessageHelper(mContext);
+                                qaMessageHelper.addQAMessage(new QAMessage(msgFrom ,
+                                        questionId,
+                                        questionStr,
+                                        answerIdList,
+                                        answerStrList,
+                                        date));
+
+                                ArrayList<QAMessage> list = qaMessageHelper.getAllQAMessages();
+
+                                Intent dialogIntent = new Intent(mContext, QAMessageDialogActivity.class);
+                                dialogIntent.putExtra("id", list.get(list.size() - 1).getId());
+                                dialogIntent.putExtra("msgFrom", msgFrom);
+                                dialogIntent.putExtra("questionId", questionId);
+                                dialogIntent.putExtra("questionStr", questionStr);
+                                dialogIntent.putStringArrayListExtra("answerIdList", answerIdList);
+                                dialogIntent.putStringArrayListExtra("answerStrList", answerStrList);
+                                dialogIntent.putExtra("date", date);
+                                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+
+                                PendingIntent pi = PendingIntent.getActivity(mContext, 0, dialogIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                                Notification notification = new NotificationCompat.Builder(mContext)
+                                        .setSmallIcon(R.drawable.ic_app_notification)
+                                        .setContentTitle(msgFrom.split("@")[0] + " send message.")
+                                        .setContentText(jsonObject.getJSONObject("question").get("str") + "")
+                                        .setContentIntent(pi)
+                                        .setAutoCancel(true)
+                                        .build();
+
+                                SettingsManager settingsManager =  SettingsManager.getSettingsManager(mContext);
+
+                                if(settingsManager.notificationSound)
+                                    notification.sound = Uri.parse(settingsManager.notificationRingtone);
+
+                                if(settingsManager.notificationVibrate)
+                                    notification.vibrate = new long[]{25, 100, 100, 200};
+
+                                if(settingsManager.notificationLED) {
+                                    notification.ledOnMS = 1000;
+                                    notification.ledOffMS = 2000;
+                                    notification.ledARGB = Color.BLUE;
+                                    notification.flags |= Notification.FLAG_SHOW_LIGHTS;
+                                }
+
+                                NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                                notificationManager.notify(0, notification);
 
                             }
-
-                            index = 0;
-
-                            while(index < jsonArray.length()){
-
-                                answerStrList.add((String) ((JSONObject) jsonArray.get(index)).get("str"));
-
-                                index = index + 1;
-
-                            }
-
-                            QAMessageHelper qaMessageHelper = new QAMessageHelper(mContext);
-                            qaMessageHelper.addQAMessage(new QAMessage(msgFrom ,
-                                                                       questionId,
-                                                                       questionStr,
-                                                                       answerIdList,
-                                                                       answerStrList,
-                                                                       date));
-
-                            ArrayList<QAMessage> list = qaMessageHelper.getAllQAMessages();
-
-                            Intent dialogIntent = new Intent(mContext, QAMessageDialogActivity.class);
-                            dialogIntent.putExtra("id", list.get(list.size() - 1).getId());
-                            dialogIntent.putExtra("msgFrom", msgFrom);
-                            dialogIntent.putExtra("questionId", questionId);
-                            dialogIntent.putExtra("questionStr", questionStr);
-                            dialogIntent.putStringArrayListExtra("answerIdList", answerIdList);
-                            dialogIntent.putStringArrayListExtra("answerStrList", answerStrList);
-                            dialogIntent.putExtra("date", date);
-                            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-
-                            PendingIntent pi = PendingIntent.getActivity(mContext, 0, dialogIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                            Notification notification = new NotificationCompat.Builder(mContext)
-                                    .setSmallIcon(R.drawable.ic_app_notification)
-                                    .setContentTitle(msgFrom.split("@")[0] + " send message.")
-                                    .setContentText(jsonObject.getJSONObject("question").get("str") + "")
-                                    .setContentIntent(pi)
-                                    .setAutoCancel(true)
-                                    .build();
-
-                            NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-                            notificationManager.notify(0, notification);
 
                             //----------------------------------------------------------------------
 
@@ -159,5 +184,24 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
         }
 
     }
+
+    //----------------------------------------------------------------------------------------------
+
+    //Thianchai (I add this)
+    private boolean isAppOnForeground(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        if (appProcesses == null) {
+            return false;
+        }
+        final String packageName = context.getPackageName();
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && appProcess.processName.equals(packageName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //**
 
 }
