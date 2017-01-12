@@ -144,9 +144,6 @@ public final class QAMainFragment
 
         QAMainFragment.this.adapter.notifyDataSetChanged();
 
-        NotificationManager notifManager= (NotificationManager) QAMainFragment.this.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        notifManager.cancelAll();
-
         QAMainFragment.this.bThread = true;
 
         Thread thread = new Thread(){
@@ -190,17 +187,6 @@ public final class QAMainFragment
                             }
 
                             QAMainFragment.this.adapter.notifyDataSetChanged();
-
-                            try{
-
-                                NotificationManager notifManager= (NotificationManager) QAMainFragment.this.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                                notifManager.cancelAll();
-
-                            }
-                            catch (Exception e){
-
-
-                            }
 
                         }
                     });

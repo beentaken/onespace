@@ -1,6 +1,7 @@
 package com.sesame.onespace.fragments;
 
 import android.annotation.TargetApi;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
@@ -18,6 +19,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -77,6 +79,10 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
     private DashboardMainFragment dashboardMainFragment;  //add by Thianchai
 
     private String name;
+
+    //Thianchai (I add this)
+    private static Boolean bFocusQA = false;
+    //**
 
     public static MainMenuFragment newInstance(String name) {
         MainMenuFragment fragment = new MainMenuFragment();
@@ -299,6 +305,21 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
 
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if (mTabLayout.getSelectedTabPosition() == 2){
+
+                    bFocusQA = true;
+
+                    NotificationManager notifManager= (NotificationManager) MainMenuFragment.this.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                    notifManager.cancelAll();
+
+                }
+                else{
+
+                    bFocusQA = false;
+
+                }
+
                 if(viewPager.getCurrentItem() <= 1) {
                     float width = viewPager.getWidth();
                     float alpha = (scrollX / width) * -1;
@@ -407,6 +428,16 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
         void onOpenChat(Chat chat);
         void onRemoveChat(Chat chat);
         void onCreateUserCorner();
+    }
+
+    //===========================================================================================================//
+    //  FOCUS Q&A                                                                                   FOCUS Q&A
+    //===========================================================================================================//
+
+    public static Boolean getbFocusQA(){
+
+        return bFocusQA;
+
     }
 
 

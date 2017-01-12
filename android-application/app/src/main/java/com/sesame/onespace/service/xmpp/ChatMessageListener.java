@@ -14,6 +14,7 @@ import android.support.v7.app.NotificationCompat;
 import com.sesame.onespace.R;
 import com.sesame.onespace.activities.dialogActivities.QAMessageDialogActivity;
 import com.sesame.onespace.databases.qaMessageDatabases.QAMessageHelper;
+import com.sesame.onespace.fragments.MainMenuFragment;
 import com.sesame.onespace.managers.SettingsManager;
 import com.sesame.onespace.models.chat.ChatMessage;
 import com.sesame.onespace.models.qaMessage.QAMessage;
@@ -30,7 +31,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by chongos on 10/22/15 AD.
@@ -106,7 +106,7 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                                     answerStrList,
                                     date));
 
-                            if (isAppOnForeground(mContext) == false){
+                            if (isAppOnForeground(mContext) == false || MainMenuFragment.getbFocusQA() == false){
 
                                 ArrayList<QAMessage> list = qaMessageHelper.getAllQAMessages();
 
