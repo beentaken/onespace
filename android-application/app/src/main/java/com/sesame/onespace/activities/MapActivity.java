@@ -448,6 +448,12 @@ public class MapActivity
         mCornerLoader.setUserID(userID);
         mCornerLoader.setRecyclerView(mCornerListView);
         mCornerLoader.setFilter(cornerFilter);
+
+        //Thianchai (I add this)
+        WalkerMarkerLoader.setIsFilter(walkerFilter.isSelected());
+        SurferMarkerLoader.setIsFilter(surferFilter.isSelected());
+        //**
+
     }
 
     @Override

@@ -13,6 +13,9 @@ import java.util.HashMap;
 /**
  * Created by chongos on 8/19/15 AD.
  */
+
+
+// Modified code by Thianchai
 public abstract class MapMarkerLoader implements OnFilterChangeListener {
 
     protected Context context;
@@ -49,6 +52,39 @@ public abstract class MapMarkerLoader implements OnFilterChangeListener {
 
     @Override
     public void onFilterChange(FilterMarkerNode filterMarkerNode) {
+
+        //Thianchai (I add this)
+        if (filterMarkerNode.getName().equals("Walkers")){
+
+            if (WalkerMarkerLoader.getIsFilter() == true){
+
+                WalkerMarkerLoader.setIsFilter(false);
+
+            }
+            else{
+
+                WalkerMarkerLoader.setIsFilter(true);
+
+            }
+
+        }
+
+        if (filterMarkerNode.getName().equals("Surfers")){
+
+            if (SurferMarkerLoader.getIsFilter() == true){
+
+                SurferMarkerLoader.setIsFilter(false);
+
+            }
+            else{
+
+                SurferMarkerLoader.setIsFilter(true);
+
+            }
+
+        }
+        //**
+
         ArrayList<Object> markers = new ArrayList<>();
         markers.addAll(markerHashMap.values());
         if(filter.isSelected())

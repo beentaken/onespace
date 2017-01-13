@@ -33,6 +33,7 @@ public class WalkerMarkerLoader extends MapMarkerLoader {
     private LatLngBounds myBounds;
     private int myLimit;
     private boolean isRunning;
+    private static Boolean isFilter = false;
     //**
 
     //===========================================================================================================//
@@ -152,6 +153,18 @@ public class WalkerMarkerLoader extends MapMarkerLoader {
     //  METHOD BY Thianchai                                                                         METHOD BY Thianchai
     //===========================================================================================================//
 
+    public static Boolean getIsFilter(){
+
+        return isFilter;
+
+    }
+
+    public static void setIsFilter(Boolean b){
+
+        isFilter = b;
+
+    }
+
     public void startThread(){
 
         this.shouldContinue = true;
@@ -163,40 +176,44 @@ public class WalkerMarkerLoader extends MapMarkerLoader {
 
                 while(shouldContinue){
 
-                    if (myBounds != null && isRunning == false){
+                    if (isFilter == true){
 
-                        isRunning = true;
+                        if (myBounds != null && isRunning == false){
 
-                        if (call != null){
+                            isRunning = true;
 
-                            call.cancel();
+                            if (call != null){
+
+                                call.cancel();
+
+                            }
+
+                            call = api.getWalkers(myBounds.northeast.latitude,
+                                    myBounds.northeast.longitude,
+                                    myBounds.southwest.latitude,
+                                    myBounds.southwest.longitude,
+                                    myLimit);
+
+                            //clone()
+                            call.enqueue(new Callback<ArrayList<Walker>>() {
+                                @Override
+                                public void onResponse(final Response<ArrayList<Walker>> response) {
+                                    if (response.isSuccess()) {
+
+                                        updateWalkerMarker(response);
+
+                                    } else {
+                                        Log.i("GET Walker", response.message());
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    Log.e("GetWalker", t.toString());
+                                }
+                            });
 
                         }
-
-                        call = api.getWalkers(myBounds.northeast.latitude,
-                                myBounds.northeast.longitude,
-                                myBounds.southwest.latitude,
-                                myBounds.southwest.longitude,
-                                myLimit);
-
-                        //clone()
-                        call.enqueue(new Callback<ArrayList<Walker>>() {
-                            @Override
-                            public void onResponse(final Response<ArrayList<Walker>> response) {
-                                if (response.isSuccess()) {
-
-                                    updateWalkerMarker(response);
-
-                                } else {
-                                    Log.i("GET Walker", response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Throwable t) {
-                                Log.e("GetWalker", t.toString());
-                            }
-                        });
 
                     }
 
