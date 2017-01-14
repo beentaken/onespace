@@ -17,6 +17,7 @@ import com.squareup.okhttp.Response;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by chongos on 9/23/15 AD.
@@ -82,6 +83,9 @@ public class MediaUploadManager {
                     .url(url)
                     .post(requestBody)
                     .build();
+
+            client.setConnectTimeout(600, TimeUnit.SECONDS);
+            client.setReadTimeout(600, TimeUnit.SECONDS);
 
             client.newCall(request).enqueue(new Callback() {
 

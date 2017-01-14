@@ -1,6 +1,5 @@
 package com.sesame.onespace.fragments.qaMessageFragments;
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.activities.dialogActivities.QAMessageDialogActivity;
+import com.sesame.onespace.activities.dialogActivities.QAChoiceDialogActivity;
+import com.sesame.onespace.activities.dialogActivities.QAImageDialogActivity;
 import com.sesame.onespace.databases.qaMessageDatabases.QAMessageHelper;
 import com.sesame.onespace.models.qaMessage.QAMessage;
 import com.sesame.onespace.views.DividerItemDecoration;
@@ -251,9 +251,23 @@ public final class QAMainFragment
                 @Override
                 public void onClick(View v) {
 
-                    Intent dialogIntent = new Intent(QAListAdapter.this.mContext, QAMessageDialogActivity.class);
+                    Intent dialogIntent = null;
+
+                    if (item.getType().equals("text")){
+
+                        dialogIntent = new Intent(QAListAdapter.this.mContext, QAChoiceDialogActivity.class);
+
+                    }
+
+                    if (item.getType().equals("image")){
+
+                        dialogIntent = new Intent(QAListAdapter.this.mContext, QAImageDialogActivity.class);
+
+                    }
+
                     dialogIntent.putExtra("id", item.getId());
                     dialogIntent.putExtra("msgFrom", item.getMsgFrom());
+                    dialogIntent.putExtra("type", item.getType());
                     dialogIntent.putExtra("questionId", item.getQuestionID());
                     dialogIntent.putExtra("questionStr", item.getQuestionStr());
                     dialogIntent.putStringArrayListExtra("answerIdList", item.getAnswerIDList());
@@ -312,6 +326,7 @@ public final class QAMainFragment
 
         private Integer id;
         private String msgFrom;
+        private String type;
         private String questionID;
         private String questionStr;
         private ArrayList<String> answerIDList;
@@ -336,6 +351,7 @@ public final class QAMainFragment
 
             QAListItem.this.id = bundle.getInt("id");
             QAListItem.this.msgFrom = bundle.getString("msgFrom");
+            QAListItem.this.type = bundle.getString("type");
             QAListItem.this.questionID = bundle.getString("questionID");
             QAListItem.this.questionStr = bundle.getString("questionStr");
             QAListItem.this.answerIDList = bundle.getStringArrayList("answerIDList");
@@ -350,6 +366,7 @@ public final class QAMainFragment
 
             QAListItem.this.id = qaMessage.getId();
             QAListItem.this.msgFrom = qaMessage.getMsgFrom();
+            QAListItem.this.type = qaMessage.getType();
             QAListItem.this.questionID = qaMessage.getQuestionID();
             QAListItem.this.questionStr = qaMessage.getQuestionStr();
             QAListItem.this.answerIDList = qaMessage.getAnswerIDList();
@@ -371,6 +388,12 @@ public final class QAMainFragment
         public String getMsgFrom(){
 
             return QAListItem.this.msgFrom;
+
+        }
+
+        public String getType(){
+
+            return QAListItem.this.type;
 
         }
 
@@ -414,6 +437,7 @@ public final class QAMainFragment
             Bundle bundle = new Bundle();
             bundle.putInt("icon", QAListItem.this.icon);
             bundle.putString("msgFrom", QAListItem.this.msgFrom);
+            bundle.putString("type", QAListItem.this.type);
             bundle.putString("questionID", QAListItem.this.questionID);
             bundle.putString("questionStr", QAListItem.this.questionStr);
             bundle.putStringArrayList("answerIDList", QAListItem.this.answerIDList);

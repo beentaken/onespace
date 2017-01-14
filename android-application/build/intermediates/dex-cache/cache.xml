@@ -502,7 +502,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="cb295df7aa924757ce559b42753b0d9fc667c29d">
+        sha1="8d469b7a669aaf666334ddc9b7cad7d1495f50cc">
         <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_86e8fe4b3d7ce08344084b0b1a7243af625d507c\classes.dex" />
     </item>
     <item
@@ -664,7 +664,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="5dee9a095ce508b4baed864974794fbe78b6c34a">
+        sha1="7c4de4c8e43e53160eb7606e3ce55f559f55c2ad">
         <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_fa50271d146c9593be2944c908e90faa03d0df2b\classes.dex" />
     </item>
     <item

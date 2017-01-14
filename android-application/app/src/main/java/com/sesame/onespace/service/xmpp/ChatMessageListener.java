@@ -12,7 +12,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.NotificationCompat;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.activities.dialogActivities.QAMessageDialogActivity;
+import com.sesame.onespace.activities.dialogActivities.QAChoiceDialogActivity;
+import com.sesame.onespace.activities.dialogActivities.QAImageDialogActivity;
 import com.sesame.onespace.databases.qaMessageDatabases.QAMessageHelper;
 import com.sesame.onespace.fragments.MainMenuFragment;
 import com.sesame.onespace.managers.SettingsManager;
@@ -67,6 +68,7 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                             //----------------------------------------------------------------------
                             //Thianchai (I add this for QAMessage)
 
+                            String type = jsonObject.get("media") + "";
                             String questionId = jsonObject.getJSONObject("question").get("id") + "";
                             String questionStr = jsonObject.getJSONObject("question").get("str") + "";
                             ArrayList<String> answerIdList = new ArrayList<String>();
@@ -100,19 +102,34 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
 
                             QAMessageHelper qaMessageHelper = new QAMessageHelper(mContext);
                             qaMessageHelper.addQAMessage(new QAMessage(msgFrom ,
-                                    questionId,
-                                    questionStr,
-                                    answerIdList,
-                                    answerStrList,
-                                    date));
+                                                                       type,
+                                                                       questionId,
+                                                                       questionStr,
+                                                                       answerIdList,
+                                                                       answerStrList,
+                                                                       date));
 
                             if (isAppOnForeground(mContext) == false || MainMenuFragment.getbFocusQA() == false){
 
                                 ArrayList<QAMessage> list = qaMessageHelper.getAllQAMessages();
 
-                                Intent dialogIntent = new Intent(mContext, QAMessageDialogActivity.class);
+                                Intent dialogIntent = null;
+
+                                if (type.equals("text")){
+
+                                    dialogIntent = new Intent(mContext, QAChoiceDialogActivity.class);
+
+                                }
+
+                                if (type.equals("image")){
+
+                                    dialogIntent = new Intent(mContext, QAImageDialogActivity.class);
+
+                                }
+
                                 dialogIntent.putExtra("id", list.get(list.size() - 1).getId());
                                 dialogIntent.putExtra("msgFrom", msgFrom);
+                                dialogIntent.putExtra("type", type);
                                 dialogIntent.putExtra("questionId", questionId);
                                 dialogIntent.putExtra("questionStr", questionStr);
                                 dialogIntent.putStringArrayListExtra("answerIdList", answerIdList);
@@ -120,8 +137,9 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                                 dialogIntent.putExtra("date", date);
                                 dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 dialogIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                                PendingIntent pi = PendingIntent.getActivity(mContext, 0, dialogIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                                PendingIntent pi = PendingIntent.getActivity(mContext, list.get(list.size() - 1).getId(), dialogIntent, PendingIntent.FLAG_ONE_SHOT);
                                 Notification notification = new NotificationCompat.Builder(mContext)
                                         .setSmallIcon(R.drawable.ic_app_notification)
                                         .setContentTitle(msgFrom.split("@")[0] + " send message.")
@@ -146,7 +164,7 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
                                 }
 
                                 NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-                                notificationManager.notify(0, notification);
+                                notificationManager.notify(list.get(list.size() - 1).getId(), notification);
 
                             }
 

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,7 +16,6 @@ import android.widget.TextView;;
 import com.sesame.onespace.R;
 import com.sesame.onespace.databases.qaMessageDatabases.QAMessageHelper;
 import com.sesame.onespace.models.chat.ChatMessage;
-import com.sesame.onespace.models.chat.QueryMessage;
 import com.sesame.onespace.models.qaMessage.QAMessage;
 import com.sesame.onespace.service.xmpp.XmppManager;
 import com.sesame.onespace.utils.DateTimeUtil;
@@ -31,7 +29,7 @@ import java.util.ArrayList;
  * Created by Thian on 8/12/2559.
  */
 
-public final class QAMessageDialogActivity
+public final class QAChoiceDialogActivity
         extends AppCompatActivity {
 
     //===========================================================================================================//
@@ -43,6 +41,7 @@ public final class QAMessageDialogActivity
 
     private Integer id;
     private String msgFrom;
+    private String type;
     private String questionID;
     private String questionStr;
     private ArrayList<String> answerIdList;
@@ -66,29 +65,29 @@ public final class QAMessageDialogActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        QAMessageDialogActivity.super.onCreate(savedInstanceState);
+        QAChoiceDialogActivity.super.onCreate(savedInstanceState);
 
-        QAMessageDialogActivity.super.setContentView(R.layout.activity_dialog_qa);
-        QAMessageDialogActivity.this.initDefaultValue();
+        QAChoiceDialogActivity.super.setContentView(R.layout.activity_dialog_qa);
+        QAChoiceDialogActivity.this.initDefaultValue();
 
     }
 
     @Override
     protected void onStart(){
-        QAMessageDialogActivity.super.onStart();
+        QAChoiceDialogActivity.super.onStart();
 
-        QAMessageDialogActivity.this.startDialog();
+        QAChoiceDialogActivity.this.startDialog();
 
     }
 
     @Override
     protected void onStop(){
-        QAMessageDialogActivity.super.onStop();
+        QAChoiceDialogActivity.super.onStop();
 
-        if (QAMessageDialogActivity.this.alertDialog != null){
+        if (QAChoiceDialogActivity.this.alertDialog != null){
 
-            QAMessageDialogActivity.this.alertDialog.dismiss();
-            QAMessageDialogActivity.this.alertDialog = null;
+            QAChoiceDialogActivity.this.alertDialog.dismiss();
+            QAChoiceDialogActivity.this.alertDialog = null;
 
         }
 
@@ -102,36 +101,38 @@ public final class QAMessageDialogActivity
     private void initDefaultValue(){
 
         Intent intent = getIntent();
-        QAMessageDialogActivity.this.id = intent.getIntExtra("id", 0);
-        QAMessageDialogActivity.this.msgFrom = intent.getStringExtra("msgFrom");
-        QAMessageDialogActivity.this.questionID = intent.getStringExtra("questionId");
-        QAMessageDialogActivity.this.questionStr = intent.getStringExtra("questionStr");
-        QAMessageDialogActivity.this.answerIdList = intent.getStringArrayListExtra("answerIdList");
-        QAMessageDialogActivity.this.answerStrList = intent.getStringArrayListExtra("answerStrList");
-        QAMessageDialogActivity.this.date = intent.getStringExtra("date");
+        QAChoiceDialogActivity.this.id = intent.getIntExtra("id", 0);
+        QAChoiceDialogActivity.this.msgFrom = intent.getStringExtra("msgFrom");
+        QAChoiceDialogActivity.this.type = intent.getStringExtra("type");
+        QAChoiceDialogActivity.this.questionID = intent.getStringExtra("questionId");
+        QAChoiceDialogActivity.this.questionStr = intent.getStringExtra("questionStr");
+        QAChoiceDialogActivity.this.answerIdList = intent.getStringArrayListExtra("answerIdList");
+        QAChoiceDialogActivity.this.answerStrList = intent.getStringArrayListExtra("answerStrList");
+        QAChoiceDialogActivity.this.date = intent.getStringExtra("date");
 
-        QAMessageDialogActivity.this.qaMessage = new QAMessage(QAMessageDialogActivity.this.id,
-                                                               QAMessageDialogActivity.this.msgFrom,
-                                                               QAMessageDialogActivity.this.questionID,
-                                                               QAMessageDialogActivity.this.questionStr,
-                                                               QAMessageDialogActivity.this.answerIdList,
-                                                               QAMessageDialogActivity.this.answerStrList,
-                                                               QAMessageDialogActivity.this.date);
+        QAChoiceDialogActivity.this.qaMessage = new QAMessage(QAChoiceDialogActivity.this.id,
+                                                              QAChoiceDialogActivity.this.msgFrom,
+                                                              QAChoiceDialogActivity.this.type,
+                                                              QAChoiceDialogActivity.this.questionID,
+                                                              QAChoiceDialogActivity.this.questionStr,
+                                                              QAChoiceDialogActivity.this.answerIdList,
+                                                              QAChoiceDialogActivity.this.answerStrList,
+                                                              QAChoiceDialogActivity.this.date);
 
         //
 
-        QAMessageDialogActivity.this.alertDialog = null;
+        QAChoiceDialogActivity.this.alertDialog = null;
 
-        QAMessageDialogActivity.this.xmppManager = XmppManager.getInstance(QAMessageDialogActivity.this.getApplicationContext());
+        QAChoiceDialogActivity.this.xmppManager = XmppManager.getInstance(QAChoiceDialogActivity.this.getApplicationContext());
 
-        QAMessageDialogActivity.this.answerIdArray = new String[QAMessageDialogActivity.this.answerIdList.size()];
-        QAMessageDialogActivity.this.answerStrArray = new String[QAMessageDialogActivity.this.answerStrList.size()];
+        QAChoiceDialogActivity.this.answerIdArray = new String[QAChoiceDialogActivity.this.answerIdList.size()];
+        QAChoiceDialogActivity.this.answerStrArray = new String[QAChoiceDialogActivity.this.answerStrList.size()];
 
         int index = 0;
 
-        while(index < QAMessageDialogActivity.this.answerIdList.size()){
+        while(index < QAChoiceDialogActivity.this.answerIdList.size()){
 
-            QAMessageDialogActivity.this.answerIdArray[index] = QAMessageDialogActivity.this.answerIdList.get(index);
+            QAChoiceDialogActivity.this.answerIdArray[index] = QAChoiceDialogActivity.this.answerIdList.get(index);
 
             index = index + 1;
 
@@ -139,15 +140,15 @@ public final class QAMessageDialogActivity
 
         index = 0;
 
-        while(index < QAMessageDialogActivity.this.answerStrList.size()){
+        while(index < QAChoiceDialogActivity.this.answerStrList.size()){
 
-            QAMessageDialogActivity.this.answerStrArray[index] = QAMessageDialogActivity.this.answerStrList.get(index);
+            QAChoiceDialogActivity.this.answerStrArray[index] = QAChoiceDialogActivity.this.answerStrList.get(index);
 
             index = index + 1;
 
         }
 
-        QAMessageDialogActivity.this.select = 0;
+        QAChoiceDialogActivity.this.select = 0;
 
     }
 
@@ -158,19 +159,19 @@ public final class QAMessageDialogActivity
 
     private void startDialog(){
 
-        QAMessageDialogActivity.this.select = 0;
+        QAChoiceDialogActivity.this.select = 0;
 
-        QAAlertDialogBuilder qaAlertDialogBuilder = new QAAlertDialogBuilder(QAMessageDialogActivity.this, R.style.QAMessageDialogStyle);
+        QAChoiceDialogActivity.QAAlertDialogBuilder qaAlertDialogBuilder = new QAChoiceDialogActivity.QAAlertDialogBuilder(QAChoiceDialogActivity.this, R.style.QAMessageDialogStyle);
 
-        qaAlertDialogBuilder.setSender(QAMessageDialogActivity.this.msgFrom.split("@")[0] + " send message.");
-        qaAlertDialogBuilder.setTitle(QAMessageDialogActivity.this.questionStr);
+        qaAlertDialogBuilder.setSender(QAChoiceDialogActivity.this.msgFrom.split("@")[0] + " send message.");
+        qaAlertDialogBuilder.setTitle(QAChoiceDialogActivity.this.questionStr);
         qaAlertDialogBuilder.setIcon(R.mipmap.ic_launcher_trim);
 
-        qaAlertDialogBuilder.setSingleChoiceItems(QAMessageDialogActivity.this.answerStrArray, -1, new DialogInterface.OnClickListener() {
+        qaAlertDialogBuilder.setSingleChoiceItems(QAChoiceDialogActivity.this.answerStrArray, -1, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int item) {
 
-                QAMessageDialogActivity.this.select = item;
+                QAChoiceDialogActivity.this.select = item;
 
             }
 
@@ -181,8 +182,8 @@ public final class QAMessageDialogActivity
             @Override
             public void onClick(DialogInterface dialog, int id) {
 
-                String answerID = QAMessageDialogActivity.this.answerIdArray[QAMessageDialogActivity.this.select];
-                String answerStr = QAMessageDialogActivity.this.answerStrArray[QAMessageDialogActivity.this.select];
+                String answerID = QAChoiceDialogActivity.this.answerIdArray[QAChoiceDialogActivity.this.select];
+                String answerStr = QAChoiceDialogActivity.this.answerStrArray[QAChoiceDialogActivity.this.select];
 
                 JSONObject jsonObject = new JSONObject();
                 JSONObject responseJsonObject = new JSONObject();
@@ -191,11 +192,12 @@ public final class QAMessageDialogActivity
 
                 try {
 
-                    jsonObject.put(ChatMessage.KEY_MESSAGE_TYPE, "query");
-                    jsonObject.put(ChatMessage.KEY_PRIMATIVE_TYPE, "response");
+                    jsonObject.put("message-type", "query");
+                    jsonObject.put("primitive", "response");
+                    jsonObject.put("media", "text");
 
-                    questionJsonObject.put("id", QAMessageDialogActivity.this.questionID);
-                    questionJsonObject.put("str", QAMessageDialogActivity.this.questionStr);
+                    questionJsonObject.put("id", QAChoiceDialogActivity.this.questionID);
+                    questionJsonObject.put("str", QAChoiceDialogActivity.this.questionStr);
 
                     answerJsonObject.put("id", answerID);
                     answerJsonObject.put("str", answerStr);
@@ -203,13 +205,13 @@ public final class QAMessageDialogActivity
                     responseJsonObject.put("question", questionJsonObject);
                     responseJsonObject.put("answer", answerJsonObject);
 
-                    jsonObject.put(QueryMessage.KEY_RESPONSE, responseJsonObject);
+                    jsonObject.put("response", responseJsonObject);
 
-                    ChatMessage chatMessage = new ChatMessage.Builder().setChatID(QAMessageDialogActivity.this.msgFrom).setBody(jsonObject.toString()).setFromMe(true).setTimestamp(DateTimeUtil.getCurrentTimeStamp()).build();
+                    ChatMessage chatMessage = new ChatMessage.Builder().setChatID(QAChoiceDialogActivity.this.msgFrom).setBody(jsonObject.toString()).setFromMe(true).setTimestamp(DateTimeUtil.getCurrentTimeStamp()).build();
 
                     if (chatMessage != null) {
 
-                        QAMessageDialogActivity.this.xmppManager.sendQAMessage(chatMessage);
+                        QAChoiceDialogActivity.this.xmppManager.sendQAMessage(chatMessage);
 
                     }
 
@@ -217,11 +219,11 @@ public final class QAMessageDialogActivity
                     e.printStackTrace();
                 }
 
-                QAMessageDialogActivity.this.removeQAMessage();
+                QAChoiceDialogActivity.this.removeQAMessage();
 
-                QAMessageDialogActivity.super.finish();
-                QAMessageDialogActivity.this.alertDialog.dismiss();
-                QAMessageDialogActivity.this.alertDialog = null;
+                QAChoiceDialogActivity.super.finish();
+                QAChoiceDialogActivity.this.alertDialog.dismiss();
+                QAChoiceDialogActivity.this.alertDialog = null;
 
             }
 
@@ -232,9 +234,9 @@ public final class QAMessageDialogActivity
             @Override
             public void onClick(DialogInterface dialog, int id) {
 
-                QAMessageDialogActivity.super.finish();
-                QAMessageDialogActivity.this.alertDialog.dismiss();
-                QAMessageDialogActivity.this.alertDialog = null;
+                QAChoiceDialogActivity.super.finish();
+                QAChoiceDialogActivity.this.alertDialog.dismiss();
+                QAChoiceDialogActivity.this.alertDialog = null;
 
             }
 
@@ -255,11 +257,12 @@ public final class QAMessageDialogActivity
 
                 try {
 
-                    jsonObject.put(ChatMessage.KEY_MESSAGE_TYPE, "query");
-                    jsonObject.put(ChatMessage.KEY_PRIMATIVE_TYPE, "response");
+                    jsonObject.put("message-type", "query");
+                    jsonObject.put("primitive", "response");
+                    jsonObject.put("media", "text");
 
-                    questionJsonObject.put("id", QAMessageDialogActivity.this.questionID);
-                    questionJsonObject.put("str", QAMessageDialogActivity.this.questionStr);
+                    questionJsonObject.put("id", QAChoiceDialogActivity.this.questionID);
+                    questionJsonObject.put("str", QAChoiceDialogActivity.this.questionStr);
 
                     answerJsonObject.put("id", answerID);
                     answerJsonObject.put("str", answerStr);
@@ -267,13 +270,13 @@ public final class QAMessageDialogActivity
                     responseJsonObject.put("question", questionJsonObject);
                     responseJsonObject.put("answer", answerJsonObject);
 
-                    jsonObject.put(QueryMessage.KEY_RESPONSE, responseJsonObject);
+                    jsonObject.put("response", responseJsonObject);
 
-                    ChatMessage chatMessage = new ChatMessage.Builder().setChatID(QAMessageDialogActivity.this.msgFrom).setBody(jsonObject.toString()).setFromMe(true).setTimestamp(DateTimeUtil.getCurrentTimeStamp()).build();
+                    ChatMessage chatMessage = new ChatMessage.Builder().setChatID(QAChoiceDialogActivity.this.msgFrom).setBody(jsonObject.toString()).setFromMe(true).setTimestamp(DateTimeUtil.getCurrentTimeStamp()).build();
 
                     if (chatMessage != null) {
 
-                        QAMessageDialogActivity.this.xmppManager.sendQAMessage(chatMessage);
+                        QAChoiceDialogActivity.this.xmppManager.sendQAMessage(chatMessage);
 
                     }
 
@@ -281,11 +284,11 @@ public final class QAMessageDialogActivity
                     e.printStackTrace();
                 }
 
-                QAMessageDialogActivity.this.removeQAMessage();
+                QAChoiceDialogActivity.this.removeQAMessage();
 
-                QAMessageDialogActivity.super.finish();
-                QAMessageDialogActivity.this.alertDialog.dismiss();
-                QAMessageDialogActivity.this.alertDialog = null;
+                QAChoiceDialogActivity.super.finish();
+                QAChoiceDialogActivity.this.alertDialog.dismiss();
+                QAChoiceDialogActivity.this.alertDialog = null;
 
             }
 
@@ -299,17 +302,17 @@ public final class QAMessageDialogActivity
                 // TODO Auto-generated method stub
                 if (keyCode == KeyEvent.KEYCODE_HOME) {
 
-                    QAMessageDialogActivity.super.finish();
-                    QAMessageDialogActivity.this.alertDialog.dismiss();
-                    QAMessageDialogActivity.this.alertDialog = null;
+                    QAChoiceDialogActivity.super.finish();
+                    QAChoiceDialogActivity.this.alertDialog.dismiss();
+                    QAChoiceDialogActivity.this.alertDialog = null;
 
                 }
 
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-                    QAMessageDialogActivity.super.finish();
-                    QAMessageDialogActivity.this.alertDialog.dismiss();
-                    QAMessageDialogActivity.this.alertDialog = null;
+                    QAChoiceDialogActivity.super.finish();
+                    QAChoiceDialogActivity.this.alertDialog.dismiss();
+                    QAChoiceDialogActivity.this.alertDialog = null;
 
                 }
 
@@ -318,12 +321,12 @@ public final class QAMessageDialogActivity
 
         });
 
-        QAMessageDialogActivity.this.alertDialog = qaAlertDialogBuilder.create();
-        QAMessageDialogActivity.this.alertDialog.setCanceledOnTouchOutside(false);
+        QAChoiceDialogActivity.this.alertDialog = qaAlertDialogBuilder.create();
+        QAChoiceDialogActivity.this.alertDialog.setCanceledOnTouchOutside(false);
 
-        QAMessageDialogActivity.this.alertDialog.show();
+        QAChoiceDialogActivity.this.alertDialog.show();
 
-        QAMessageDialogActivity.this.alertDialog.getListView().setItemChecked(QAMessageDialogActivity.this.select, true);
+        QAChoiceDialogActivity.this.alertDialog.getListView().setItemChecked(QAChoiceDialogActivity.this.select, true);
 
     }
 
@@ -386,8 +389,8 @@ public final class QAMessageDialogActivity
 
     private void removeQAMessage(){
 
-        QAMessageHelper qaMessageHelper = new QAMessageHelper(QAMessageDialogActivity.this.getApplicationContext());
-        qaMessageHelper.deleteQAMessage(QAMessageDialogActivity.this.qaMessage);
+        QAMessageHelper qaMessageHelper = new QAMessageHelper(QAChoiceDialogActivity.this.getApplicationContext());
+        qaMessageHelper.deleteQAMessage(QAChoiceDialogActivity.this.qaMessage);
 
     }
 

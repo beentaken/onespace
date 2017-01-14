@@ -14,6 +14,7 @@ public final class QAMessage {
 
     private Integer id;
     private String msgFrom;
+    private String type;
     private String questionID;
     private String questionStr;
     private ArrayList<String> answerIDList;
@@ -24,10 +25,11 @@ public final class QAMessage {
     //  CONSTRUCTOR                                                                                 CONSTRUCTOR
     //===========================================================================================================//
 
-    public QAMessage(Integer id, String msgFrom, String questionID, String questionStr, ArrayList<String> answerIDList, ArrayList<String> answerStrList, String date){
+    public QAMessage(Integer id, String msgFrom, String type, String questionID, String questionStr, ArrayList<String> answerIDList, ArrayList<String> answerStrList, String date){
 
         QAMessage.this.id = id;
         QAMessage.this.msgFrom = msgFrom;
+        QAMessage.this.type = type;
         QAMessage.this.questionID = questionID;
         QAMessage.this.questionStr = questionStr;
         QAMessage.this.answerIDList = answerIDList;
@@ -36,10 +38,11 @@ public final class QAMessage {
 
     }
 
-    public QAMessage(String msgFrom, String questionID, String questionStr, ArrayList<String> answerIDList, ArrayList<String> answerStrList, String date){
+    public QAMessage(String msgFrom, String type, String questionID, String questionStr, ArrayList<String> answerIDList, ArrayList<String> answerStrList, String date){
 
         QAMessage.this.id = null;
         QAMessage.this.msgFrom = msgFrom;
+        QAMessage.this.type = type;
         QAMessage.this.questionID = questionID;
         QAMessage.this.questionStr = questionStr;
         QAMessage.this.answerIDList = answerIDList;
@@ -61,6 +64,12 @@ public final class QAMessage {
     public void setMsgFrom(String msgFrom){
 
         QAMessage.this.msgFrom = msgFrom;
+
+    }
+
+    public void setType(String type){
+
+        QAMessage.this.type = type;
 
     }
 
@@ -103,6 +112,12 @@ public final class QAMessage {
     public String getMsgFrom(){
 
         return QAMessage.this.msgFrom;
+
+    }
+
+    public String getType(){
+
+        return QAMessage.this.type;
 
     }
 

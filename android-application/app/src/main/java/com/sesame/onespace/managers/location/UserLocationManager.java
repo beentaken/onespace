@@ -88,7 +88,7 @@ public abstract class UserLocationManager {
 
         } catch (IOException e) {
 
-            e.printStackTrace();
+            //e.printStackTrace();
 
         }
 

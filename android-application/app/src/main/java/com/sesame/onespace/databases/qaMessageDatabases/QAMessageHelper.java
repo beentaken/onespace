@@ -31,6 +31,7 @@ public final class QAMessageHelper
 
     private static final String KEY_ID = "id";
     private static final String KEY_MSGFROM = "msgFrom";
+    private static final String KEY_TYPE = "type";
     private static final String KEY_QUESTIONID = "questionID";
     private static final String KEY_QUESTIONSTR = "questionStr";
     private static final String KEY_ANSWERIDLIST = "answerIDList";
@@ -39,6 +40,7 @@ public final class QAMessageHelper
 
     private static final String[] COLUMNS = {QAMessageHelper.KEY_ID,
                                              QAMessageHelper.KEY_MSGFROM,
+                                             QAMessageHelper.KEY_TYPE,
                                              QAMessageHelper.KEY_QUESTIONID,
                                              QAMessageHelper.KEY_QUESTIONSTR,
                                              QAMessageHelper.KEY_ANSWERIDLIST,
@@ -48,6 +50,7 @@ public final class QAMessageHelper
     private static final String CREATE_QAMESSAGE_TABLE = "CREATE TABLE " + QAMessageHelper.TABLE_QAMESSAGES + " ( " +
                                                                       "" + QAMessageHelper.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                                                       "" + QAMessageHelper.KEY_MSGFROM + " TEXT, "+
+                                                                      "" + QAMessageHelper.KEY_TYPE + " TEXT, "+
                                                                       "" + QAMessageHelper.KEY_QUESTIONID + " TEXT, "+
                                                                       "" + QAMessageHelper.KEY_QUESTIONSTR + " TEXT, "+
                                                                       "" + QAMessageHelper.KEY_ANSWERIDLIST + " TEXT, "+
@@ -103,6 +106,7 @@ public final class QAMessageHelper
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(QAMessageHelper.KEY_MSGFROM, qaMessage.getMsgFrom());
+        contentValues.put(QAMessageHelper.KEY_TYPE, qaMessage.getType());
         contentValues.put(QAMessageHelper.KEY_QUESTIONID, qaMessage.getQuestionID());
         contentValues.put(QAMessageHelper.KEY_QUESTIONSTR, qaMessage.getQuestionStr());
         contentValues.put(QAMessageHelper.KEY_ANSWERIDLIST, DatabaseConvert.convertArrayListToString(qaMessage.getAnswerIDList()));
@@ -139,9 +143,10 @@ public final class QAMessageHelper
                                             cursor.getString(1),
                                             cursor.getString(2),
                                             cursor.getString(3),
-                                            DatabaseConvert.convertStringToArrayList(cursor.getString(4)),
+                                            cursor.getString(4),
                                             DatabaseConvert.convertStringToArrayList(cursor.getString(5)),
-                                            cursor.getString(6));
+                                            DatabaseConvert.convertStringToArrayList(cursor.getString(6)),
+                                            cursor.getString(7));
 
 
 
@@ -166,9 +171,10 @@ public final class QAMessageHelper
                                           cursor.getString(1),
                                           cursor.getString(2),
                                           cursor.getString(3),
-                                          DatabaseConvert.convertStringToArrayList(cursor.getString(4)),
+                                          cursor.getString(4),
                                           DatabaseConvert.convertStringToArrayList(cursor.getString(5)),
-                                          cursor.getString(6));
+                                          DatabaseConvert.convertStringToArrayList(cursor.getString(6)),
+                                          cursor.getString(7));
 
                 qaMessages.add(qaMessage);
 

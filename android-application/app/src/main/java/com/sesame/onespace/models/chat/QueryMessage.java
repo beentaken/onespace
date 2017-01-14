@@ -26,10 +26,6 @@ public final class QueryMessage
         }
     };
 
-    public static final String KEY_QUESTION = "question";
-    public static final String KEY_ANSWERS = "answers";
-    public static final String KEY_RESPONSE = "response";
-
     //===========================================================================================================//
     //  CONSTRUCTOR                                                                                 CONSTRUCTOR
     //===========================================================================================================//

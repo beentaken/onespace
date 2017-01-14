@@ -19,10 +19,6 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
     public static final String KEY_MESSAGE_TYPE = "message-type";
     public static final String KEY_MEDIA_TYPE = "media";
 
-    //Thianchai (I add this)
-    public static final String KEY_PRIMATIVE_TYPE = "primitive";
-    //
-
     private static final String KEY_ID = "id";
     private static final String KEY_CHAT_ID = "chat_id";
     private static final String KEY_FROM_JID = "from_jid";
@@ -189,7 +185,22 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
             this.body = body;
             try {
                 JSONObject jsonObject = new JSONObject(body);
-                this.type = jsonObject.getString(KEY_MEDIA_TYPE);
+
+                //Thianchai (I modified this)
+                if (jsonObject.getString("message-type").equals("chat")){
+
+                    this.type = jsonObject.getString(KEY_MEDIA_TYPE);
+
+                }
+
+                if (jsonObject.getString("message-type").equals("query")){
+
+                    this.type = "query";
+
+                }
+                //**
+
+
             } catch (JSONException e) {
                 this.type = Type.TEXT.getString();
             }
