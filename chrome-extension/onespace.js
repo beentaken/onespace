@@ -19,7 +19,7 @@ OneSpace.Controller.prototype = {
 
     chrome.browserAction.onClicked.addListener(function() {
       if (that.view.popupWindow.window == null) {
-	chrome.windows.create({'url': 'popup.html', 'type': 'normal', 'width': 600, 'height': 500 }, function(window) { that.onPopupWindowOpened(window) } );
+	chrome.windows.create({'url': 'popup.html', 'type': 'popup', 'width': 600, 'height': 500 }, function(window) { that.onPopupWindowOpened(window) } );
       } else {
 	var updateInfo = {};
 	updateInfo.focused = true;
