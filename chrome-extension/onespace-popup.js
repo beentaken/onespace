@@ -1,26 +1,3 @@
-//const HTTP_SERVER_URL = "http://172.18.101.112:8091";
-//const HTTP_SERVER_URL = "http://127.0.0.1:8888";
-//const HTTP_SERVER_URL = "http://172.29.33.45:11090";
-//const HTTP_SERVER_URL = "http://172.29.32.195:11090";
-const HTTP_SERVER_URL = "http://sesame.comp.nus.edu.sg/app/onespace/api";
-
-const MAP_MAX_DISPLAYED_LOCATIONS = 1000;
-const MAP_MAX_DISPLAYED_USER_CORNERS = 1000;
-const MAP_MAX_DISPLAYED_SURFERS = 1000 ;
-const MAP_MAX_DISPLAYED_WALKERS = 1000;
-
-const DASHBOARD_MAX_DISPLAYED_ITEMS = 20;
-
-//const XMPP_SERVER = "172.18.101.112";
-const XMPP_SERVER = "172.29.33.45";
-//const XMPP_SERVER = "localhost";
-//const XMPP_HTTP_BIND = "http://172.18.101.112:8090/http-bind/";
-//const XMPP_HTTP_BIND = "http://172.29.33.45/http-bind/";
-const XMPP_HTTP_BIND = "http://sesame.comp.nus.edu.sg/app/onespace/xmpp/bosh/";
-//const XMPP_HTTP_BIND = "http://127.0.0.1/http-bind/";
-const XMPP_RESOURCE = "conference";
-const XMPP_GROUP_CHAT_WEB = ".web";
-const XMPP_GROUP_CHAT_GEO = ".geo";
 
 const CSS_CLASS_CHAT_PRESENCE = "chat-presence";
 const CSS_CLASS_CHAT_PRESENCE_USER = "chat-presence-user";
@@ -88,8 +65,6 @@ OneSpacePopup.Controller.prototype = {
     this.messageHandler.initialize();
     this.model.initialize();
     this.view.initialize();
-    
-    //chrome.storage.sync.get(null, function (data) { alert(JSON.stringify(data, null, 4)); });
   },
     
   
@@ -114,21 +89,21 @@ OneSpacePopup.Controller.prototype = {
     switch (action) {
 
       case 'show':
-	
-	switch (target) {
-	  case 'locations':
-	    this.toggleLocations(isChecked);
-	    break;
-   	  case 'corners':
-	    this.toggleUserCorners(isChecked);
-	    break;
-	  case 'surfers':
-	    this.toggleSurfers(isChecked);
-	    break;
-	  case 'walkers':
-	    this.toggleWalkers(isChecked);
-	    break;
-	} 
+        
+        switch (target) {
+          case 'locations':
+            this.toggleLocations(isChecked);
+            break;
+            case 'corners':
+            this.toggleUserCorners(isChecked);
+            break;
+          case 'surfers':
+            this.toggleSurfers(isChecked);
+            break;
+          case 'walkers':
+            this.toggleWalkers(isChecked);
+            break;
+        } 
       
         break;
     } 
@@ -139,31 +114,28 @@ OneSpacePopup.Controller.prototype = {
   handleSettingsCheckboxClick : function (target, isChecked) {
     switch (target) {
       case 'multiloc':
-	this.multipleLocations = isChecked;
-	this.setOption(target, isChecked);
-	var exemptGroupChatJids = new Object();
-	if (isChecked == false) {
-	  exemptGroupChatJids[this.model.currentActiveTab.id] = 1;
- 	  this.model.xmpp.leaveAllWebGroupChats(exemptGroupChatJids);
-	} else {
-	  // First, leave all group chats (should only be one anyway)
-	  this.model.xmpp.leaveAllWebGroupChats(exemptGroupChatJids);
-	  // Re-initialize all locations from scratch
-	  var details = {};
-	  details.event = 'reinitialize-locations';
-	  chrome.runtime.sendMessage({ details: details }, function(response) {});
-	}
-	break;
+        this.multipleLocations = isChecked;
+        this.setOption(target, isChecked);
+        var exemptGroupChatJids = new Object();
+        if (isChecked == false) {
+          exemptGroupChatJids[this.model.currentActiveTab.id] = 1;
+          this.model.xmpp.leaveAllWebGroupChats(exemptGroupChatJids);
+        } else {
+          // First, leave all group chats (should only be one anyway)
+          this.model.xmpp.leaveAllWebGroupChats(exemptGroupChatJids);
+          // Re-initialize all locations from scratch
+          var details = {};
+          details.event = 'reinitialize-locations';
+          chrome.runtime.sendMessage({ details: details }, function(response) {});
+        }
+        break;
       case 'autotracking':
-	this.autoTrackLocation = isChecked;
-	this.setOption(target, isChecked);
-	if (isChecked == true) {
-	  // Switch to group chat of active tab
-	  var tab = this.model.currentActiveTab;
-	  //var jid = this.model.openTabs[tab.id].groupChatRoomJid;
-	  //this.view.chat.switchToChat(jid);
-	}
-	break;
+        this.autoTrackLocation = isChecked;
+        this.setOption(target, isChecked);
+        if (isChecked == true) {
+          var tab = this.model.currentActiveTab;
+        }
+        break;
     } 
   },
   
@@ -171,9 +143,6 @@ OneSpacePopup.Controller.prototype = {
   
   
   handleOnConnected : function () {
-    //var details = {};
-    //details.event = 'on-popup-window-initialized';
-    //chrome.runtime.sendMessage({ details: details }, function(response) {});
     this.model.http.handleUserLogin(this.model.xmpp.user, this.model.xmpp.password, this.model.xmpp.server, this.model.xmpp.resource);
   },
   
@@ -185,13 +154,13 @@ OneSpacePopup.Controller.prototype = {
     chrome.runtime.sendMessage({ details: details }, function(response) {});
   },
   
-  requestLocations : function(mapBounds) { this.model.http.requestLocations(mapBounds, MAP_MAX_DISPLAYED_LOCATIONS); },
+  requestLocations : function(mapBounds) { this.model.http.requestLocations(mapBounds); },
   
-  requestUserCorners : function(mapBounds) { this.model.http.requestUserCorners(mapBounds, MAP_MAX_DISPLAYED_USER_CORNERS); },
+  requestUserCorners : function(mapBounds) { this.model.http.requestUserCorners(mapBounds); },
   
-  requestSurfers : function(mapBounds) { this.model.http.requestSurfers(mapBounds, MAP_MAX_DISPLAYED_SURFERS); },
+  requestSurfers : function(mapBounds) { this.model.http.requestSurfers(mapBounds); },
   
-  requestWalkers : function(mapBounds) { this.model.http.requestWalkers(mapBounds, MAP_MAX_DISPLAYED_WALKERS); },
+  requestWalkers : function(mapBounds) { this.model.http.requestWalkers(mapBounds); },
   
   onLocationsReceived : function(locations) { this.view.map.onLocationsReceived(locations); },
   
@@ -277,24 +246,8 @@ OneSpacePopup.Controller.prototype = {
     }
 
     this.prerendered = false;
-    
-    //chrome.tabs.sendMessage(tab.id, {text: 'request-dom'}, that.handleDOM);
   },
   
-  //handleDOM : function(domContent) {
-    //alert('I received the following DOM content:\n' + domContent);
-    //alert(JSON.stringify(domContent, null, 4));
-    //document.createTreeWalker(domContent, NodeFilter.SHOW_TEXT, function(node) { return NodeFilter.FILTER_ACCEPT; }, false);
-
-    //while(treeWalker.nextNode()) console.log(treeWalker.currentNode);
-    
-    
-    //var walk=document.createTreeWalker(domContent,NodeFilter.SHOW_TEXT,null,false);
-    //alert(walk);
-    //while(n=walk.nextNode()) {
-    //  alert(n.textContent);
-    //};
-  //},
 
   onNewTabSelected : function(tab) {
     if (this.prerendered == true) {
@@ -312,7 +265,7 @@ OneSpacePopup.Controller.prototype = {
 
     if (joinGroupChat == true) {
       if (this.multipleLocations == false) {
-	try { this.model.xmpp.leaveWebGroupChats(previousActiveTab); } catch(e) {  } // Needed if tab activated due to closed active tab
+        try { this.model.xmpp.leaveWebGroupChats(previousActiveTab); } catch(e) {  } // Needed if tab activated due to closed active tab
       }
       var openTab = this.model.openTabs[tab.id];
       this.joinAllVPlacesGroupChats(openTab);
@@ -350,21 +303,16 @@ OneSpacePopup.Controller.prototype = {
     // Check if the URL is a valid one
     if (OneSpacePopup.Controller.Utility.isValidUrl(tab.url) == false) { joinGroupChat = false; }
     // Check if the new location -> jid <- is the same -- if so, nothing to do
-    //if (this.view.chat.currentDisplayedChat == this.view.chat.generateWebGroupChatRoomJid(tab.url)) { joinGroupChat = false; }
 
     if (joinGroupChat == true) {
       if (tab.active == true) {
-	this.model.xmpp.leaveWebGroupChats(tab);
+        this.model.xmpp.leaveWebGroupChats(tab);
       }
     }
 
     tab.vloc = response['vloc'];
     tab.vlocSha1 = response['vloc-sha1'];
     tab.vplaces = response['vplaces'];
-    
-    //if (tab.previousVloc == '') {
-    //  tab.previousVloc = response['vloc'];
-    //}
     
     if (tab.vplaces.length == 0) {
       var vplace = {};
@@ -440,12 +388,8 @@ OneSpacePopup.Controller.prototype = {
   
   
   onWebGroupChatLeft : function(tabId, vloc, roomJid) {
-    //var vloc = roomJid.split('@')[0];
-    //var selectedJid = $("#chat-select").val();
     var tab = this.model.openTabs[tabId];
-    //this.model.openTabs[tabId].groupChatRoomJid = '';
     this.view.chat.removeGroupChatFromList(roomJid);
-    //console.log("[onWebGroupChatLeft] " + vloc + " / " + tab.vloc)
     this.model.http.updateUserVloc(this.model.userId, 'remove', tab.vloc, true);
     this.model.http.requestPloc(vloc, 1);
     var selectedJid = $("#chat-select").val();
@@ -475,7 +419,7 @@ OneSpacePopup.Controller.prototype = {
       bodyJson = jQuery.parseJSON(body);
     } catch (e) {
       if (jid == this.view.chat.currentDisplayedChat) {
-	this.view.chat.displayNewMessage(jid, user, body);
+        this.view.chat.displayNewMessage(jid, user, body);
       }
     }
     
@@ -484,27 +428,14 @@ OneSpacePopup.Controller.prototype = {
     var messageType = bodyJson["message-type"];
     switch (messageType) {
       case 'chat':
-	this.handleChatMessage(jid, user, bodyJson)
+        this.handleChatMessage(jid, user, bodyJson)
         break;
       case 'cmd':
-	if (processCommands == true) {
-	  this.handleCommandMessage(jid, user, bodyJson);
-	}
+        if (processCommands == true) {
+          this.handleCommandMessage(jid, user, bodyJson);
+        }
         break;
     }
-//     if (body.indexOf(XMPP_CHAT_COMMAND_PREFIX) > -1) {
-//       if (processCommands == false) { return; } // Needed no not re-execute commands when history is shown
-//       body = body.replace(XMPP_CHAT_COMMAND_PREFIX, '').trim();
-//       body = OneSpacePopup.Controller.Utility.unescapeHtml(body);
-//       try {
-// 	command = jQuery.parseJSON(body);
-// 	this.handleChatCommand(jid, user, command);
-//       } catch (e) {
-// 	alert(e);
-//       }
-//     } else if (jid == this.view.chat.currentDisplayedChat) {
-//       this.view.chat.displayNewMessage(jid, user, body);
-//     }
   },
   
 
@@ -650,12 +581,12 @@ OneSpacePopup.Controller.prototype = {
     var winId = -1;
     chrome.windows.getAll({ populate: true}, function(windows) {
       for (var w = 0; w < windows.length; w++) {
-	var win = windows[w];
-	if (win.id != that.windowId) {
-	  winId = win.id;
-	}
-	chrome.tabs.create({ windowId : winId,  url: url });
-	return;
+        var win = windows[w];
+        if (win.id != that.windowId) {
+          winId = win.id;
+        }
+        chrome.tabs.create({ windowId : winId,  url: url });
+        return;
       }
     });
     
@@ -667,7 +598,7 @@ OneSpacePopup.Controller.prototype = {
     var vloc = this.model.openTabs[currentTabId].vloc;
     var vlocSha1 = this.model.openTabs[currentTabId].vlocSha1;
     if (vlocSha1 != '') {
-      this.model.http.requestData(currentTabId, target, vloc, vlocSha1, DASHBOARD_MAX_DISPLAYED_ITEMS);
+      this.model.http.requestData(currentTabId, target, vloc, vlocSha1 );
     } else{
       alert('Not a valid website');
     }
@@ -677,36 +608,36 @@ OneSpacePopup.Controller.prototype = {
   onDataReceived : function(tabId, type, data) {
     switch (type) {
       case 'twitter':
-	this.view.dashboard.setHeading('Latest Tweets for "' + this.model.openTabs[tabId].title + '"');
-	this.view.dashboard.displayLatestTweets(data);
+        this.view.dashboard.setHeading('Latest Tweets for "' + this.model.openTabs[tabId].title + '"');
+        this.view.dashboard.displayLatestTweets(data);
         break;
       case 'youtube':
-	this.view.dashboard.setHeading('YouTube videos for "' + this.model.openTabs[tabId].title + '"');
-	this.view.dashboard.displayYoutubeVideos(data);
+        this.view.dashboard.setHeading('YouTube videos for "' + this.model.openTabs[tabId].title + '"');
+        this.view.dashboard.displayYoutubeVideos(data);
         break;
       case 'flickr':
-	this.view.dashboard.setHeading('Flickr images for "' + this.model.openTabs[tabId].title + '"');
-	this.view.dashboard.displayFlickrImages(data);
+        this.view.dashboard.setHeading('Flickr images for "' + this.model.openTabs[tabId].title + '"');
+        this.view.dashboard.displayFlickrImages(data);
         break;
       case 'instagram':
-	this.view.dashboard.setHeading('Instagram images for "' + this.model.openTabs[tabId].title + '"');
-	this.view.dashboard.displayInstagramImages(data);
+        this.view.dashboard.setHeading('Instagram images for "' + this.model.openTabs[tabId].title + '"');
+        this.view.dashboard.displayInstagramImages(data);
         break;
       case 'nea':
-	this.view.dashboard.setHeading('2h Nowcast for "' + this.model.openTabs[tabId].title + '"');
-	this.view.dashboard.displayNeaNowcast(data);
-	break
+        this.view.dashboard.setHeading('2h Nowcast for "' + this.model.openTabs[tabId].title + '"');
+        this.view.dashboard.displayNeaNowcast(data);
+        break
       case 'lta':
-	this.view.dashboard.setHeading('Carpark Availability for "' + this.model.openTabs[tabId].title + '"');
-	this.view.dashboard.displaycarparkAvailability(data);
+        this.view.dashboard.setHeading('Carpark Availability for "' + this.model.openTabs[tabId].title + '"');
+        this.view.dashboard.displaycarparkAvailability(data);
         break;
       case 'ltabuses':
-	this.view.dashboard.setHeading('Bus Stop Information for "' + this.model.openTabs[tabId].title + '"');
-	this.view.dashboard.displayBusStopInformation(data);
+        this.view.dashboard.setHeading('Bus Stop Information for "' + this.model.openTabs[tabId].title + '"');
+        this.view.dashboard.displayBusStopInformation(data);
         break;
       case 'products':
-	this.view.dashboard.setHeading('Local Products for "' + this.model.openTabs[tabId].title + '"');
-	this.view.dashboard.displayLocalProducts(data);
+        this.view.dashboard.setHeading('Local Products for "' + this.model.openTabs[tabId].title + '"');
+        this.view.dashboard.displayLocalProducts(data);
         break;
     } 
     
@@ -805,40 +736,40 @@ OneSpacePopup.Controller.prototype = {
 
     switch (action) {
       case 'send-share-request':
-	this.view.notificationPanel.handleLiveViewShareRequestSent(source);
-	break;
+        this.view.notificationPanel.handleLiveViewShareRequestSent(source);
+        break;
       case 'handle-share-request-accepted':
-	this.model.liveView.addFollower(source);
-	this.view.notificationPanel.handleLiveViewShareRequestAccepted(source);
-	break;
+        this.model.liveView.addFollower(source);
+        this.view.notificationPanel.handleLiveViewShareRequestAccepted(source);
+        break;
       case 'handle-share-request-rejected':
-	this.view.notificationPanel.handleLiveViewShareRequestRejected(source);
-	break;
+        this.view.notificationPanel.handleLiveViewShareRequestRejected(source);
+        break;
       case 'handle-following-stopped':
-	this.model.liveView.removeFollower(source);
-	this.view.liveView.updateFollowersList();
-	this.view.notificationPanel.handleLiveViewFollowingStopped(source);
-	break;
+        this.model.liveView.removeFollower(source);
+        this.view.liveView.updateFollowersList();
+        this.view.notificationPanel.handleLiveViewFollowingStopped(source);
+        break;
       case 'handle-guiding-stopped':
-	this.model.liveView.removeGuide(source);
-	this.view.liveView.updateGuidesList();
-	this.view.notificationPanel.handleLiveViewShareGuidingStopped(source);
-	break;
+        this.model.liveView.removeGuide(source);
+        this.view.liveView.updateGuidesList();
+        this.view.notificationPanel.handleLiveViewShareGuidingStopped(source);
+        break;
       case 'send-url':
-	if (jid in this.model.liveView.surferGuides) { 
-	  this.model.liveView.surferGuides[jid].url = command['url'];
-	  this.view.liveView.updateLiveView(jid, command); 
-	} 
-	break;
+        if (jid in this.model.liveView.surferGuides) { 
+          this.model.liveView.surferGuides[jid].url = command['url'];
+          this.view.liveView.updateLiveView(jid, command); 
+        } 
+        break;
       case 'send-image-base64':
-	if (jid in this.model.liveView.surferGuides) { 
-	  this.model.liveView.surferGuides[jid].imageBase64 = command['base64'];
-	  this.view.liveView.updateLiveView(jid, command); 
-	} else if (jid in this.model.liveView.walkerGuides) { 
-	  this.model.liveView.walkerGuides[jid].imageBase64 = command['base64'];
-	  this.view.liveView.updateLiveView(jid, command); 
-	}
-	break;
+        if (jid in this.model.liveView.surferGuides) { 
+          this.model.liveView.surferGuides[jid].imageBase64 = command['base64'];
+          this.view.liveView.updateLiveView(jid, command); 
+        } else if (jid in this.model.liveView.walkerGuides) { 
+          this.model.liveView.walkerGuides[jid].imageBase64 = command['base64'];
+          this.view.liveView.updateLiveView(jid, command); 
+        }
+        break;
     } 
 
   },
@@ -994,17 +925,17 @@ OneSpacePopup.Controller.MessageHandler.prototype = {
     chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
       //alert(JSON.stringify(message, null, 4));
       if (message.details.event == 'onespace-popup-opened') {
-	that.controller.windowId = message.details.window.id;
+        that.controller.windowId = message.details.window.id;
       } else if (message.details.event == 'onespace-new-tab-selected') {
-	that.controller.onNewTabSelected(message.details.tab);
+        that.controller.onNewTabSelected(message.details.tab);
       } else if (message.details.event == 'onespace-tab-added') {
-	that.controller.onTabAdded(message.details.tab);
+        that.controller.onTabAdded(message.details.tab);
       } else if (message.details.event == 'onespace-tab-removed') {
-	that.controller.onTabRemoved(message.details.tabId);
+        that.controller.onTabRemoved(message.details.tabId);
       } else if (message.details.event == 'onespace-tab-replaced') {
-	that.controller.onTabReplaced(message.details.tabDetails);
+        that.controller.onTabReplaced(message.details.tabDetails);
       } else if (message.details.event == 'onespace-new-page-loaded') {
-	that.controller.onNewPageLoaded(message.details.tab);
+        that.controller.onNewPageLoaded(message.details.tab);
       } 
     
     });

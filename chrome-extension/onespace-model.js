@@ -1,5 +1,5 @@
-var OneSpaceModel = new Array();
 
+var OneSpaceModel = new Array();
 
 
 OneSpaceModel = function(controller) {
@@ -36,10 +36,6 @@ OneSpaceModel.prototype = {
     });
     
   },
-    
-  
-
-
   
 };
 
@@ -66,16 +62,9 @@ OneSpaceModel.WindowHandler.prototype = {
     chrome.windows.onRemoved.addListener( function (windowId) {
       that.model.controller.onWindowClosed(windowId);
     }); 
-
-    
   },
 
-
 };
-
-
-
-
 
 
 
@@ -110,17 +99,15 @@ OneSpaceModel.TabHandler.prototype = {
 
     chrome.tabs.onActivated.addListener( function(info) {
       if (that.prerendered == true) {
-	// if prerendered, it's not "really" a onActivated event!!!
+        // if prerendered, it's not "really" a onActivated event!!!
       } else {
-	chrome.tabs.get(info.tabId, function (tab) {
-	  that.model.controller.onTabSelectionChanged(tab);
-	});
+        chrome.tabs.get(info.tabId, function (tab) {
+          that.model.controller.onTabSelectionChanged(tab);
+        });
       }
       that.prerendered = false;
     }); 
 
-
-    
     //
     // Repairs the prerendering issue
     //
@@ -132,8 +119,6 @@ OneSpaceModel.TabHandler.prototype = {
   
   
 };
-
-
 
 
 
@@ -154,7 +139,7 @@ OneSpaceModel.Http.prototype = {
       url: serverUrl, type: method, data: data, dataType: "json",
       success: function(response, textStatus, jqXHR){ callback(response); },
       error: function(jqXHR, textStatus, errorThrown){ 
-	
+
       },
     });
   },

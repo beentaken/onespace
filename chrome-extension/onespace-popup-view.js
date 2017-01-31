@@ -217,7 +217,7 @@ OneSpacePopupView.Settings.prototype = {
   handleCheckboxReturnOption : function(items) {
     for(item in items) {
       if (items[item] == true) {
-	$('#settings-'+item).prop('checked', items[item]);
+        $('#settings-'+item).prop('checked', items[item]);
       }
     }
   },
@@ -309,7 +309,6 @@ OneSpacePopupView.Dashboard.prototype = {
       var video = data[i];
       var url = video.url.replace("watch?v=", "v/");
       var entry = '<div class="' + CSS_CLASS_DASHBOARD_DATA_YOUTUBE_VIDEO + '"> <iframe width="480" height="390" src="http://' + url + '" frameborder="0"></iframe></div>';
-      //var entry = '<div class="' + CSS_CLASS_DASHBOARD_DATA_YOUTUBE_VIDEO + '"> <object data="http://www.youtube.com/embed/W7qWa52k-nE" width="480" height="390"></object></div>';
       var row = '<tr><td>'+entry+'</td></tr>';
       tableEnd.append(row);
     }
@@ -321,7 +320,6 @@ OneSpacePopupView.Dashboard.prototype = {
     var tableEnd = $('#data-table tbody');
     for (var i = 0; i < data.length; i++) {
       var image = data[i];
-      //var entry = '<div class="' + CSS_CLASS_DASHBOARD_DATA_FLICKR_IMAGES + '"><img src="http://' + image.url + '" alt="' + image.title + '"></div>';
       var entry = '<div class="' + CSS_CLASS_DASHBOARD_DATA_FLICKR_IMAGES + '"><img src="http://' + image.url + '"></div>';
       var row = '<tr><td>'+entry+'</td></tr>';
       tableEnd.append(row);
@@ -333,7 +331,6 @@ OneSpacePopupView.Dashboard.prototype = {
     var tableEnd = $('#data-table tbody');
     for (var i = 0; i < data.length; i++) {
       var image = data[i];
-      //var entry = '<div class="' + CSS_CLASS_DASHBOARD_DATA_INSTAGRAM_IMAGES + '"><img src="http://' + image.url + '" alt="' + image.title + '"></div>';
       var entry = '<div class="' + CSS_CLASS_DASHBOARD_DATA_INSTAGRAM_IMAGES + '"><img src="https://' + image.url + '"></div>';
       var row = '<tr><td>'+entry+'</td></tr>';
       tableEnd.append(row);
@@ -346,7 +343,8 @@ OneSpacePopupView.Dashboard.prototype = {
     for (var i = 0; i < data.length; i++) {
       var item = data[i];
       var icon = item['icon'].toUpperCase();
-	  icon = icon.replace("CD", "CL"); 
+      icon = icon.replace("CD", "CL");
+      icon = icon.replace("TS", "TL"); 
       var entry = '<div class="' + CSS_CLASS_DASHBOARD_DATA_NEA + '"><table><tr><td><img src="http://www.nea.gov.sg/Html/Nea/images/common/weather/50px/' + icon + '.png" alt="' + icon + '"></td><td style="font-size: 115%;">' +  OneSpacePopup.Controller.Utility.toTitleCase(item['location']) + ' (Distance: ' + item['distance_in_km'] + ')</td></tr></table></div>'
 	  
       var row = '<tr><td>'+entry+'</td></tr>';
@@ -359,9 +357,7 @@ OneSpacePopupView.Dashboard.prototype = {
     var tableEnd = $('#data-table tbody');
     for (var i = 0; i < data.length; i++) {
       var item = data[i];
-      //var entry = '<div class="' + CSS_CLASS_DASHBOARD_DATA_LTA + '"><table><tr><td><b>' + item['available_lots'] + '</b></td><td>' + item['development'] + '</td><td>(Distance: ' + item['distance_in_km'] + ')</td></tr></table></div>'
-	  
-      var row = '<tr><td style="margin: 15px; font-size: 115%;"><b>'+item['available_lots']+'</b></td><td style="font-size: 115%;">' + item['development'] + '</td><td style="font-size: 115%;">(Distance: '+item['distance_in_km']+'km)</td></tr>';
+      var row = '<tr><td style="margin: 15px; font-size: 115%;"><b>'+item['Lots']+'</b></td><td style="font-size: 115%;">' + item['Development'] + '</td><td style="font-size: 115%;">(Distance: '+item['distance'].toFixed(2)+'km)</td></tr>';
       tableEnd.append(row);
     }
   },
@@ -375,14 +371,13 @@ OneSpacePopupView.Dashboard.prototype = {
       var entry = '<div class="' + CSS_CLASS_DASHBOARD_DATA_LTA + '"><table><tr><td style="font-size: 115%;"><b>' + item['description'] + '</b> (Distance: ' + item['distance_in_km'] + ')</td></tr></table></div>'
       entry += '<div><table>';
       for (var pos in item['arrival_times']) {
-	var info = item['arrival_times'][pos]
-	//alert(JSON.stringify(info, null, 4));
-	var time = info['arrival_time'];
-	var timeConverted = new Date(time);	
- 	entry += '<tr><td><b>' + info['service_nr'] + '</b></td><td style="padding-left: 20px;">' + timeConverted.getHours() + ':' + timeConverted.getMinutes() + ':' + timeConverted.getSeconds() + '</td></tr>';
+        var info = item['arrival_times'][pos]
+        //alert(JSON.stringify(info, null, 4));
+        var time = info['arrival_time'];
+        var timeConverted = new Date(time);	
+        entry += '<tr><td><b>' + info['service_nr'] + '</b></td><td style="padding-left: 20px;">' + timeConverted.getHours() + ':' + timeConverted.getMinutes() + ':' + timeConverted.getSeconds() + '</td></tr>';
       }
       entry += '<table></div>'
-      //var row = '<tr><td style="margon: 15px;"><b>'+item['available_lots']+'</b></td><td>' + item['development'] + '</td><td>(Distance: '+item['distance_in_km']+'km)</td></tr>';
       var row = '<tr><td style="margin: 15px;">'+entry+'</td></tr><tr></tr>';
       tableEnd.append(row);
     }
@@ -531,7 +526,6 @@ OneSpacePopupView.Map.prototype = {
       //split at the '1' and take the second offset
       var target = $(this).attr('value');
       var isChecked = $(this).is(':checked');
-      //that.controller.handleMapLegendFilterLocationCheckboxClick(target, isChecked);
       that.updateShownLocationCategories(target, isChecked);
     });
 
@@ -540,14 +534,13 @@ OneSpacePopupView.Map.prototype = {
   updateShownLocationCategories : function(target, isChecked) {
     if (target in this.shownLocationCategories) {
       if (isChecked == false) {
-	delete this.shownLocationCategories[target];
+        delete this.shownLocationCategories[target];
       }
     } else {
       if (isChecked == true) {
-	this.shownLocationCategories[target] = 1;
+        this.shownLocationCategories[target] = 1;
       }      
     }
-    //console.log(this.shownLocationCategories);
     this.controller.onShownLocationUpdated();
   },
   
@@ -616,12 +609,12 @@ OneSpacePopupView.Map.prototype = {
     for ( i = 0; i < locations.length; i++) {
       var location = locations[i];
       if (location.category in this.shownLocationCategories) {
-	var point = new google.maps.LatLng(location.lat, location.lng);
-	var marker = new google.maps.Marker({position: point, icon: "images/icon-location-"+location.category+".png", map: that.map });
-	marker.location = location;
-	google.maps.event.addListener(marker, "click",  function() { that.handleOnLocationClicked(this); } , false );
-	this.markersLocations.push(marker);
-	marker.setMap(this.map);
+        var point = new google.maps.LatLng(location.lat, location.lng);
+        var marker = new google.maps.Marker({position: point, icon: "images/icon-location-"+location.category+".png", map: that.map });
+        marker.location = location;
+        google.maps.event.addListener(marker, "click",  function() { that.handleOnLocationClicked(this); } , false );
+        this.markersLocations.push(marker);
+        marker.setMap(this.map);
       }
     }
   },
@@ -652,7 +645,6 @@ OneSpacePopupView.Map.prototype = {
       var point = new google.maps.LatLng(surfer.lat, surfer.lng);
       var marker = new google.maps.Marker({position: point, icon: icon, map: that.map });
       marker.surfer = surfer;
-      //marker.location = location;
       google.maps.event.addListener(marker, "click",  function() { that.handleOnSurferClicked(this); }, false );
       this.markersSurfers.push(marker);
       marker.setMap(this.map);
@@ -694,7 +686,6 @@ OneSpacePopupView.Map.prototype = {
 
 OneSpacePopupView.Map.ContextMenu = function(controller) {
   this.controller = controller;
-  //this.divContextMenu = $('#content-div-map-context-menu');
   this.lastRightClickCursorX = 0;
   this.lastRightClickCursorY = 0;
   this.lastRightClickLat = 0;
@@ -883,8 +874,8 @@ OneSpacePopupView.Chat.prototype = {
     
     $('#chat-send-message-text').keypress(function( event ) {
       if ( event.which == 13 ) { 
-	event.preventDefault(); 
-	that.controller.handleSendMessageClick();
+        event.preventDefault(); 
+        that.controller.handleSendMessageClick();
       }
     });
     
@@ -908,9 +899,6 @@ OneSpacePopupView.Chat.prototype = {
     
   },
   
-//   generateWebGroupChatRoomJid : function(url) {
-//     return OneSpacePopup.Controller.Utility.extractDomain(url) + XMPP_GROUP_CHAT_WEB + "@" + this.controller.model.xmpp.resource + "." + this.controller.model.xmpp.server;;
-//   },
   
   onNewLocationSelected : function(jid) {
     this.switchToChat(jid);
@@ -940,17 +928,16 @@ OneSpacePopupView.Chat.prototype = {
     this.updateParticipantsList(jid);
     this.updateReceivedMessages(jid);
     this.updateCloseChatButton(jid);
-    
-    //Check if correct content view
+
   },
 
   updateCloseChatButton : function(jid) {
     if (jid in this.controller.model.xmpp.groupChats) {
       var type = this.controller.model.xmpp.groupChats[jid].type;
       if (type == GROUP_CHAT_TYPE_DEFAULT) {
-	$('#button-chat-close').show();
+        $('#button-chat-close').show();
       } else {
-	$('#button-chat-close').hide();
+        $('#button-chat-close').hide();
       }
     } else {
       $('#button-chat-close').show();
@@ -962,9 +949,9 @@ OneSpacePopupView.Chat.prototype = {
       var entry = '';
       var info = '';
       if (status == 'available') {
-	info = 'has joined the chat';
+        info = 'has joined the chat';
       } else { 
-	info = 'has left the chat';
+        info = 'has left the chat';
       }
       entry = "<div class='"+ CSS_CLASS_CHAT_PRESENCE + "'><span class='" + CSS_CLASS_CHAT_PRESENCE_USER + "'>" + user + "</span> <span class='" + CSS_CLASS_CHAT_PRESENCE_INFO + "'>" + info + "</div>";
       $('#chat-received-messages').append(entry);
@@ -984,7 +971,6 @@ OneSpacePopupView.Chat.prototype = {
     } else {
       return;
     }
-    //for(var i = 0; i < participants.length; i++) {
     for(jid in participants) {
       var participant = participants[jid];
       str += "<table id='table-chat-participants'><tr><td width='100%'><div class='" + CSS_CLASS_CHAT_PARTICIPANTS_USER + "'>" + participant.name + "</div></td><td><a href='#' title='Click to share your browsing session'><img class='share-session-icon' id='share-session-" + participant.jid + "' src='images/share-session-icon.png' /></a></td><td><a href='#' title='Click to start private chat'><img class='private-chat-icon' id='private-chat-" + participant.jid + "' src='images/private-chat-icon.png' /></a></td></tr></table>";
@@ -1026,18 +1012,16 @@ OneSpacePopupView.Chat.prototype = {
     
     if (user != null) {
       if (user == this.controller.model.xmpp.user) {
-	entry = "<div class='bubble you'>" + OneSpacePopup.Controller.Utility.convertToLinks(text); + "</div>"
+        entry = "<div class='bubble you'>" + OneSpacePopup.Controller.Utility.convertToLinks(text); + "</div>"
       } else {
-	name = jid.split('@')[0];
-	if (name == user) {
-	  entry = "<div class='bubble me'>" + OneSpacePopup.Controller.Utility.convertToLinks(text); + "</div>";
-	} else {
-	  entry = "<div class='bubble me'><b>" + user + ":</b> " + OneSpacePopup.Controller.Utility.convertToLinks(text); + "</div>";
-	}
+        name = jid.split('@')[0];
+        if (name == user) {
+          entry = "<div class='bubble me'>" + OneSpacePopup.Controller.Utility.convertToLinks(text); + "</div>";
+        } else {
+          entry = "<div class='bubble me'><b>" + user + ":</b> " + OneSpacePopup.Controller.Utility.convertToLinks(text); + "</div>";
+        }
       }
       $('#chat-received-messages').append(entry);
-      //entry = "<div class='" + CSS_CLASS_CHAT_MESSAGE + "'><a href='http://172.29.32.195/onespace/media/uploads/images/2015-09-23/6TvnKzCKDX8YlQZghQtGx15m.png' target='_blank'><img src='http://172.29.32.195/onespace/media/uploads/images/2015-09-23/6TvnKzCKDX8YlQZghQtGx15m_t.png' /></a></span></div>"
-      //$('#chat-received-messages').append(entry);
       scrollHeight = $('#chat-received-messages')[0].scrollHeight;
       $('#chat-received-messages').scrollTop(scrollHeight);
     }
@@ -1074,7 +1058,6 @@ OneSpacePopupView.Radar.prototype = {
     } else {
       return;
     }
-    //for(var i = 0; i < participants.length; i++) {
     for(jid in participants) {
       var participant = participants[jid];
       str += "<tr><td width='100%'><div class='radar-user'>" + participant.name + "</div></td><td><a href='#' title='Click to share your browsing session'><img class='share-session-icon' id='share-session-" + participant.jid + "' src='images/share-session-icon.png' /></a></td><td><a href='#' title='Click to start private chat'><img class='private-chat-icon' id='private-chat-" + participant.jid + "' src='images/private-chat-icon.png' /></a></td></tr>";
@@ -1119,12 +1102,6 @@ OneSpacePopupView.Radar.prototype = {
       var userJid = elements[2]; 
       that.controller.handleStartPrivateChatClick(userJid, true);
     });
-//     $('.share-session-icon').click(function() {
-//       var elements = $(this).attr('id').split('-');
-//       var userJid = elements[2]; 
-//       that.controller.handleStartShareSessionClick(userJid);
-//     });
-    
   },  
 };
 
@@ -1141,7 +1118,6 @@ OneSpacePopupView.LiveView = function(controller) {
 OneSpacePopupView.LiveView.prototype = {
   
   initialize : function() {
-    //this.checkIfWebcamAvailable();
     this.initializeListeners();
   },
 
@@ -1152,9 +1128,9 @@ OneSpacePopupView.LiveView.prototype = {
     $('input[id^="liveview-tab-"]').click(function() {
       var id = $(this).attr('id');
       if (id == 'liveview-tab-snapshot') {
-	that.checkIfWebcamAvailable();
+        that.checkIfWebcamAvailable();
       } else {
-	$('#liveview-snapshot-wrapper').empty();
+        $('#liveview-snapshot-wrapper').empty();
       }
     });
     
@@ -1183,7 +1159,6 @@ OneSpacePopupView.LiveView.prototype = {
     $('#liveview-snapshot-wrapper').empty();
     $('#liveview-snapshot-wrapper').append('<video id="liveview-snapshot-video" width="98%" height="98%" autoplay></video>');
     $('#liveview-snapshot-wrapper').append('<canvas id="liveview-snapshot-canvas" width="640" height="480" style="display: none;"></canvas>');
-    //$('#liveview-snapshot-wrapper').append('<canvas id="liveview-snapshot-canvas" width="90%" height="90%" style="display: none;"></canvas>');
     navigator.webkitGetUserMedia({ "video": true }, this.handleVideo, this.handleVideoError);
     
   },
@@ -1201,7 +1176,6 @@ OneSpacePopupView.LiveView.prototype = {
   onSnapshotButtonClick : function() {
     var snapshotVideo = document.getElementById("liveview-snapshot-video");
     var canvas = document.getElementById("liveview-snapshot-canvas");
-    //alert(canvas.attr('width'));
     var context = canvas.getContext("2d");
     context.drawImage(snapshotVideo, 0, 0, 640, 480);
     var imageBase64 = canvas.toDataURL("image/png");
@@ -1228,13 +1202,13 @@ OneSpacePopupView.LiveView.prototype = {
       
       fileExtension = OneSpacePopup.Controller.Utility.getFileExtension(command['url']).toLowerCase();
       if (fileExtension in IMAGE_MEDIA_FILE_SUFFIXES) { // raw media content
-	$('#liveview-content-wrapper').append('<table width="100%"  height="100%"><tr><td><img id="liveview-img-snapshot" src="" /></td></tr></table>');
-	//$('#liveview-img-snapshot').attr('src', 'http://172.29.32.195/onespace/service/liveview-grabber.php?url='+command['url']);
-	$('#liveview-img-snapshot').attr('src', command['url']);
+        $('#liveview-content-wrapper').append('<table width="100%"  height="100%"><tr><td><img id="liveview-img-snapshot" src="" /></td></tr></table>');
+        //$('#liveview-img-snapshot').attr('src', 'http://172.29.32.195/onespace/service/liveview-grabber.php?url='+command['url']);
+        $('#liveview-img-snapshot').attr('src', command['url']);
       } else { // normal HTML content
-	$('#liveview-content-wrapper').append('<iframe id="liveview-frame" src="" frameborder="0"></iframe>');
+        $('#liveview-content-wrapper').append('<iframe id="liveview-frame" src="" frameborder="0"></iframe>');
         //$('#liveview-frame').attr('src', 'http://172.29.32.195/onespace/service/liveview-grabber.php?url='+command['url']);
-	$('#liveview-frame').attr('src', command['url']);
+        $('#liveview-frame').attr('src', command['url']);
       }
     } else if ('base64' in command) {
       $('#liveview-content-wrapper').append('<table width="100%"  height="100%"><tr><td><img id="liveview-img-snapshot" src="" /></td></tr></table>');
@@ -1282,7 +1256,6 @@ OneSpacePopupView.LiveView.prototype = {
       var elements = $(this).attr('id').split('-');
       var userJid = elements[2];
       var role = elements[3]; 
-      //alert('Stop following ' + role + ': ' + userJid);
       that.controller.handleStopFollowingUserClick(userJid, role);
     });
     
@@ -1314,17 +1287,11 @@ OneSpacePopupView.LiveView.prototype = {
     
     // Attache click handler to private chat icons
     var that = this;
-    //$('.table-liveview-follower-link').click(function() {
-    //  var elements = $(this).attr('id').split('-');
-    //  var userJid = elements[4]; 
-      //that.controller.handleStartPrivateChatClick(userJid, true);
-    //});
 
     $('.cancel-sharing-session-icon').click(function() {
       var elements = $(this).attr('id').split('-');
       var userJid = elements[2];
       var role = elements[3]; 
-      //alert('Stop sharing ' + role + ': ' + userJid);
       that.controller.handleStopSharingClick(userJid, role);
     });
     
@@ -1352,9 +1319,9 @@ OneSpacePopupView.LiveView.prototype = {
     var that = this;
     $('.table-liveview-guides').each(function() {
       if (($(this).attr('id') == 'table-liveview-guide-'+that.currentDisplayedGuideJid+'-surfer') || ($(this).attr('id') == 'table-liveview-guide-'+that.currentDisplayedGuideJid+'-walker') ) {
-	$(this).css('background-color', '#CCDDFF');
+        $(this).css('background-color', '#CCDDFF');
       } else {
-	$(this).css('background-color', '#FFFFFF');
+        $(this).css('background-color', '#FFFFFF');
       }
     });
   },
@@ -1395,14 +1362,14 @@ OneSpacePopupView.DialogWindowManager.prototype = {
   handleButtonClick : function(action) {
     switch (action) {
       case 'close':
-	$('.dialog-window').hide();
-	break;
+        $('.dialog-window').hide();
+        break;
       case 'createcorner':
-	var name = $('#dialog-window-create-corner-name').val().trim();
-	var description = $('#dialog-window-create-corner-description').val().trim();
-	if (name == '') { alert('Name field cannot be empty'); return ;}
-	this.controller.handleCreateNewCornerClick(name, description);
-	break;
+        var name = $('#dialog-window-create-corner-name').val().trim();
+        var description = $('#dialog-window-create-corner-description').val().trim();
+        if (name == '') { alert('Name field cannot be empty'); return ;}
+        this.controller.handleCreateNewCornerClick(name, description);
+        break;
     } 
   },
 

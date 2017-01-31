@@ -8,44 +8,80 @@
       
   <body>
 
-    <H1>OneSpace Options</H1>
+  <div style="padding:20px;">
   
-    <H3>XMPP Connection Settings</H3>
-    <table id="options-table">
-      <tr>
-	<td>Host URL:</td>
-	<td width="500"><input class="form-textfield" id="options-xmpp-host" type="text"/></td>
-      </tr>
-      <tr>
-	<td>Http-bind URL:</td>
-	<td width="500"><input class="form-textfield" id="options-xmpp-http-bind" type="text"/></td>
-      </tr>
-      <tr>
-	<td>Resource:</td>
-	<td width="500"><input class="form-textfield" id="options-xmpp-resource" type="text"/></td>
-      </tr>
+      <H1>OneSpace Options</H1>
 
-      <tr>
-	<td>User name:</td>
-	<td width="500"><input class="form-textfield" id="options-xmpp-user-name" type="text"/></td>
-      </tr>
-      <tr>
-	<td>User Password:</td>
-	<td width="500"><input class="form-textfield" id="options-xmpp-password" type="password"/></td>
-      </tr>
+    
+      <H3>API</H3>
+      <table id="options-table">
+        <tr>
+          <td width="125px">Base URL:</td>
+          <td width="500px"><input class="form-textfield" id="options-api-base-url" type="text"/></td>
+        </tr>
+      </table>
       
-  
-    </table>
-  
-  
-  
-  
-  
-  
+      
+      <H3>XMPP Connection Settings</H3>
+      <table id="options-table">
+        <tr>
+          <td width="125px">Host URL:</td>
+          <td width="500"><input class="form-textfield" id="options-xmpp-host" type="text"/></td>
+        </tr>
+        <tr>
+          <td width="125px">Http-bind URL:</td>
+          <td width="500"><input class="form-textfield" id="options-xmpp-http-bind" type="text"/></td>
+        </tr>
+        <tr>
+          <td width="125px">Resource:</td>
+          <td width="500"><input class="form-textfield" id="options-xmpp-resource" type="text"/></td>
+        </tr>
 
-    <div id="status"></div>
-    <button id="button-save-options">Save</button>
+        <tr>
+          <td width="125px">User name:</td>
+          <td width="500"><input class="form-textfield" id="options-xmpp-user-name" type="text"/></td>
+        </tr>
+        <tr>
+          <td width="125px">User Password:</td>
+          <td width="500"><input class="form-textfield" id="options-xmpp-password" type="password"/></td>
+        </tr>
+      </table>
+      
+      <H3>Map Settings</H3>
+      <table id="options-table">
+        <tr>
+          <td width="125px">Max. #Places:</td>
+          <td width="500"><input class="form-textfield" id="options-map-max-places" type="text"/></td>
+        </tr>
+        <tr>
+          <td width="125px">Max. #Corners:</td>
+          <td width="500"><input class="form-textfield" id="options-map-max-corners" type="text"/></td>
+        </tr>
+        <tr>
+          <td width="125px">Max. #Surfers:</td>
+          <td width="500"><input class="form-textfield" id="options-map-max-surfers" type="text"/></td>
+        </tr>
 
+        <tr>
+          <td width="125px">Max. #Walkers:</td>
+          <td width="500"><input class="form-textfield" id="options-map-max-walkers" type="text"/></td>
+        </tr>
+      </table>
+      
+      <H3>Dashboard Settings</H3>
+      <table id="options-table">
+        <tr>
+          <td width="125px">Max. #Items:</td>
+          <td width="500"><input class="form-textfield" id="options-dashboard-max-items" type="text"/></td>
+        </tr>
+      </table>      
+    
+      <br /><br />
+      
+      <button id="button-save-options" style="width:100px;">Save Settings</button>
+      <div id="status"></div>
+      
+    </div>
 
   </body>
 </html>

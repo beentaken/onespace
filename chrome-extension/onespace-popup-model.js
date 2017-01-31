@@ -23,18 +23,18 @@ OneSpacePopupModel.prototype = {
     
     chrome.webRequest.onHeadersReceived.addListener(
       function(info) {
-	  var headers = info.responseHeaders;
-	  for (var i=headers.length-1; i>=0; --i) {
-	      var header = headers[i].name.toLowerCase();
-	      if (header == 'x-frame-options' || header == 'frame-options') {
-		  headers.splice(i, 1); // Remove header
-	      }
-	  }
-	  return {responseHeaders: headers};
+        var headers = info.responseHeaders;
+        for (var i=headers.length-1; i>=0; --i) {
+            var header = headers[i].name.toLowerCase();
+            if (header == 'x-frame-options' || header == 'frame-options') {
+          headers.splice(i, 1); // Remove header
+            }
+        }
+        return {responseHeaders: headers};
       },
       {
-	  urls: [ '*://*/*' ], // Pattern to match all http(s) pages
-	  types: [ 'sub_frame' ]
+        urls: [ '*://*/*' ], // Pattern to match all http(s) pages
+        types: [ 'sub_frame' ]
       },
       ['blocking', 'responseHeaders']
     );
@@ -44,7 +44,6 @@ OneSpacePopupModel.prototype = {
 
   
   addTab : function(tab) {
-    //tab.groupChatRoomJid = '';
     tab.vloc = '';
     tab.vlocSha1 = '';
     tab.vplaces = [];
@@ -54,12 +53,10 @@ OneSpacePopupModel.prototype = {
   },
 
   updateTab : function(tab) {
-    //var existingGroupChatRoomJid = this.openTabs[tab.id].groupChatRoomJid;
     var existingVloc = this.openTabs[tab.id].vloc;
     var existingVlocSha1 = this.openTabs[tab.id].vlocSha1;
     var existingVplaces = this.openTabs[tab.id].vplaces;
     var existingPreviousVloc = this.openTabs[tab.id].previousVloc;
-    //tab.groupChatRoomJid = existingGroupChatRoomJid;
     tab.vloc = existingVloc;
     tab.vlocSha1 = existingVlocSha1;
     tab.vplaces = existingVplaces;
@@ -83,12 +80,12 @@ OneSpacePopupModel.prototype = {
       tabIds = this.xmpp.groupChatTabMap[roomJid];
       newTabIds = [];
       for (var i = 0; i < tabIds.length; i++) {
-	var currentTabId = tabIds[i];
-	if (currentTabId == tabDetails.replacedTabId) {
-	  newTabIds.push(tabDetails.tabId);
-	} else {
-	  newTabIds.push(currentTabId);
-	}
+        var currentTabId = tabIds[i];
+        if (currentTabId == tabDetails.replacedTabId) {
+          newTabIds.push(tabDetails.tabId);
+        } else {
+          newTabIds.push(currentTabId);
+        }
       }
       this.xmpp.groupChatTabMap[roomJid] = newTabIds;
     }
@@ -102,7 +99,6 @@ OneSpacePopupModel.prototype = {
     }, function(items) {
       that.controller.multipleLocations = items.multiloc;
       that.controller.autoTrackLocation = items.autotracking;
-      //alert(that.controller.multipleLocations + '/ ' + that.controller.autoTrackLocation);
     });
   },
   
@@ -149,8 +145,8 @@ OneSpacePopupModel.Xmpp.prototype = {
   sendProofOfLive : function() {
     if (this.connection != null) {
       if (this.connection.connected()) { 
-	this.connection.send(new JSJaCPresence());
-      }	
+        this.connection.send(new JSJaCPresence());
+      }
     }
   },
   
@@ -179,7 +175,7 @@ OneSpacePopupModel.Xmpp.prototype = {
     this.groupChats = new Array(); this.privateChats = new Array(); this.userGroupChat = null;
     if (this.connection != null) {
       if (this.connection.connected()) { 
-	this.connection.disconnect(); 
+        this.connection.disconnect(); 
       }	
     }
   },
@@ -187,7 +183,7 @@ OneSpacePopupModel.Xmpp.prototype = {
   connect : function(doRegister) {
     if (this.connection != null) {
       if (this.connection.connected()) {
-	this.connection.disconnect();
+        this.connection.disconnect();
       }
     }    
      
@@ -232,7 +228,6 @@ OneSpacePopupModel.Xmpp.prototype = {
 
   
   handleMessage : function(oJSJaCPacket) {
-    //console.log('handleMessage');
     jid = oJSJaCPacket.getFromJID().toString();
     if (jid.indexOf("@"+this.resource+"."+this.server) >= 0) {
       this.handleGroupChatMessage(oJSJaCPacket);
@@ -246,9 +241,7 @@ OneSpacePopupModel.Xmpp.prototype = {
     var jid = oJSJaCPacket.getFromJID().toString();
     if (jid.indexOf("@"+this.resource+"."+this.server) >= 0) {
       this.handleGroupChatPresence(oJSJaCPacket);
-    } else {
-      //this.handlePrivateChatPresence(oJSJaCPacket)
-    }
+    } 
   },
 
   
@@ -258,7 +251,6 @@ OneSpacePopupModel.Xmpp.prototype = {
 
   
   handleOnError : function(e) {
-    //alert(("An error occured; Code: "+ e.getAttribute("code")+", Type: "+ e.getAttribute("type") + "Condition: "+e.firstChild.nodeName).htmlEnc());
     code = e.getAttribute("code");
     if (code == 401) 
       alert("Error: wrong user name or password (code: " + code + ")!");
@@ -268,8 +260,6 @@ OneSpacePopupModel.Xmpp.prototype = {
       alert("Error: unknown problem (code: " + code + ")!");
 
     if (this.connection.connected()) { this.connection.disconnect(); }
-    
-    //this.controller.handleOnXmppError(e);
   },
 
   
@@ -297,12 +287,12 @@ OneSpacePopupModel.Xmpp.prototype = {
   handleIqTime : function (iq) {
     var now = new Date();
     this.connection.send(iq.reply([iq.buildNode('display',
-				    now.toLocaleString()),
-		      iq.buildNode('utc',
-				    now.jabberDate()),
-		      iq.buildNode('tz',
-				    now.toLocaleString().substring(now.toLocaleString().lastIndexOf(' ')+1))
-		      ]));
+          now.toLocaleString()),
+          iq.buildNode('utc',
+          now.jabberDate()),
+          iq.buildNode('tz',
+          now.toLocaleString().substring(now.toLocaleString().lastIndexOf(' ')+1))
+      ]));
     return true;
   },
   
@@ -316,12 +306,12 @@ OneSpacePopupModel.Xmpp.prototype = {
     try {
       status = "unavailable";
       if (oJSJaCPacket.getType() != null) {
-	if (oJSJaCPacket.getType().toString().toLowerCase() == "unavailable") {
-	  this.groupChats[roomJid].removeParticipant(userJid);
-	}
+        if (oJSJaCPacket.getType().toString().toLowerCase() == "unavailable") {
+          this.groupChats[roomJid].removeParticipant(userJid);
+        }
       } else {
-	this.groupChats[roomJid].addNewParticipant(userJid, user, "available");
-	status = "available";
+        this.groupChats[roomJid].addNewParticipant(userJid, user, "available");
+        status = "available";
       }
       this.controller.handleGroupChatPresence(roomJid, user, status);
     } catch(e) {
@@ -342,38 +332,7 @@ OneSpacePopupModel.Xmpp.prototype = {
     this.controller.handleIncomingMessage(roomJid, user, body, true);
   },
   
-  
-  
-//   createUserGroupChat : function() {
-//     var roomJid = this.user + "@" + this.resource + "." + this.server;
-//     var str = this.user + "@" + this.resource + "." + this.server + "/" + this.user;
-//     var presence = new JSJaCPresence();
-//     presence.setTo(str);
-//     inode = presence.buildNode("item");
-//     inode.setAttribute("affiliation", "none");
-//     inode.setAttribute("jid", this.user + "@" + this.server + "/" + this.resource);
-//     inode.setAttribute("role", "participant");
-// 
-//     var xnode = presence.buildNode("x", [inode]);
-//     xnode.setAttribute("xmlns", "http://jabber.org/protocol/muc#user");
-//     
-//     presence.appendNode(xnode);
-//     presence.setStatus("available");
-//     presence.setShow('chat');
-//       
-//     var success = false;
-//     if (this.connection != null) {
-//       if (this.connection.connected()) {
-// 	success = this.connection.send(presence);
-// 	if (success == true) {
-// 	  this.userGroupChat = new OneSpacePopupModel.Xmpp.GroupChat(this.controller, roomJid, name);
-// 	}
-//       }
-//     }
-//   },
-  
-  
-  //this.model.xmpp.joinWebGroupChat(-1, location.url, 'XXX', location.vloc, location.vloc, 'chat');
+
   joinWebGroupChat : function(tabId, url, vloc, vlocSha1, room, name, show) {
     
     if (tabId > 0) { // "Normally" called by main browser window
@@ -381,10 +340,10 @@ OneSpacePopupModel.Xmpp.prototype = {
     } else { // Called due to click on "Join Group Chat" on map => no TAB ID associated
       roomJid = room + "@" + this.resource + "." + this.server;
       if (roomJid in this.groupChats) { // Group Chat already open
-	//tabId = this.groupChatTabs[roomJid][0];
-	this.joinTabGroupChat(tabId, vloc, vlocSha1, room, name, show, true);
+        //tabId = this.groupChatTabs[roomJid][0];
+        this.joinTabGroupChat(tabId, vloc, vlocSha1, room, name, show, true);
       } else { // Group chat does not yet exist => open new tab (is the more consistent solution than, e.g., dummy tabs)
-	this.controller.openUrlInNewTab(url);
+        this.controller.openUrlInNewTab(url);
       }
     }
   },
@@ -396,9 +355,9 @@ OneSpacePopupModel.Xmpp.prototype = {
     if (roomJid in this.groupChats) {
       tabs = this.groupChatTabMap[roomJid];
       if(typeof tabs !== 'undefined') { 
-	if (tabs.indexOf(tabId) < 0) { tabs.push(tabId); }
-	this.controller.onWebGroupChatEntered(vloc, vlocSha1, roomJid, name, false, forceTracking);
-	return;
+        if (tabs.indexOf(tabId) < 0) { tabs.push(tabId); }
+        this.controller.onWebGroupChatEntered(vloc, vlocSha1, roomJid, name, false, forceTracking);
+        return;
       }
     }
     
@@ -445,7 +404,6 @@ OneSpacePopupModel.Xmpp.prototype = {
     if (roomJid in this.groupChats) { return; }
     
     var str = roomJid + "/" + this.user;
-    //console.log('joinGroupChat: ' + str);
     var presence = new JSJaCPresence();
     presence.setTo(str);
     inode = presence.buildNode("item");
@@ -463,10 +421,10 @@ OneSpacePopupModel.Xmpp.prototype = {
     var success = false;
     if (this.connection != null) {
       if (this.connection.connected()) {
-	success = this.connection.send(presence);
-	if (success == true) {
-	  this.groupChats[roomJid] = new OneSpacePopupModel.Xmpp.GroupChat(this.controller, roomJid, roomName, GROUP_CHAT_TYPE_DEFAULT);
-	}
+        success = this.connection.send(presence);
+        if (success == true) {
+          this.groupChats[roomJid] = new OneSpacePopupModel.Xmpp.GroupChat(this.controller, roomJid, roomName, GROUP_CHAT_TYPE_DEFAULT);
+        }
       }
     }
       
@@ -483,10 +441,10 @@ OneSpacePopupModel.Xmpp.prototype = {
     presence.setStatus("unavailable");
     if (this.connection != null) {
       if (this.connection.connected()) {
-	var success = this.connection.send(presence);
-	if (success == true) {
-	  this.controller.onGroupChatLeft(roomJid);
-	}
+        var success = this.connection.send(presence);
+        if (success == true) {
+          this.controller.onGroupChatLeft(roomJid);
+        }
       }
     }    
     try { delete this.groupChats[roomJid]; } catch(e) {  }
@@ -507,8 +465,8 @@ OneSpacePopupModel.Xmpp.prototype = {
       if (index > -1) { tabs.splice(index, 1); }
       
       if (tabs.length == 0) {
-	this.leaveWebGroupChat(tabId, roomJid);
-	try { delete this.groupChatTabMap[roomJid]; } catch(e) {  }
+        this.leaveWebGroupChat(tabId, roomJid);
+        try { delete this.groupChatTabMap[roomJid]; } catch(e) {  }
       }
       
     }
@@ -524,11 +482,11 @@ OneSpacePopupModel.Xmpp.prototype = {
     presence.setStatus("unavailable");
     if (this.connection != null) {
       if (this.connection.connected()) {
-	var success = this.connection.send(presence);
-	if (success == true) {
-	  var tab = this.controller.model.openTabs[tabId]
-	  this.controller.onWebGroupChatLeft(tabId, tab.previousVloc ,roomJid);
-	}
+        var success = this.connection.send(presence);
+        if (success == true) {
+          var tab = this.controller.model.openTabs[tabId]
+          this.controller.onWebGroupChatLeft(tabId, tab.previousVloc ,roomJid);
+        }
       }
     }    
     try { delete this.groupChats[roomJid]; } catch(e) {  }
@@ -540,7 +498,7 @@ OneSpacePopupModel.Xmpp.prototype = {
   leaveAllWebGroupChats : function(exemptTabIds) {
     for (tabId in this.controller.model.openTabs) {
       if (!(tabId in exemptTabIds)) {
-	this.leaveWebGroupChats(this.controller.model.openTabs[parseInt(tabId)]);
+        this.leaveWebGroupChats(this.controller.model.openTabs[parseInt(tabId)]);
       }
     }
   },
@@ -602,13 +560,8 @@ OneSpacePopupModel.Xmpp.prototype = {
       aMsg.setBody(body.toString());
       this.connection.send(aMsg);
       this.privateChats[toJid].addNewMessage(this.userJid, body);
-      //this.controller.displayNewMessage(this.model.xmppManager.user, text.toString());
       var user = toJid.split('@')[0];
-
-      //this.controller.view.chat.displayNewMessage(this.userJid, this.controller.model.xmpp.user, body);
-      //this.controller.handleIncomingMessage(this.userJid, this.controller.model.xmpp.user, body, false);
       this.controller.handleIncomingMessage(toJid, this.controller.model.xmpp.user, body, false);
-      
       return true;
     } catch (e) {
       return false;
@@ -648,7 +601,7 @@ OneSpacePopupModel.Xmpp.GroupChat.prototype =  {
   showHistory : function() {
     for(i = 0; i < this.messages.length; i++) {
       if (this.messages[i].user) {
-	this.controller.handleIncomingMessage(this.roomJid, this.messages[i].user, this.messages[i].text, false);
+        this.controller.handleIncomingMessage(this.roomJid, this.messages[i].user, this.messages[i].text, false);
       }
     }
   }
@@ -673,7 +626,7 @@ OneSpacePopupModel.Xmpp.PrivateChat.prototype =  {
   showHistory : function() {
     for(i = 0; i < this.messages.length; i++) {
       if (this.messages[i].user) {
-	this.controller.handleIncomingMessage(this.contactJid, this.messages[i].user, this.messages[i].text, false);
+        this.controller.handleIncomingMessage(this.contactJid, this.messages[i].user, this.messages[i].text, false);
       }
     }
   }
@@ -706,8 +659,29 @@ OneSpacePopupModel.Http = function(controller) {
 OneSpacePopupModel.Http.prototype = {
   
   initialize : function() {
-    //
+    this.initializeApiOptions();
   },
+  
+  
+  initializeApiOptions : function (){
+    var that = this;
+    chrome.storage.sync.get({
+      apiBaseUrl: '',
+      mapMaxPlaces: 100,
+      mapMaxCorners: 100,
+      mapMaxSurfers: 10,
+      mapMaxWalkers: 10,
+      dashboardMaxItems: 10
+    }, function(items) {
+      that.apiBaseUrl = items.apiBaseUrl;
+      that.mapMaxPlaces = items.mapMaxPlaces;
+      that.mapMaxCorners = items.mapMaxCorners;
+      that.mapMaxSurfers = items.mapMaxSurfers;
+      that.mapMaxWalkers = items.mapMaxWalkers;
+      that.dashboardMaxItems = items.dashboardMaxItems;
+    });
+  },  
+  
   
   unload : function() {
     //this.updateUserPloc(0, 0);
@@ -727,7 +701,7 @@ OneSpacePopupModel.Http.prototype = {
   handleUserLogin : function (userName, password, xmppHost, xmppResource) {
     //"http://172.29.32.195:11090/user/login/?name=homer&password=pwd&jid=barney@172.29.32.195&jidresource=conference"
     var jid = userName + "@" + xmppHost;
-    var url = HTTP_SERVER_URL + "/user/login/?name="+userName+"&password="+password+"&jid="+jid+"&jidresource="+xmppResource;
+    var url = this.apiBaseUrl + "/user/login/?name="+userName+"&password="+password+"&jid="+jid+"&jidresource="+xmppResource;
     this.doAjaxPostRequest(url, "post", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onUserIDReceived));
   },
   
@@ -737,7 +711,7 @@ OneSpacePopupModel.Http.prototype = {
   },
   
   requestVloc : function(tab) {
-    var url = HTTP_SERVER_URL + "/url/map/?tabid="+tab.id+"&url="+encodeURIComponent(tab.url)+"&unshorten=0";
+    var url = this.apiBaseUrl + "/url/map/?tabid="+tab.id+"&url="+encodeURIComponent(tab.url)+"&unshorten=0";
     this.doAjaxPostRequest(url, "get", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onVlocReceived));
   },
   
@@ -747,9 +721,9 @@ OneSpacePopupModel.Http.prototype = {
     this.controller.onVlocReceived(response);
   },
   
-  requestLocations : function(mapBounds, limit) {
+  requestLocations : function(mapBounds) {
     var ne = mapBounds.getNorthEast(); var sw = mapBounds.getSouthWest();
-    var url = HTTP_SERVER_URL + "/places/box/?lat1="+ne.lat()+"&lng1="+ne.lng()+"&lat2="+sw.lat()+"&lng2="+sw.lng()+"&limit="+limit;
+    var url = this.apiBaseUrl + "/places/box/?lat1="+ne.lat()+"&lng1="+ne.lng()+"&lat2="+sw.lat()+"&lng2="+sw.lng()+"&limit="+this.mapMaxPlaces;
     this.doAjaxPostRequest(url, "get", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onLocationsReceived));
   },
 
@@ -763,9 +737,9 @@ OneSpacePopupModel.Http.prototype = {
   },
 
 
-  requestUserCorners : function(mapBounds, limit) {
+  requestUserCorners : function(mapBounds) {
     var ne = mapBounds.getNorthEast(); var sw = mapBounds.getSouthWest();
-    var url = HTTP_SERVER_URL + "/corners/box/?lat1="+ne.lat()+"&lng1="+ne.lng()+"&lat2="+sw.lat()+"&lng2="+sw.lng()+"&limit="+limit;
+    var url = this.apiBaseUrl + "/corners/box/?lat1="+ne.lat()+"&lng1="+ne.lng()+"&lat2="+sw.lat()+"&lng2="+sw.lng()+"&limit="+this.mapMaxCorners;
     this.doAjaxPostRequest(url, "get", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onUserCornersReceived));
   },
 
@@ -779,8 +753,7 @@ OneSpacePopupModel.Http.prototype = {
   },
 
   deleteUserCorner : function(creatorId, roomJid) {
-    //"http://172.29.32.195:11090/corners/delete/?creatorid=68AD856477C911E580E23417EBA1E68F&roomjid=..."
-    var url = HTTP_SERVER_URL + "/corners/delete/?creatorid="+creatorId+"&roomjid="+roomJid;
+    var url = this.apiBaseUrl + "/corners/delete/?creatorid="+creatorId+"&roomjid="+roomJid;
     this.doAjaxPostRequest(url, "post", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onUserCornerDeleted));    
   },
   
@@ -789,7 +762,7 @@ OneSpacePopupModel.Http.prototype = {
   },
   
   requestNearSites : function(lat, lng, radius, limit) {
-    var url = HTTP_SERVER_URL + "/places/near/?lat="+lat+"&lng="+lng+"&radius="+radius+"&limit="+limit;
+    var url = this.apiBaseUrl + "/places/near/?lat="+lat+"&lng="+lng+"&radius="+radius+"&limit="+limit;
     this.doAjaxPostRequest(url, "get", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onNearSitesReceived));
   },
 
@@ -801,9 +774,9 @@ OneSpacePopupModel.Http.prototype = {
     }
   },
 
-  requestSurfers : function(mapBounds, limit) {
+  requestSurfers : function(mapBounds) {
     var ne = mapBounds.getNorthEast(); var sw = mapBounds.getSouthWest();
-    var url = HTTP_SERVER_URL + "/surfers/box/?lat1="+ne.lat()+"&lng1="+ne.lng()+"&lat2="+sw.lat()+"&lng2="+sw.lng()+"&limit="+limit;
+    var url = this.apiBaseUrl + "/surfers/box/?lat1="+ne.lat()+"&lng1="+ne.lng()+"&lat2="+sw.lat()+"&lng2="+sw.lng()+"&limit="+this.mapMaxSurfers;
     this.doAjaxPostRequest(url, "get", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onSurfersReceived));
   },
   
@@ -816,9 +789,9 @@ OneSpacePopupModel.Http.prototype = {
     this.controller.onSurfersReceived(surfers, response.locations);
   },
   
-  requestWalkers : function(mapBounds, limit) {
+  requestWalkers : function(mapBounds) {
     var ne = mapBounds.getNorthEast(); var sw = mapBounds.getSouthWest();
-    var url = HTTP_SERVER_URL + "/walkers/box/?lat1="+ne.lat()+"&lng1="+ne.lng()+"&lat2="+sw.lat()+"&lng2="+sw.lng()+"&limit="+limit;
+    var url = this.apiBaseUrl + "/walkers/box/?lat1="+ne.lat()+"&lng1="+ne.lng()+"&lat2="+sw.lat()+"&lng2="+sw.lng()+"&limit="+this.mapMaxWalkers;
     this.doAjaxPostRequest(url, "get", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onWalkersReceived));
   },
   
@@ -832,7 +805,7 @@ OneSpacePopupModel.Http.prototype = {
   },
   
   updateUserPloc : function(lat, lng) {
-    var url = HTTP_SERVER_URL + "/user/ploc/?userid="+this.model.userId+"&lat="+lat+"&lng="+lng;
+    var url = this.apiBaseUrl + "/user/ploc/?userid="+this.model.userId+"&lat="+lat+"&lng="+lng;
     this.doAjaxPostRequest(url, "put", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onUserPlocUpdated));
     this.requestNearSites(lat, lng, 100, 10);
   },
@@ -842,7 +815,7 @@ OneSpacePopupModel.Http.prototype = {
   },
   
   updateUserVloc : function(userId, action, vloc, doAsyncRequest) {
-    var url = HTTP_SERVER_URL + "/user/vloc/?userid="+userId.toString()+"&action="+action+"&vloc="+vloc;
+    var url = this.apiBaseUrl + "/user/vloc/?userid="+userId.toString()+"&action="+action+"&vloc="+vloc;
     this.doAjaxPostRequest(url, "put", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onUserVlocUpdated));
   },
   
@@ -853,7 +826,7 @@ OneSpacePopupModel.Http.prototype = {
 
   
   requestPloc : function(vloc, limit) {
-    var url = HTTP_SERVER_URL + "/places/ploc/?vloc="+vloc+"&limit="+limit;
+    var url = this.apiBaseUrl + "/places/ploc/?vloc="+vloc+"&limit="+limit;
     this.doAjaxPostRequest(url, "get", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onPlocReceived));
   },
    
@@ -861,8 +834,8 @@ OneSpacePopupModel.Http.prototype = {
     //alert(JSON.stringify(response, null, 4));
   },  
   
-  requestData : function(tabId, type, vloc, vlocSha1, limit) {
-    var url = HTTP_SERVER_URL + "/data/?tabid="+tabId+"&type="+type+"&vloc="+vloc+"&vlocsha1="+vlocSha1+"&limit="+limit;
+  requestData : function(tabId, type, vloc, vlocSha1 ) {
+    var url = this.apiBaseUrl + "/data/?tabid="+tabId+"&type="+type+"&vloc="+vloc+"&vlocsha1="+vlocSha1+"&limit="+this.dashboardMaxItems;
     this.doAjaxPostRequest(url, "get", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onDataReceived));
   },
   
@@ -876,7 +849,7 @@ OneSpacePopupModel.Http.prototype = {
   
   uploadMediaFile : function(fromJid, fromJidResource, toJid, toJidResource, formData) {
     //"http://172.29.33.45:11090/media/upload/?fromjid=homer@172.29.33.45&fromjidresource=conference&tojid=carl@172.29.33.45&tojidresource=conference"
-    var url = HTTP_SERVER_URL + "/media/upload/?fromjid="+fromJid+"&fromjidresource="+fromJidResource+"&tojid="+toJid+"&tojidresource="+toJidResource;
+    var url = this.apiBaseUrl + "/media/upload/?fromjid="+fromJid+"&fromjidresource="+fromJidResource+"&tojid="+toJid+"&tojidresource="+toJidResource;
     this.doAjaxPostRequest(url, "post", formData, "json", false, OneSpacePopup.Controller.Utility.bind(this, this.onUploadResponseReceived));
   },
   
@@ -885,9 +858,7 @@ OneSpacePopupModel.Http.prototype = {
   },
   
   createNewUserCorner : function(userId, userName, userJid, userJidResource, name, description, lat, lng) {
-    //"http://172.29.32.195:11090/corners/add/?creatorid=68AD856477C911E580E23417EBA1E68F&creatorname=barney&creatorjid=barney@172.29.32.195&creatorjidresource=conference&name=TestCorner&description=BlaBlubb&lat=1.292494&lng=103.774829"
-
-    var url = HTTP_SERVER_URL + "/corners/add/?creatorid="+userId+"&creatorname="+userName+"&creatorjid="+userJid+"&creatorjidresource="+userJidResource+"&name="+name+"&description="+description+"&lat="+lat+"&lng="+lng;
+    var url = this.apiBaseUrl + "/corners/add/?creatorid="+userId+"&creatorname="+userName+"&creatorjid="+userJid+"&creatorjidresource="+userJidResource+"&name="+name+"&description="+description+"&lat="+lat+"&lng="+lng;
     this.doAjaxPostRequest(url, "post", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onCreateUserCornerResponseReceived));
   },
   
@@ -902,7 +873,8 @@ OneSpacePopupModel.Http.prototype = {
 
   
   requestWalkersAroundVloc(vloc, maxDistance) {
-    var url = HTTP_SERVER_URL + "/walkers/vloc/?vloc="+vloc+"&maxdistance="+maxDistance;
+    var url = this.apiBaseUrl + "/walkers/vloc/?vloc="+vloc+"&maxdistance="+maxDistance;
+    console.log(url);
     this.doAjaxPostRequest(url, "get", { }, "json", true, OneSpacePopup.Controller.Utility.bind(this, this.onWalkersAroundVlocReceived));
   },
   
@@ -945,9 +917,9 @@ OneSpacePopupModel.LiveView.prototype = {
   removeFollower : function(source) {
     try {
       if (source.role == 'surfer') {
-	delete this.surferFollowers[source.jid]; 
+        delete this.surferFollowers[source.jid]; 
       } else if (source.role == 'walker') {
-	delete this.walkerFollowers[source.jid]; 
+        delete this.walkerFollowers[source.jid]; 
       }
     } catch(e) { } 
   },
@@ -964,9 +936,9 @@ OneSpacePopupModel.LiveView.prototype = {
   removeGuide : function(source) {
     try {
       if (source.role == 'surfer') {
-	delete this.surferGuides[source.jid]; 
+        delete this.surferGuides[source.jid]; 
       } else if (source.role == 'walker') {
-	delete this.walkerGuides[source.jid]; 
+        delete this.walkerGuides[source.jid]; 
       }
     } catch(e) { } 
   },
