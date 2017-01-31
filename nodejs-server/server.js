@@ -1,10 +1,6 @@
-HTTP_ACTION_GET_NEAR_SITES = "get-places-within-circle";
-
-HTTP_ACTION_WS_SEND_TO_ENDPOINT = 'push';
-HTTP_ACTION_WS_BROADCAST = 'broadcast';
+var config = require('./config'); 
 
 FILE_PLACE_TYPE_MAPPING = 'data/place-type-mapping.txt'
-
 
 var http = require('http');
 var express = require('express');
@@ -14,27 +10,27 @@ var bodyParser = require('body-parser');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
-//var WebSocketServer = require('ws').Server;
 var MongoDb = require('./mongodb-manager')
 var mysqlManager = require('./mysql-manager');;
 var urlManager = require('./url-manager');
 var fileManager = require('./file-manager');
 var uploadManager = require('./upload-manager');
 var requestManager = require('./request-manager');
+var fcmManager = require('./fcm-manager');
 
 
 
 Server = function() {
-  this.mongodbManager = new MongoDbManager(this, 'localhost', 27017);
-  this.mysqlManagerOnespace = new MysqlManager(this, '172.29.33.45', 'onespace', '!!5656tT', 'onespace')
-  //this.mysqlManagerOnespace = new MysqlManager(this, 'localhost', 'root', '', 'onespace')
-  this.mysqlManagerOpenfire = new MysqlManager(this, '172.29.33.45', 'onespace', '!!5656tT', 'openfire')
+  
+  //this.mongodbManager = new MongoDbManager(this, 'localhost', 27017);
+  this.mysqlManagerOnespace = new MysqlManager(this, config.db.data.host, config.db.data.user, config.db.data.password, config.db.data.dbname)
+  this.mysqlManagerEjabberd = new MysqlManager(this, config.db.ejabberd.host, config.db.ejabberd.user, config.db.ejabberd.password, config.db.ejabberd.dbname)
   this.urlManager = new UrlManager(this);
   this.fileManager = new FileManager();
-  this.requestManager = new RequestManager();
+  this.requestManager = new RequestManager(this);
   this.uploadManager = new UploadManager(this);
+	this.fcmManager = new FcmManager(this);
   this.serverHttp = new Server.Http(this);
-  // this.serverWebSocket = new Server.WebSocket(this); // Not used at the moment
 };
 
 
@@ -44,7 +40,7 @@ Server.prototype = {
     this.serverHttp.initialize();
     this.fileManager.placeTypeMapper.initialize(FILE_PLACE_TYPE_MAPPING, null);
     // this.serverWebSocket.initialize();
-    
+    this.fcmManager.initialize();
     
     // All not used at the moment
     this.wsClientId = 0;
@@ -82,6 +78,16 @@ Server.Util = {
         if (obj.hasOwnProperty(key)) size++;
     }
     return size;
+  },
+  
+  distance : function(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;    // Math.PI / 180
+    var c = Math.cos;
+    var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+            c(lat1 * p) * c(lat2 * p) * 
+            (1 - c((lon2 - lon1) * p))/2;
+
+    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
   },
   
 };
@@ -125,10 +131,11 @@ Server.Http.prototype = {
     
     // curl -F "test=@feedme-sg-hospitals.png" "http://localhost:11090/media/upload/?fromjid=homer@172.29.33.45&fromjidresource=conference&tojid=carl@172.29.33.45&tojidresource=conference"
     
-    // curl "http://localhost:11090/messages/history/?fromjid=chong@172.29.33.45&fromjidresource=conference&tojid=homer@172.29.33.45&tojidresource=conference&lastsentdate=1442476004805&limit=20"
+    
+    // curl -d "" "http://localhost:11090/notification/push/?bla=blubb"
     
     
-    this.app.set('port', process.env.PORT || 11090); 
+    this.app.set('port', process.env.PORT || config['http-port']); 
  
     this.app.all('/*', function(req, res, next) {
       res.header('Access-Control-Allow-Origin', '*');
@@ -138,6 +145,20 @@ Server.Http.prototype = {
     });
     
     this.app.use(bodyParser());
+    
+    /** bodyParser.urlencoded(options)
+    * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
+    * and exposes the resulting object (containing the keys and values) on req.body
+    */
+    this.app.use(bodyParser.urlencoded({
+        extended: true
+    }));
+
+    /**bodyParser.json(options)
+    * Parses the text as JSON and exposes the resulting object on req.body.
+    */
+    this.app.use(bodyParser.json());
+    
     
     this.app.get('/url/unshort/:url/', Server.Util.bind(this, this.onUnshortenUrlRequest))
     this.app.get('/url/map/', Server.Util.bind(this, this.onMapUrlRequest))
@@ -149,7 +170,6 @@ Server.Http.prototype = {
     this.app.post('/corners/add/', Server.Util.bind(this, this.onCreateUserCornerRequest));
     this.app.post('/corners/delete/', Server.Util.bind(this, this.onDeleteUserCornerRequest));
     
-    //this.app.get('/places/near/', Server.Util.bind(this, this.onGetPlacesWithinCircleRequest));
     this.app.get('/places/box/', Server.Util.bind(this, this.onGetPlacesWithinBoxRequest));
     this.app.get('/places/ploc/', Server.Util.bind(this, this.onGetPlocForVlocRequest));
     this.app.get('/surfers/box/', Server.Util.bind(this, this.onGetSurfersWithinBoxRequest));
@@ -165,11 +185,11 @@ Server.Http.prototype = {
     
     this.app.post('/notes/add/', Server.Util.bind(this, this.onInsertNoteRequest));
     
-    //this.app.post('/media/upload/', Server.Util.bind(this, this.onMediaUploadRequest));
-    
     this.app.post('/media/upload', multipartMiddleware, Server.Util.bind(this, this.onMediaUploadRequest));
     
     this.app.get('/messages/history/', Server.Util.bind(this, this.onGetMessageHistoryRequest));
+    
+    this.app.post('/notification/push/', Server.Util.bind(this, this.onPushNotificationRequest));
     
     var that = this;
    
@@ -207,38 +227,38 @@ Server.Http.prototype = {
     console.log(type);
     switch (type) {
       case "vplaces":
-	this.onGetVirtualPlaces(request, response);
-	break;
+        this.onGetVirtualPlaces(request, response);
+        break;
       case "twitter":
-	this.onGetLatestTweetsRequest(request, response);
-	break;
+        this.onGetLatestTweetsRequest(request, response);
+        break;
       case "youtube":
-	this.onGetYoutubeVideosRequest(request, response);
-	break
+        this.onGetYoutubeVideosRequest(request, response);
+        break
       case "flickr":
-	this.onGetFlickrImagesRequest(request, response);
-	break;
+        this.onGetFlickrImagesRequest(request, response);
+        break;
       case "instagram":
-	this.onGetInstagramImagesRequest(request, response);
-	break;
+        this.onGetInstagramImagesRequest(request, response);
+        break;
       case "nea":
-	this.onGetNeaNowcastRequest(request, response);
-	break;
+        this.onGetNeaNowcastRequest(request, response);
+        break;
       case "lta":
-	this.onGetCarparkAvailabilityRequest(request, response);
-	break;
-      case "buses":
-	this.onGetBusStopInformationRequest(request, response);
-	break;
+        this.onGetCarparkAvailabilityRequest(request, response);
+        break;
+      case "ltabuses":
+        this.onGetBusStopInformationRequest(request, response);
+        break;
       case "lta-bus-arrival-times":
-	this.onGetBusArrivalTimesRequest(request, response);
-	break;
+        this.onGetBusArrivalTimesRequest(request, response);
+        break;
       case "products":
-	this.onGetLocalProdcutsRequest(request, response);
-	break;
+        this.onGetLocalProdcutsRequest(request, response);
+        break;
       default: 
-	that.sendResponse(response, 'text/json', JSON.stringify({}));
-	break;
+        that.sendResponse(response, 'text/json', JSON.stringify({}));
+        break;
     }
   },
   
@@ -320,12 +340,11 @@ Server.Http.prototype = {
   
   onGetCarparkAvailabilityRequest : function(request, response) {
     var that = this;
-    this.main.mysqlManagerOnespace.lta.getCarparkAvailability(
+    this.main.requestManager.lta.getCarparkAvailability(
       request.query.tabid,
       request.query.type,
       request.query.vloc,
       request.query.vlocsha1,
-      request.query.limit,
       function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
     );
   },
@@ -375,16 +394,6 @@ Server.Http.prototype = {
     );
   },
   
-//   onHandleUserLoginRequest :  function(request, response) {
-//     var that = this;
-//     this.main.mongodbManager.users.handleUserLogin(
-//       request.query.name,
-//       request.query.password,
-//       request.query.xmpphost,
-//       request.query.xmppresource,
-//       function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
-//     );
-//   },
 
   onHandleUserLoginRequest :  function(request, response) {
     var that = this;
@@ -481,19 +490,6 @@ Server.Http.prototype = {
   },
 
   
-  
-//   onGetPlacesWithinCircleRequest : function(request, response) {
-//     var that = this;
-//     this.main.mongodbManager.places.getPlacesWithinCircle(
-//       parseFloat(request.query.lat), 
-//       parseFloat(request.query.lng), 
-//       parseInt(request.query.radius), 
-//       parseInt(request.query.limit),
-//       function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
-//     );
-//   },
-  
-  
   onGetSurfersWithinBoxRequest : function(request, response) {
     var that = this;
     //this.main.mongodbManager.users.getSurfersWithinBox(
@@ -523,9 +519,10 @@ Server.Http.prototype = {
 
   onGetWalkersAroundVlocRequest : function(request, response) {
     var that = this;
+    var distanceInMeters = parseInt(request.query.maxdistance);
     this.main.mysqlManagerOnespace.users.getWalkersAroundVloc(
       request.query.vloc,
-      parseInt(request.query.maxdistance, 10000),
+      distanceInMeters,
       function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
     );
   },
@@ -571,7 +568,7 @@ Server.Http.prototype = {
 
   onGetMessageHistoryRequest : function(request, response) {
     var that = this;
-    this.main.mysqlManagerOpenfire.openfire.getMessageHistory(
+    this.main.mysqlManagerEjabberd.ejabberd.getMessageHistory(
       request.query.fromjid,
       request.query.fromjidresource,
       request.query.tojid,
@@ -583,52 +580,20 @@ Server.Http.prototype = {
   },
 
   
-//   onRequest : function(request, response) {
-//     var path = url.parse(request.url).pathname;
-//     var dirs = path.split('/');
-//     var action = dirs[1].toString();
-//     
-//     switch(action) {
-//       case HTTP_ACTION_WS_BROADCAST:
-// 	this.wsBroadcast(request, response);
-// 	break;
-//       case HTTP_ACTION_WS_SEND_TO_ENDPOINT:
-// 	this.wsSendToEndpoint(request, response);
-// 	break;
-//       case HTTP_ACTION_GET_NEAR_SITES:
-// 	this.main.mongodb.getNeatSites(request, response);
-// 	break;
-//       default:
-// 	this.sendResponse(response, "text/plain", "Handled action: " + action);
-//     } 
-//     
-//   },
-  
-  
-  
-//   wsSendToEndpoint : function(request, response) {
-//     var path = url.parse(request.url).pathname;
-//     var dirs = path.split('/');
-//     var endpoint = dirs[2].toString();
-//     
-//     var wsClients = this.main.wsEndpointToClientsMap[endpoint];
-//     for (var wsClientId in wsClients) {
-//       this.main.wsClients[wsClientId].send('New broadcaset message - endpoint: ' + endpoint);
-//     }
-//     
-//     this.sendResponse(response, "text/plain", "Sent to endpoint: " + endpoint);
-//   },
-  
-  
-//   wsBroadcast : function(request, response) {
-//     for (var wsClientId in this.main.wsClientToEndpointsMap) {
-//       this.main.wsClients[wsClientId].send('New broadcaset message: ...');
-//     }
-//     this.sendResponse(response, "text/plain", "Broadcast initiated");
-//   },
+  onPushNotificationRequest : function(request, response) {
+    var that = this;
+    console.log(request.query);
+    this.main.fcmManager.handlePushNotification(
+      request.query.fromjid,
+      request.query.tojid,
+      request.query.body,
+      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+    );
+  },
+
   
   sendResponse : function(response, contentType, body) {
-    console.log(body);
+    //console.log(body);
     response.writeHead(200, {"Content-Type": contentType});
     response.write(body);
     response.end();
@@ -636,82 +601,6 @@ Server.Http.prototype = {
   
 };
 
-
-
-
-
-// Server.WebSocket = function(main) {
-//   this.main = main;
-//   this.wss = null;
-//   
-// };
-// 
-// 
-// Server.WebSocket.prototype = {
-// 
-//   initialize : function() {    
-//     this.wss = new WebSocketServer({port: 9999});
-//     
-//     var that = this;
-//     this.wss.on('connection', function(ws) {
-// 
-//       that.handleNewConnection(ws);
-//       
-//       ws.on('message', function(message) {
-//         ws.send('Message from ' + ws.id + ': ' + message);
-//       });
-// 
-//       ws.on('close', function() {
-// 	that.handleClosedConnection(ws);
-//       });
-//       
-//     });
-//   },
-// 
-// 
-//   handleNewConnection : function(client) {
-//     var path = client.upgradeReq.url.split('?')[0].toString();
-//     var endpoint = path.split('/')[1].toString();
-// 
-//      if ((typeof endpoint === 'undefined') && (endpoint == '')) {
-//        return;
-//      }
-// 
-//     this.main.wsClientId++;
-//     client.id = this.main.wsClientId;
-// 
-//     this.main.wsClients[client.id] = client;
-//     this.main.wsClientToEndpointsMap[client.id] = endpoint;
-// 
-//     try {
-//       var clients = this.main.wsEndpointToClientsMap[endpoint]
-//       clients[client.id] = 1;
-//       this.main.wsEndpointToClientsMap[endpoint] = clients;
-//     } catch (e){
-//       console.log(endpoint);
-//       var clients = new Object();
-//       clients[client.id] = 1;
-//       this.main.wsEndpointToClientsMap[endpoint] = clients;
-//     } 
-//     
-//   },
-//   
-//   handleClosedConnection : function(client) {
-//     if(typeof this.main.wsClients[client.id] != 'undefined') {
-//       var endpoint = this.main.wsClientToEndpointsMap[client.id];
-//       
-//       delete this.main.wsEndpointToClientsMap[endpoint][client.id];
-//       if (Server.Util.size(this.main.wsEndpointToClientsMap[endpoint]) == 0) {
-// 	delete this.main.wsEndpointToClientsMap[endpoint];
-//       }
-// 
-//       delete this.main.wsClientToEndpointsMap[client.id];
-//       delete this.main.wsClients[client.id];
-//     }
-//   },
-//   
-//   
-// };
 
 
 

@@ -12,8 +12,6 @@ MysqlManager = function(server, host, user, password, database) {
     password : password,
     database : database
   }
-  //this.connection = mysql.createConnection(this.dbConfig);
-  //this.connection.connect();
 
   this.server = server;
   this.connection = null;
@@ -33,7 +31,7 @@ MysqlManager = function(server, host, user, password, database) {
   this.lta = new MysqlManager.LTA(this);
   this.golocal = new MysqlManager.GoLocal(this);
   this.mediaUploader = new MysqlManager.MediaUploader(this);
-  this.openfire = new MysqlManager.Openfire(this);
+  this.ejabberd = new MysqlManager.Ejabberd(this);
 
   this.handleDisconnect();
 };
@@ -45,21 +43,21 @@ MysqlManager.prototype =  {
     var that = this;
     
     console.log("MysqlManager.handleDisconnect: " + this.dbConfig.host + " / " + this.dbConfig.database);
-    this.connection = mysql.createConnection(this.dbConfig); // Recreate the connection, since the old one cannot be reused.
+    this.connection = mysql.createConnection(this.dbConfig);  // Recreate the connection, since the old one cannot be reused.
 
-    this.connection.connect(function(err) {              // The server is either down
-      if(err) {                                     // or restarting (takes a while sometimes).
+    this.connection.connect(function(err) {                   // The server is either down
+      if(err) {                                               // or restarting (takes a while sometimes).
         console.log('error when connecting to db:', err);
-        setTimeout(that.handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
-      }                                          // to avoid a hot loop, and to allow our node script to
-    });                                          // process asynchronous requests in the meantime.
-                                                 // If you're also serving http, display a 503 error.
+        setTimeout(that.handleDisconnect, 2000);              // We introduce a delay before attempting to reconnect,
+      }                                                       // to avoid a hot loop, and to allow our node script to
+    });                                                       // process asynchronous requests in the meantime.
+                                                              // If you're also serving http, display a 503 error.
     this.connection.on('error', function(err) {
       console.log('db error', err);
-      if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-        that.handleDisconnect();                    // lost due to either server restart, or a
-      } else {                                      // connnection idle timeout (the wait_timeout
-        throw err;                                  // server variable configures this)
+      if(err.code === 'PROTOCOL_CONNECTION_LOST') {           // Connection to the MySQL server is usually
+        that.handleDisconnect();                              // lost due to either server restart, or a
+      } else {                                                // connnection idle timeout (the wait_timeout
+        throw err;                                            // server variable configures this)
       }
     });
   },
@@ -82,19 +80,19 @@ MysqlManager.Users.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT HEX(id) AS id FROM osUsers WHERE jid = '" + jid + "'";
- 	that.main.connection.query(query, this);
+        var query = "SELECT HEX(id) AS id, fcm_token FROM osUsers WHERE jid = '" + jid + "'";
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  var res = null;
-	  for(var i = 0; i < result.length; i++) {
-	    res = { "id" : result[i]['id'], "jid" : jid }
-	  }
-	  callback(null, res );
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          var res = null;
+          for(var i = 0; i < result.length; i++) {
+            res = { "id" : result[i]['id'], "jid" : jid, "fcmtoken" : result[i]['fcm_token'] };
+          }
+          callback(null, res );
+        }
       }
     );
   },
@@ -113,27 +111,26 @@ MysqlManager.Users.prototype = {
     var that = this;
     step(
       function getUser() {
-	that.getUserByJid(jid, this);
+        that.getUserByJid(jid, this);
       },
       function onGetUserResultReceived(error, result){
-	if (error) {
-	  callback(error);
-	} else {
-	  if (result) {
-	    callback(null, result);
-	  } else {
-	    //var query = { 'name' : name, 'password' : password, 'xmpp' : { 'host' : xmppHost , 'resource' : xmppResource } };
-	    var query = "INSERT INTO osUsers (name, password, jid, jid_resource) VALUES ('" + name +"', '" + password + "', '" + jid +"' , '" + jidResource +"') ";
-	    that.main.connection.query(query, this);
-	  }
-	}
+        if (error) {
+          callback(error);
+        } else {
+          if (result) {
+            callback(null, result);
+          } else {
+            var query = "INSERT INTO osUsers (name, password, jid, jid_resource) VALUES ('" + name +"', '" + password + "', '" + jid +"' , '" + jidResource +"') ";
+            that.main.connection.query(query, this);
+          }
+        }
       },
       function onInsert(error) {
-	if (error) {
-	  callback(error) ;
-	} else {
-	  that.handleUserLogin(name, password, jid, jidResource, callback);
-	}
+        if (error) {
+          callback(error) ;
+        } else {
+          that.handleUserLogin(name, password, jid, jidResource, callback);
+        }
       }
     );
     
@@ -141,14 +138,14 @@ MysqlManager.Users.prototype = {
     
 
   //
-  // curl  -X PUT "http://172.29.32.195:11090/user/ploc/?userid=68AD856477C911E580E23417EBA1E68F&lat=1.292454&lng=103.774118"
+  // curl  -X PUT "http://172.29.32.195:11090/user/ploc/?userid=f6447838e6c611e6b5233417ebb4b372&lat=1.292454&lng=103.774118"
   //
   updatePlocOfUser : function(userId, latitude, longitude, callback) {
     var that = this;
     step(
       function executeQuery() {
         if ((Math.abs(latitude) > 90) || (Math.abs(longitude) > 180)) {
-	  var query = "DELETE FROM osWalkers WHERE user_id = UNHEX('" + userId + "')";
+          var query = "DELETE FROM osWalkers WHERE user_id = UNHEX('" + userId + "')";
         } else {
           var query = "INSERT INTO osWalkers (user_id, ploc) VALUES (UNHEX('" + userId + "'), POINT(" + latitude + ", " + longitude + ")) ON DUPLICATE KEY UPDATE ploc = POINT(" + latitude + ", " + longitude + "), created = CURRENT_TIMESTAMP;";
         }
@@ -175,30 +172,30 @@ MysqlManager.Users.prototype = {
     var that = this;
     step (
       function getPlocs() {
-	that.main.places.getPlocForVloc(vloc, 1, this);
+        that.main.places.getPlocForVloc(vloc, 1, this);
       },
       function onPlocsReceived(error, result) {
-	if (error) {
-	  callback(error);
-	} else {
-	  console.log(result);
-	  if (result.length == 0) {
-	    result.push({ 'lat' : 1000, 'lng' : 1000});
-	  }	  
-	  for(var i = 0; i < result.length; i++) {
-	    var latitude = result[i]['lat'];
-	    var longitude = result[i]['lng'];
-	    if (action == 'add') {
-	      var query = "INSERT IGNORE osSurfers (user_id, vloc, ploc) VALUES (UNHEX('" + userId + "'), '" + vloc + "', POINT(" + latitude + ", " + longitude + "))";
-	    } else if (action == 'remove'){
-	      var query = "DELETE FROM osSurfers WHERE user_id = UNHEX('" + userId + "') AND vloc = '" + vloc + "'";
-	    } else if (action == 'remove-all'){
-	      var query = "DELETE FROM osSurfers WHERE user_id = UNHEX('" + userId + "')";
-	    }
-	    console.log(query);
-	    that.main.connection.query(query, this);
-	  }
-	}
+        if (error) {
+          callback(error);
+        } else {
+          console.log(result);
+          if (result.length == 0) {
+            result.push({ 'lat' : 1000, 'lng' : 1000});
+          }	  
+          for(var i = 0; i < result.length; i++) {
+            var latitude = result[i]['lat'];
+            var longitude = result[i]['lng'];
+            if (action == 'add') {
+              var query = "INSERT IGNORE osSurfers (user_id, vloc, ploc) VALUES (UNHEX('" + userId + "'), '" + vloc + "', POINT(" + latitude + ", " + longitude + "))";
+            } else if (action == 'remove'){
+              var query = "DELETE FROM osSurfers WHERE user_id = UNHEX('" + userId + "') AND vloc = '" + vloc + "'";
+            } else if (action == 'remove-all'){
+              var query = "DELETE FROM osSurfers WHERE user_id = UNHEX('" + userId + "')";
+            }
+            console.log(query);
+            that.main.connection.query(query, this);
+          }
+        }
       },
       function onResult(error, result) {
         if(error) {
@@ -213,6 +210,7 @@ MysqlManager.Users.prototype = {
   
   //
   // curl "http://172.29.32.195:11090/surfers/box/?lat1=1.29648&lng1=103.769976&lat2=1.292243&lng2=103.774965&limit=1"
+  // curl "http://172.29.33.45:11090/surfers/box/?lat1=1.29648&lng1=103.769976&lat2=1.292243&lng2=103.774965&limit=1"
   //
   getSurfersWithinBox : function(latA, lngA, latB, lngB, limit, callback) {
     var that = this;
@@ -221,15 +219,15 @@ MysqlManager.Users.prototype = {
     
     step(
       function executeQuery(){
-	var query = "SELECT HEX(u.id) AS user_id, u.name AS user_name, u.jid AS jid, u.jid_resource AS resource, p.name AS place_name, X(s.ploc) AS lat, Y(s.ploc) AS lng, s.vloc AS vloc, p.website AS website FROM osUsers u, osSurfers s, osPlaces p WHERE u.id = s.user_id AND s.vloc = p.vloc AND s.ploc = p.ploc AND WITHIN(s.ploc, GeomFromText('POLYGON((" + polygon + " ))') ) LIMIT " + limit;
- 	that.main.connection.query(query, this);
+        var query = "SELECT HEX(u.id) AS user_id, u.name AS user_name, u.jid AS jid, u.jid_resource AS resource, p.name AS place_name, X(s.ploc) AS lat, Y(s.ploc) AS lng, s.vloc AS vloc, p.website AS website FROM osUsers u, osSurfers s, osPlaces p WHERE u.id = s.user_id AND s.vloc = p.vloc AND s.ploc = p.ploc AND WITHIN(s.ploc, GeomFromText('POLYGON((" + polygon + " ))') ) LIMIT " + limit;
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
- 	  callback(null, result)
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          callback(null, result)
+        }
       }
     );
   },
@@ -245,15 +243,15 @@ MysqlManager.Users.prototype = {
     
     step(
       function executeQuery(){
-	var query = "SELECT HEX(u.id) AS user_id, u.name AS user_name, u.jid AS jid, u.jid_resource AS resource, X(w.ploc) AS lat, Y(w.ploc) AS lng FROM osUsers u, osWalkers w WHERE u.id = w.user_id AND WITHIN(w.ploc, GeomFromText('POLYGON((" + polygon + " ))') ) LIMIT " + limit;
- 	that.main.connection.query(query, this);
+        var query = "SELECT HEX(u.id) AS user_id, u.name AS user_name, u.jid AS jid, u.jid_resource AS resource, X(w.ploc) AS lat, Y(w.ploc) AS lng FROM osUsers u, osWalkers w WHERE u.id = w.user_id AND WITHIN(w.ploc, GeomFromText('POLYGON((" + polygon + " ))') ) LIMIT " + limit;
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
- 	  callback(null, result)
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          callback(null, result)
+        }
       }
     );
   },
@@ -267,18 +265,18 @@ MysqlManager.Users.prototype = {
     
     step(
       function executeQuery(){
-	var query = "SELECT HEX(u.id) AS user_id, u.name, u.jid, u.jid_resource, w2.distance_in_meter FROM osUsers u, (SELECT w.user_id, MIN(ROUND(glength(LineStringFromWKB(LineString(GeomFromText(astext(PointFromWKB(w.ploc))),GeomFromText(astext(PointFromWKB(p.ploc))))))*100*1000)) AS distance_in_meter FROM osWalkers w, (SELECT id, ploc FROM osPlaces WHERE vloc = '" + vloc + "') p GROUP BY w.user_id) w2 WHERE w2.user_id = u.id AND w2.distance_in_meter <= " + maxDistance + " ORDER BY w2.distance_in_meter";
- 	that.main.connection.query(query, this);
+        var query = "SELECT HEX(u.id) AS user_id, u.name, u.jid, u.jid_resource, w2.distance_in_meter FROM osUsers u, (SELECT w.user_id, MIN(ROUND(glength(LineStringFromWKB(LineString(GeomFromText(astext(PointFromWKB(w.ploc))),GeomFromText(astext(PointFromWKB(p.ploc))))))*100*1000)) AS distance_in_meter FROM osWalkers w, (SELECT id, ploc FROM osPlaces WHERE vloc = '" + vloc + "') p GROUP BY w.user_id) w2 WHERE w2.user_id = u.id AND w2.distance_in_meter <= " + maxDistance + " ORDER BY w2.distance_in_meter";
+        //console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
- 	  callback(null, result)
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          callback(null, result)
+        }
       }
     );
-    
   },
 };
 
@@ -303,45 +301,44 @@ MysqlManager.Places.prototype = {
     
     step(
       function executeQuery(){
-	var query = "SELECT id, name, formatted_address, formatted_phone_nr, primary_category, X(ploc) AS lat, Y(ploc) AS lng, vloc, website FROM osPlaces WHERE WITHIN(ploc, GeomFromText('POLYGON((" + polygon + " ))') ) LIMIT " + limit;
-        console.log(query);
- 	that.main.connection.query(query, this);
+        var query = "SELECT id, name, formatted_address, formatted_phone_nr, primary_category, X(ploc) AS lat, Y(ploc) AS lng, vloc, website FROM osPlaces WHERE WITHIN(ploc, GeomFromText('POLYGON((" + polygon + " ))') ) LIMIT " + limit;
+              console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  for(var i = 0; i < result.length; i++) {
-	    var name = result[i]['name'];
-	    var primaryCategory = result[i]['primary_category']
-	    var placeCategory = that.main.server.fileManager.placeTypeMapper.map[primaryCategory];
-	    result[i]['category_class'] = placeCategory;
-	  }
- 	  callback(null, result)
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          for(var i = 0; i < result.length; i++) {
+            var name = result[i]['name'];
+            var primaryCategory = result[i]['primary_category']
+            var placeCategory = that.main.server.fileManager.placeTypeMapper.map[primaryCategory];
+            result[i]['category_class'] = placeCategory;
+          }
+          callback(null, result)
+        }
       }
     );
   },
 
   
   //
-  // curl  "http://172.29.32.195:11090/places/ploc/www.comp.nus.edu.sg/?limit=1"
-  // curl  "http://172.29.33.45:11090/places/ploc/www.comp.nus.edu.sg/?limit=1"
+  // curl "http://172.29.32.195:11090/places/ploc/?vloc=www.comp.nus.edu.sg/?&limit=1"
   //
   getPlocForVloc : function(vloc, limit, callback) {
     var that = this;
     step (
       function executeQuery(){
-	var query = "SELECT id, X(ploc) AS lat, Y(ploc) AS lng FROM osPlaces WHERE vloc = '" + vloc + "' LIMIT " + limit;
-	console.log(query);
- 	that.main.connection.query(query, this);
+        var query = "SELECT id, X(ploc) AS lat, Y(ploc) AS lng FROM osPlaces WHERE vloc = '" + vloc + "' LIMIT " + limit;
+        console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
- 	  callback(null, result)
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          callback(null, result)
+        }
       }
     );
   },
@@ -359,6 +356,10 @@ MysqlManager.Netlocs = function(main){
 
 MysqlManager.Netlocs.prototype = {
   
+  
+  //
+  // curl "http://172.29.32.195:11090/places/ploc/?vloc=www.comp.nus.edu.sg/?&limit=1"
+  //
   getNetloc : function(vloc, callback) {
     var that = this;
     step(
@@ -367,12 +368,12 @@ MysqlManager.Netlocs.prototype = {
  	that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
-	  console.log(error);
- 	  callback(error);
- 	} else {
- 	  callback(null, result);
- 	}
+        if (error) {
+          console.log(error);
+          callback(error);
+        } else {
+          callback(null, result);
+        }
       }
     );
   },
@@ -390,22 +391,22 @@ MysqlManager.Notes = function(main){
 MysqlManager.Notes.prototype = {
   
   //
-  // curl  "http://172.29.32.195:11090/notes/532227f98d9271be7f8fc875be5ff48dc8864a02/?skip=0&limit10"
+  // curl  "http://172.29.32.195:11090/notes/532227f98d9271be7f8fc875be5ff48dc8864a02/?skip=0&limit=10"
   //
   getNotes : function(placeId, skip, limit, callback) {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT HEX(vplace_id) AS vplace_id, HEX(user_id) AS user_id, user_name, created, text FROM osNotes WHERE vplace_id = UNHEX('" + placeId + "')";
-	console.log(query);
- 	that.main.connection.query(query, this);
+        var query = "SELECT HEX(vplace_id) AS vplace_id, HEX(user_id) AS user_id, user_name, created, text FROM osNotes WHERE vplace_id = UNHEX('" + placeId + "')";
+        console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
- 	  callback(null, result)
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          callback(null, result)
+        }
       }
     );
   },
@@ -417,15 +418,15 @@ MysqlManager.Notes.prototype = {
     var that = this;
     step(
       function executeQuery() {
-	var query = "INSERT IGNORE osNotes (vplace_id, user_id, user_name, text) VALUES (UNHEX('" + placeId + "'), UNHEX('" + userId + "'), '" + userName + "', '" + text + "')";
-	that.main.connection.query(query, this);
+        var query = "INSERT IGNORE osNotes (vplace_id, user_id, user_name, text) VALUES (UNHEX('" + placeId + "'), UNHEX('" + userId + "'), '" + userName + "', '" + text + "')";
+        that.main.connection.query(query, this);
       },
       function onInsert(error, result) {
-	if (error) {
-	  callback(error) ;
-	} else {
-	  callback(null, result);
-	}
+        if (error) {
+          callback(error) ;
+        } else {
+          callback(null, result);
+        }
       }
     );
     
@@ -448,20 +449,23 @@ MysqlManager.Linker = function(main) {
 
 MysqlManager.Linker.prototype = {
 
+  //
+  // curl  "http://172.29.32.195:11090/notes/532227f98d9271be7f8fc875be5ff48dc8864a02/?skip=0&limit=10"
+  //  
   getVirtualPlaceIds : function(tabId, type, vloc, vlocSha1, callback) {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT p.vplace_id, IFNULL(p.physical_name, '[na]') AS name FROM osvplaces p, osvplaces_vlocs_map m, osvlocs l WHERE p.vplace_id = m.vplace_id AND m.vloc_id = l.vloc_id AND l.url = '" + vloc + "'"
-	that.main.connection.query(query, this);
+        var query = "SELECT p.vplace_id, IFNULL(p.physical_name, '[na]') AS name FROM osvplaces p, osvplaces_vlocs_map m, osvlocs l WHERE p.vplace_id = m.vplace_id AND m.vloc_id = l.vloc_id AND l.url = '" + vloc + "'"
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
+        if (error) {
+          callback(error);
+        } else {
           var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : result };
           callback(null, result);
- 	}
+        }
       }
       
       
@@ -490,16 +494,16 @@ MysqlManager.Corners.prototype = {
     
     step(
       function executeQuery(){
-	var query = "SELECT id, HEX(creator_id) AS creator_id, creator_jid, creator_jid_resource, room_jid, room_jid_resource, name, description, X(ploc) AS lat, Y(ploc) AS lng, created FROM osUserCorners WHERE WITHIN(ploc, GeomFromText('POLYGON((" + polygon + " ))') ) LIMIT " + limit;
-	console.log(query);
- 	that.main.connection.query(query, this);
+        var query = "SELECT id, HEX(creator_id) AS creator_id, creator_jid, creator_jid_resource, room_jid, room_jid_resource, name, description, X(ploc) AS lat, Y(ploc) AS lng, created FROM osUserCorners WHERE WITHIN(ploc, GeomFromText('POLYGON((" + polygon + " ))') ) LIMIT " + limit;
+        console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
- 	  callback(null, result)
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          callback(null, result)
+        }
       }
     );
   },
@@ -512,16 +516,16 @@ MysqlManager.Corners.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT id, HEX(creator_id) AS creator_id, creator_jid, creator_jid_resource, room_jid, room_jid_resource, name, description, X(ploc) AS lat, Y(ploc) AS lng, created FROM osUserCorners WHERE creator_id = UNHEX('" + creatorId + "')";
-	console.log(query);
- 	that.main.connection.query(query, this);
+        var query = "SELECT id, HEX(creator_id) AS creator_id, creator_jid, creator_jid_resource, room_jid, room_jid_resource, name, description, X(ploc) AS lat, Y(ploc) AS lng, created FROM osUserCorners WHERE creator_id = UNHEX('" + creatorId + "')";
+        console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
- 	  callback(null, result)
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          callback(null, result)
+        }
       }
     );
   },
@@ -544,33 +548,33 @@ MysqlManager.Corners.prototype = {
     
     step(
       function executeQuery(){
-	var query = "SELECT COUNT(*) AS 'cnt' FROM osUserCorners WHERE creator_id = UNHEX('" + creatorId + "')";
-	console.log(query);
- 	that.main.connection.query(query, this);
+        var query = "SELECT COUNT(*) AS 'cnt' FROM osUserCorners WHERE creator_id = UNHEX('" + creatorId + "')";
+        console.log(query);
+        that.main.connection.query(query, this);
       },
       function onCornerCountReceived(error, result){
-	if (error) {
-	  callback(error, { errorcode: 31, errormsg: "Something went wrong."});
-	} else {
-	  console.log(result[0]);
-	  var cornerCount = result[0]['cnt'];
-	  if (cornerCount >= MAX_CORNER_COUNT_PER_USER) {
-	    callback(error, { errorcode: 30, errormsg: "You have already created " + MAX_CORNER_COUNT_PER_USER + " corners"});
-	  } else {
-	    var query = "INSERT INTO osUserCorners (creator_id, creator_name, creator_jid, creator_jid_resource, room_jid, room_jid_resource, name, description, ploc) VALUE (UNHEX('"+ creatorId + "'), '" + creatorName + "', '" + creatorJid + "' , '" + creatorJidResource + "', '" + roomJid + "', '" + roomJidResource + "', '" + name + "', '" + description + "', POINT(" + latitude + ", " + longitude + "))";
-	    console.log(query);
-	    that.main.connection.query(query, this);
-	  }
-	}
+        if (error) {
+          callback(error, { errorcode: 31, errormsg: "Something went wrong."});
+        } else {
+          console.log(result[0]);
+          var cornerCount = result[0]['cnt'];
+          if (cornerCount >= MAX_CORNER_COUNT_PER_USER) {
+            callback(error, { errorcode: 30, errormsg: "You have already created " + MAX_CORNER_COUNT_PER_USER + " corners"});
+          } else {
+            var query = "INSERT INTO osUserCorners (creator_id, creator_name, creator_jid, creator_jid_resource, room_jid, room_jid_resource, name, description, ploc) VALUE (UNHEX('"+ creatorId + "'), '" + creatorName + "', '" + creatorJid + "' , '" + creatorJidResource + "', '" + roomJid + "', '" + roomJidResource + "', '" + name + "', '" + description + "', POINT(" + latitude + ", " + longitude + "))";
+            console.log(query);
+            that.main.connection.query(query, this);
+          }
+        }
       },
       function onResult(error, result){
- 	if (error) {
-	  console.log(error);
- 	  callback(error, { errorcode: 34, errormsg: "Corner with the same name already exists."});
- 	} else {
-	  res = { name : name, roomjid : roomJid }
- 	  callback(null, res);
- 	}
+        if (error) {
+          console.log(error);
+          callback(error, { errorcode: 34, errormsg: "Corner with the same name already exists."});
+        } else {
+          res = { name : name, roomjid : roomJid }
+          callback(null, res);
+        }
       }
     );
   },
@@ -584,21 +588,21 @@ MysqlManager.Corners.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	if (typeof roomJid === 'undefined') {
-	  var query = "DELETE FROM osUserCorners WHERE creator_id = UNHEX('" + creatorId + "')";
-	} else {
-	  var query = "DELETE FROM osUserCorners WHERE creator_id = UNHEX('" + creatorId + "') AND room_jid = '" + roomJid + "'";
-	}
-	console.log(query);
- 	that.main.connection.query(query, this);
+        if (typeof roomJid === 'undefined') {
+          var query = "DELETE FROM osUserCorners WHERE creator_id = UNHEX('" + creatorId + "')";
+        } else {
+          var query = "DELETE FROM osUserCorners WHERE creator_id = UNHEX('" + creatorId + "') AND room_jid = '" + roomJid + "'";
+        }
+        console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  console.log(result);
- 	  callback(null, result);
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          console.log(result);
+          callback(null, result);
+        }
       }
     );
   },
@@ -627,17 +631,17 @@ MysqlManager.Tweets.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = 'SELECT tweet_timestamp, tweet_screen_name, tweet_text FROM osGeotweetsVlocs WHERE HEX(vloc_sha1) = \'' + vlocSha1 + '\' ORDER BY tweet_timestamp DESC LIMIT ' + limit;
-	that.main.connection.query(query, this);
+        var query = 'SELECT tweet_timestamp, tweet_screen_name, tweet_text FROM osGeotweetsVlocs WHERE vloc = \'' + vloc + '\' ORDER BY tweet_timestamp DESC LIMIT ' + limit;
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  tweets = result;
-	  var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : tweets };
- 	  callback(null, result);
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          tweets = result;
+          var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : tweets };
+          callback(null, result);
+        }
       }
     );
   },
@@ -656,17 +660,17 @@ MysqlManager.Youtube.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = 'SELECT vs.dom, vt.url, vt.title FROM osvlocs vs, osgpPlaces_vLocs_map ms, osgpPlaces_vLocs_map mt, osvlocs vt WHERE vs.url = \'' + vloc + '\' AND vs.path = \'\' AND vs.vloc_id = ms.vloc_id AND ms.place_id = mt.place_id AND ms.vloc_id <> mt.vloc_id AND mt.vloc_id = vt.vloc_id AND vt.dom = \'www.youtube.com\' LIMIT ' + limit; 
-	that.main.connection.query(query, this);
+        var query = "SELECT v1.dom, v2.url, v2.title FROM osvlocs v1, osvplaces_vlocs_map m1, osvplaces_vlocs_map m2, osvlocs v2 WHERE v1.vloc_id = m1.vloc_id AND m2.vplace_id = m1.vplace_id AND m2.vloc_id = v2.vloc_id AND m1.vloc_id != m2.vloc_id AND v2.dom = 'www.youtube.com' AND v1.url = '" + vloc + "' LIMIT " + limit;
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  tweets = result;
-	  var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : tweets };
- 	  callback(null, result);
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          tweets = result;
+          var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : tweets };
+          callback(null, result);
+        }
       }
     );
   },
@@ -685,17 +689,17 @@ MysqlManager.Flickr.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT vs.dom, vt.url, vt.title FROM osvlocs vs, osgpPlaces_vLocs_map ms, osgpPlaces_vLocs_map mt, osvlocs vt WHERE vs.url = '" + vloc + "' AND vs.path = '/' AND vs.vloc_id = ms.vloc_id AND ms.place_id = mt.place_id AND ms.vloc_id <> mt.vloc_id AND mt.vloc_id = vt.vloc_id AND vt.dom LIKE 'farm%.staticflickr.com' LIMIT " + limit; 
-	that.main.connection.query(query, this);
+        var query = "SELECT v1.dom, v2.url, v2.title FROM osvlocs v1, osvplaces_vlocs_map m1, osvplaces_vlocs_map m2, osvlocs v2 WHERE v1.vloc_id = m1.vloc_id AND m2.vplace_id = m1.vplace_id AND m2.vloc_id = v2.vloc_id AND m1.vloc_id != m2.vloc_id AND v2.dom LIKE 'farm%.staticflickr.com' AND v1.url = '" + vloc + "' LIMIT " + limit;
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  tweets = result;
-	  var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : tweets };
- 	  callback(null, result);
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          tweets = result;
+          var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : tweets };
+          callback(null, result);
+        }
       }
     );
   },
@@ -715,18 +719,18 @@ MysqlManager.Instagram.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT i.dom, i.title, i.url FROM ostweetsinstavlocs i, osgeotweetsvlocs t WHERE t.vloc='" + vloc  + "' and i.tweet_id_str = t.tweet_id_str and i.ct_id=2 LIMIT " + limit; 
-	console.log(query);
-	that.main.connection.query(query, this);
+        var query = "SELECT i.dom, i.title, i.url FROM ostweetsinstavlocs i, osGeotweetsVlocs t WHERE t.vloc='" + vloc  + "' and i.tweet_id_str = t.tweet_id_str and i.ct_id=2 LIMIT " + limit; 
+        console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  tweets = result;
-	  var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : tweets };
- 	  callback(null, result);
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          tweets = result;
+          var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : tweets };
+          callback(null, result);
+        }
       }
     );
   },
@@ -745,18 +749,18 @@ MysqlManager.NEA.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT n.location, n.icon, n.update_timestamp, TRUNCATE(glength(LineStringFromWKB(LineString(GeomFromText(astext(PointFromWKB(n.ploc))),GeomFromText(astext(PointFromWKB(p.ploc))))))*100, 2) AS distance_in_km FROM (SELECT n.* FROM osNeaNowcast n JOIN (SELECT location, MAX(update_timestamp) maxTimestamp FROM osNeaNowcast GROUP BY location) n2 ON n.update_timestamp = n2.maxTimestamp AND n.location = n2.location) n, (SELECT ploc FROM osPlaces WHERE vloc = '" + vloc +"' LIMIT 1) p ORDER BY distance_in_km, update_timestamp DESC LIMIT " + limit; 
-	console.log(query);
-	that.main.connection.query(query, this);
+        var query = "SELECT n.location, n.icon, n.update_timestamp, TRUNCATE(glength(LineStringFromWKB(LineString(GeomFromText(astext(PointFromWKB(n.ploc))),GeomFromText(astext(PointFromWKB(p.ploc))))))*100, 2) AS distance_in_km FROM (SELECT n.* FROM osNeaNowcast n JOIN (SELECT location, MAX(update_timestamp) maxTimestamp FROM osNeaNowcast GROUP BY location) n2 ON n.update_timestamp = n2.maxTimestamp AND n.location = n2.location) n, (SELECT ploc FROM osPlaces WHERE vloc = '" + vloc +"' LIMIT 1) p ORDER BY distance_in_km, update_timestamp DESC LIMIT " + limit; 
+        console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  var data = result;
-	  var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : data };
- 	  callback(null, result);
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          var data = result;
+          var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : data };
+          callback(null, result);
+        }
       }
     );
   },
@@ -776,18 +780,18 @@ MysqlManager.LTA.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT n.carpark_id, n.area, n.development, n.available_lots, TRUNCATE(glength(LineStringFromWKB(LineString(GeomFromText(astext(PointFromWKB(n.ploc))),GeomFromText(astext(PointFromWKB(p.ploc))))))*100, 2) AS distance_in_km FROM (SELECT n.* FROM osLtaCarparkAvailability n JOIN (SELECT MAX(update_timestamp) AS maxTimestamp FROM osLtaCarparkAvailability) n2 ON n.update_timestamp = n2.maxTimestamp) n, (SELECT ploc FROM osPlaces WHERE vloc = '" + vloc +"' LIMIT 1) p ORDER BY distance_in_km, update_timestamp DESC LIMIT " + limit; 
-	console.log(query);
-	that.main.connection.query(query, this);
+        var query = "SELECT n.carpark_id, n.area, n.development, n.available_lots, TRUNCATE(glength(LineStringFromWKB(LineString(GeomFromText(astext(PointFromWKB(n.ploc))),GeomFromText(astext(PointFromWKB(p.ploc))))))*100, 2) AS distance_in_km FROM (SELECT n.* FROM osLtaCarparkAvailability n JOIN (SELECT MAX(update_timestamp) AS maxTimestamp FROM osLtaCarparkAvailability) n2 ON n.update_timestamp = n2.maxTimestamp) n, (SELECT ploc FROM osPlaces WHERE vloc = '" + vloc +"' LIMIT 1) p ORDER BY distance_in_km, update_timestamp DESC LIMIT " + limit; 
+        console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  var data = result;
-	  var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : data };
- 	  callback(null, result);
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          var data = result;
+          var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : data };
+          callback(null, result);
+        }
       }
     );
   },
@@ -798,45 +802,40 @@ MysqlManager.LTA.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT b.code, b.description, TRUNCATE(glength(LineStringFromWKB(LineString(GeomFromText(astext(PointFromWKB(b.ploc))),GeomFromText(astext(PointFromWKB(p.ploc))))))*100, 2) AS distance_in_km FROM (SELECT ploc, code, description FROM osBusStopLocations) b, (SELECT ploc FROM osPlaces WHERE vloc = '"+vloc+"' LIMIT 1) p ORDER BY distance_in_km ASC LIMIT " + limit; 
-	console.log(query);
-	that.main.connection.query(query, this);
+        var query = "SELECT b.code, b.description, TRUNCATE(glength(LineStringFromWKB(LineString(GeomFromText(astext(PointFromWKB(b.ploc))),GeomFromText(astext(PointFromWKB(p.ploc))))))*100, 2) AS distance_in_km FROM (SELECT ploc, code, description FROM osBusStopLocations) b, (SELECT ploc FROM osPlaces WHERE vloc = '"+vloc+"' LIMIT 1) p ORDER BY distance_in_km ASC LIMIT " + limit; 
+        console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  var data = result;
-	  var numCompletedCalls = 0
-	  for (var i = 0; i < data.length; i++) {
-	    var item = data[i];
-	    arrivalTimes[item.code] = new Array();
-	    //console.log("Request Arrival Times for " + item.code);
-	    that.main.server.requestManager.lta.getBusArrivalTimes(item.code, function(error, result) { 
-	      for (var i = 0; i < result.Services.length; i++) {
-		service = result.Services[i];
-		if (service.NextBus.EstimatedArrival != '') {
-		  //console.log(result.BusStopID  + " --- " + service.ServiceNo + ": " + service.NextBus.EstimatedArrival);
-		  arrivalTimes[result.BusStopID.toString()].push({'service_nr': service.ServiceNo, 'arrival_time' : service.NextBus.EstimatedArrival});
-		}
-	      }
+        if (error) {
+          callback(error);
+        } else {
+          var data = result;
+          var numCompletedCalls = 0
+          for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            arrivalTimes[item.code] = new Array();
+            that.main.server.requestManager.lta.getBusArrivalTimes(item.code, function(error, result) { 
+              for (var i = 0; i < result.Services.length; i++) {
+                service = result.Services[i];
+                if (service.NextBus.EstimatedArrival != '') {
+                  arrivalTimes[result.BusStopID.toString()].push({'service_nr': service.ServiceNo, 'arrival_time' : service.NextBus.EstimatedArrival});
+                }
+              }
 
-	      numCompletedCalls++;
-	      if (numCompletedCalls == data.length) {
-		console.log("Done all calls!");
-		for (var i = 0; i < data.length; i++) {
-		  var item = data[i];
-		  item['arrival_times'] = arrivalTimes[item.code.toString()];
-		}
-		//console.log(data);
-		var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : data };
-		callback(null, result);
-	      }
-	    });
-	  }
-	  
-	  
- 	}
+              numCompletedCalls++;
+              if (numCompletedCalls == data.length) {
+                console.log("Done all calls!");
+                for (var i = 0; i < data.length; i++) {
+                  var item = data[i];
+                  item['arrival_times'] = arrivalTimes[item.code.toString()];
+                }
+                var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : data };
+                callback(null, result);
+              }
+            });
+          }
+        }
       }
     );
   },
@@ -908,27 +907,29 @@ MysqlManager.MediaUploader.prototype = {
 
 
 
-MysqlManager.Openfire = function(main) {
+MysqlManager.Ejabberd = function(main) {
   this.main  = main; 
 };
 
-MysqlManager.Openfire.prototype = {
+MysqlManager.Ejabberd.prototype = {
 
+  
   getMessageHistory : function(fromJid, fromJidResource, toJid, toJidResource, lastSentDate, limit, callback) {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT sentDate, stanza, IF(fromJID = '" + fromJid + "','me','other') AS source FROM ofMessageArchive WHERE ((fromJID = '" + fromJid + "' AND fromJIDResource = '" + fromJidResource + "' AND toJID = '" + toJid + "' AND toJIDResource = '" + toJidResource + "' ) OR (fromJID = '" + toJid + "' AND fromJIDResource = '" + toJidResource + "' AND toJID = '" + fromJid + "' AND toJIDResource = '" + fromJidResource + "' )) AND sentDate < " + lastSentDate + " ORDER BY sentDate DESC LIMIT " + limit; 
-	that.main.connection.query(query, this);
+        var query = "SELECT timestamp, xml AS stanza, IF(username = SUBSTRING_INDEX('" + fromJid + "', '@', 1),'me','other') AS source FROM archive WHERE ((username = SUBSTRING_INDEX('" + fromJid + "', '@', 1) AND bare_peer = '" + toJid + "') OR (username = SUBSTRING_INDEX('" + toJid + "', '@', 1) AND bare_peer = '" + fromJid + "')) AND kind = 'chat' ORDER BY timestamp DESC LIMIT " + limit;
+        //console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  var messages = result;
-	  var result = { 'fromjid' : fromJid, 'fromjidresource' : fromJidResource, 'tojid' : toJid, 'tojidresource' : toJidResource, 'messages' : messages };
-	  callback(null, result);
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          var messages = result;
+          var result = { 'fromjid' : fromJid, 'fromjidresource' : fromJidResource, 'tojid' : toJid, 'tojidresource' : toJidResource, 'messages' : messages };
+          callback(null, result);
+        }
       }
     );
   },
@@ -944,26 +945,31 @@ exports.MysqlManager = MysqlManager;
 
 
 // curl "http://172.29.33.45:11090/data/?tabid=0&type=twitter&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=twitter&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
 
 // curl "http://172.29.33.45:11090/data/?tabid=0&type=youtube&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=youtube&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
 
 // curl "http://172.29.33.45:11090/data/?tabid=0&type=flickr&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=flickr&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
 
 // curl "http://172.29.33.45:11090/data/?tabid=0&type=instagram&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=instagram&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
 
 // curl "http://172.29.33.45:11090/data/?tabid=0&type=nea&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=nea&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
 
 // curl "http://172.29.33.45:11090/data/?tabid=0&type=lta&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=lta&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10"
 
 
 
 
 // curl "http://172.29.32.195:11090/data/?tabid=0&type=lta-bus-stop-information&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=3"
-
-
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=lta-bus-stop-information&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=3"
 
 // curl "http://172.29.33.45:11090/data/?tabid=0&type=vplaces&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a"
-
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=vplaces&vloc=www.marinabaysands.com%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a"
 
 
 
@@ -971,14 +977,19 @@ exports.MysqlManager = MysqlManager;
 
 
 // curl "http://172.29.33.45:11090/data/?tabid=0&type=twitter&vloc=www.clarkequay.com.sg%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=1"
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=twitter&vloc=www.clarkequay.com.sg%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=1"
 
 // curl "http://172.29.33.45:11090/data/?tabid=0&type=youtube&vloc=www.clarkequay.com.sg%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=1"
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=youtube&vloc=www.clarkequay.com.sg%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=1"
 
 // curl "http://172.29.33.45:11090/data/?tabid=0&type=flickr&vloc=www.clarkequay.com.sg%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=1"
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=flickr&vloc=www.clarkequay.com.sg%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=1"
 
 // curl "http://172.29.33.45:11090/data/?tabid=0&type=instagram&vloc=www.clarkequay.com.sg%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=1"
+// curl "http://172.29.32.195:11090/data/?tabid=0&type=instagram&vloc=www.clarkequay.com.sg%2F%3F&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=1"
 
 
 
 
 
+// curl "http://172.29.32.195:11090/messages/history/?fromjid=chris@172.29.33.45&fromjidresource=conference&tojid=homer@172.29.33.45&tojidresource=conference&lastsentdate=1442476004805&limit=20"
