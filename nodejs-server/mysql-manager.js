@@ -912,7 +912,7 @@ MysqlManager.Ejabberd.prototype = {
     var that = this;
     step(
       function executeQuery(){
-        var query = "SELECT timestamp, xml AS stanza, IF(username = SUBSTRING_INDEX('" + fromJid + "', '@', 1),'me','other') AS source FROM archive WHERE ((username = SUBSTRING_INDEX('" + fromJid + "', '@', 1) AND bare_peer = '" + toJid + "') OR (username = SUBSTRING_INDEX('" + toJid + "', '@', 1) AND bare_peer = '" + fromJid + "')) AND kind = 'chat' ORDER BY timestamp DESC LIMIT " + limit;
+        var query = "SELECT timestamp AS sentDate, xml AS stanza, IF(username = SUBSTRING_INDEX('" + fromJid + "', '@', 1),'me','other') AS source FROM archive WHERE ((username = SUBSTRING_INDEX('" + fromJid + "', '@', 1) AND bare_peer = '" + toJid + "') OR (username = SUBSTRING_INDEX('" + toJid + "', '@', 1) AND bare_peer = '" + fromJid + "')) AND kind = 'chat' ORDER BY timestamp DESC LIMIT " + limit;
         //console.log(query);
         that.main.connection.query(query, this);
       },
