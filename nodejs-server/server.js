@@ -130,6 +130,7 @@ Server.Http.prototype = {
     // curl http://localhost:11090/media/upload/ -F 'test=@test_file'
     
     // curl -F "test=@feedme-sg-hospitals.png" "http://localhost:11090/media/upload/?fromjid=homer@172.29.33.45&fromjidresource=conference&tojid=carl@172.29.33.45&tojidresource=conference"
+    // curl -F "test=@feedme-sg-hospitals.png" "http://localhost:11090/media/upload/?fromjid=homer@172.29.33.45&fromjidresource=conference&tojid=carl@172.29.33.45&tojidresource=conference"
     
     
     // curl -d "" "http://localhost:11090/notification/push/?bla=blubb"
@@ -204,7 +205,7 @@ Server.Http.prototype = {
     console.log(request.params.url);
     this.main.urlManager.urlUnshortener.unshortenUrl(
       request.params.url,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); } 
     );
   },
 
@@ -215,7 +216,7 @@ Server.Http.prototype = {
       request.query.tabid,
       request.query.url,
       request.query.unshorten,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }  
     );
   },
 
@@ -257,7 +258,7 @@ Server.Http.prototype = {
         this.onGetLocalProdcutsRequest(request, response);
         break;
       default: 
-        that.sendResponse(response, 'text/json', JSON.stringify({}));
+        that.sendResponse(error, response, 'text/json', JSON.stringify({})); 
         break;
     }
   },
@@ -271,7 +272,7 @@ Server.Http.prototype = {
       request.query.type,
       request.query.vloc,
       request.query.vlocsha1,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -283,7 +284,7 @@ Server.Http.prototype = {
       request.query.vloc,
       request.query.vlocsha1,
       request.query.limit,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -296,7 +297,7 @@ Server.Http.prototype = {
       request.query.vloc,
       request.query.vlocsha1,
       request.query.limit,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -308,7 +309,7 @@ Server.Http.prototype = {
       request.query.vloc,
       request.query.vlocsha1,
       request.query.limit,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -320,7 +321,7 @@ Server.Http.prototype = {
       request.query.vloc,
       request.query.vlocsha1,
       request.query.limit,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -333,7 +334,7 @@ Server.Http.prototype = {
       request.query.vloc,
       request.query.vlocsha1,
       request.query.limit,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -345,7 +346,7 @@ Server.Http.prototype = {
       request.query.type,
       request.query.vloc,
       request.query.vlocsha1,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -357,7 +358,7 @@ Server.Http.prototype = {
       request.query.vloc,
       request.query.vlocsha1,
       request.query.limit,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -366,7 +367,7 @@ Server.Http.prototype = {
     var that = this;
     this.main.requestManager.lta.getBusArrivalTimes(
       request.query.busstopcode,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
     
@@ -378,7 +379,7 @@ Server.Http.prototype = {
       request.query.vloc,
       request.query.vlocsha1,
       request.query.limit,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -390,7 +391,7 @@ Server.Http.prototype = {
       request.query.user_id,
       request.query.user_name,
       request.query.text,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -402,7 +403,7 @@ Server.Http.prototype = {
       request.query.password,
       request.query.jid,
       request.query.jidresource,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -414,7 +415,7 @@ Server.Http.prototype = {
       request.query.userid,
       parseFloat(request.query.lat), 
       parseFloat(request.query.lng),
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -425,7 +426,7 @@ Server.Http.prototype = {
       request.query.userid,
       request.query.action,
       request.query.vloc,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -438,7 +439,7 @@ Server.Http.prototype = {
       parseFloat(request.query.lat2), 
       parseFloat(request.query.lng2), 
       parseInt(request.query.limit, 10),
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -447,7 +448,7 @@ Server.Http.prototype = {
     var that = this;
     this.main.mysqlManagerOnespace.corners.getUserCornersForUser(
       request.params.creatorid,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -460,7 +461,7 @@ Server.Http.prototype = {
       parseFloat(request.query.lat2), 
       parseFloat(request.query.lng2), 
       parseInt(request.query.limit, 10),
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -476,7 +477,7 @@ Server.Http.prototype = {
       request.query.description,
       parseFloat(request.query.lat), 
       parseFloat(request.query.lng), 
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -485,7 +486,7 @@ Server.Http.prototype = {
     this.main.mysqlManagerOnespace.corners.deleteUserCorners(
       request.query.creatorid, 
       request.query.roomjid,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -499,7 +500,7 @@ Server.Http.prototype = {
       parseFloat(request.query.lat2), 
       parseFloat(request.query.lng2), 
       parseInt(request.query.limit, 10),
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -512,7 +513,7 @@ Server.Http.prototype = {
       parseFloat(request.query.lat2), 
       parseFloat(request.query.lng2), 
       parseInt(request.query.limit, 10),
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -523,7 +524,7 @@ Server.Http.prototype = {
     this.main.mysqlManagerOnespace.users.getWalkersAroundVloc(
       request.query.vloc,
       distanceInMeters,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -534,7 +535,7 @@ Server.Http.prototype = {
     this.main.mysqlManagerOnespace.places.getPlocForVloc(
       request.query.vloc,
       parseInt(request.query.limit, 10),
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
   
@@ -547,7 +548,7 @@ Server.Http.prototype = {
       request.params.placeid,
       parseInt(request.query.skip, 0),
       parseInt(request.query.limit, 10),
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -561,7 +562,7 @@ Server.Http.prototype = {
       request.query.tojid,
       request.query.tojidresource,
       request.files,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -575,7 +576,7 @@ Server.Http.prototype = {
       request.query.tojidresource,
       request.query.lastsentdate,
       request.query.limit,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
@@ -587,15 +588,21 @@ Server.Http.prototype = {
       request.query.fromjid,
       request.query.tojid,
       request.query.body,
-      function(error, result) { that.sendResponse(response, 'text/json', JSON.stringify(result)); } 
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
     );
   },
 
   
-  sendResponse : function(response, contentType, body) {
-    //console.log(body);
-    response.writeHead(200, {"Content-Type": contentType});
-    response.write(body);
+  sendResponse : function(error, response, contentType, body) {
+    //console.log(error);
+    if (error) {
+      console.log(error);
+      response.writeHead(500, {"Content-Type": contentType});
+      response.write(JSON.stringify({"error" : error }));
+    } else {
+      response.writeHead(200, {"Content-Type": contentType});
+      response.write(body);
+    }
     response.end();
   },
   

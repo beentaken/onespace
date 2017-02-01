@@ -613,14 +613,6 @@ MysqlManager.Corners.prototype = {
 
 
 
-
-
-
-
-
-
-
-
 MysqlManager.Tweets = function(main) {
   this.main  = main; 
 };
@@ -650,6 +642,7 @@ MysqlManager.Tweets.prototype = {
 };
 
 
+
 MysqlManager.Youtube = function(main) {
   this.main  = main; 
 };
@@ -677,6 +670,7 @@ MysqlManager.Youtube.prototype = {
   
 
 };
+
 
 
 MysqlManager.Flickr = function(main) {
@@ -855,18 +849,18 @@ MysqlManager.GoLocal.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT p.sname, p.pname, p.price, p.url, g.formatted_address, (g.ploc) AS lat, Y(g.ploc) AS lng FROM osplaces g, oslocalproducts p, osglobalproducts m WHERE m.url ='" + vloc + "' AND m.p_id = p.p_id AND p.place_id = g.external_source_id AND g.external_source = 'google_places' ORDER BY p.sname ASC"; 
-	console.log(query);
-	that.main.connection.query(query, this);
+        var query = "SELECT p.sname, p.pname, p.price, p.url, g.formatted_address, (g.ploc) AS lat, Y(g.ploc) AS lng FROM osplaces g, oslocalproducts p, osglobalproducts m WHERE m.url ='" + vloc + "' AND m.p_id = p.p_id AND p.place_id = g.external_source_id AND g.external_source = 'google_places' ORDER BY p.sname ASC"; 
+        console.log(query);
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  var data = result;
-	  var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : data };
- 	  callback(null, result);
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          var data = result;
+          var result = { 'tabid' : tabId, 'type' : type, 'vloc' : vloc, 'vloc-sha1' : vlocSha1, 'data' : data };
+          callback(null, result);
+        }
       }
     );
   },
@@ -889,15 +883,15 @@ MysqlManager.MediaUploader.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = "INSERT INTO osMediaUploadsImages (from_jid, from_jid_resource, to_jid, to_jid_resource, upload_unix_timestamp, image_link, thumbnail_link) VALUES ('" + fromJid + "', '" + fromJidResource + "', '" + toJid + "', '" + toJidResource + "', " + uploadUnixTimestamp+ ", '" + imageLink +"', '" + thumbnailLink +"')"; 
-	that.main.connection.query(query, this);
+        var query = "INSERT INTO osMediaUploadsImages (from_jid, from_jid_resource, to_jid, to_jid_resource, upload_unix_timestamp, image_link, thumbnail_link) VALUES ('" + fromJid + "', '" + fromJidResource + "', '" + toJid + "', '" + toJidResource + "', " + uploadUnixTimestamp+ ", '" + imageLink +"', '" + thumbnailLink +"')"; 
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
- 	if (error) {
- 	  callback(error);
- 	} else {
-	  callback(null, result);
- 	}
+        if (error) {
+          callback(error);
+        } else {
+          callback(null, result);
+        }
       }
     );
   },
