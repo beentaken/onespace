@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.sesame.onespace.models.chat.Chat;
 import com.sesame.onespace.models.chat.ChatMessage;
+import com.sesame.onespace.models.qaMessage.QAMessage;
 import com.sesame.onespace.service.MessageService;
 
 /**

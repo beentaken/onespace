@@ -32,6 +32,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
+import com.sesame.onespace.fragments.MainMenuFragment;
 import com.sesame.onespace.fragments.dashboardFragments.flickrFragment.FlickrFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.CanNotConnectedToServerFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.DoNotHaveLocationFragment;
@@ -39,9 +40,11 @@ import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.Int
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.NoDataFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.WaitingFragment;
 import com.sesame.onespace.interfaces.activityInterfaces.SimpleGestureFilter;
+import com.sesame.onespace.managers.SettingsManager;
 import com.sesame.onespace.managers.location.UserLocationManager;
 import com.sesame.onespace.models.map.Place;
 import com.sesame.onespace.network.OneSpaceApi;
+import com.sesame.onespace.utils.Log;
 import com.sesame.onespace.utils.connect.Connection;
 
 import org.json.JSONArray;
@@ -88,6 +91,8 @@ public final class FlickrActivity
     private final static String NO_DATA = "no data";
     private final static String END = "end";
 
+    private final static String DEFAULT_URL__IMAGE_NOT_FOUND = "http://ubicomp-web.d1.comp.nus.edu.sg/onespace/media/images/onespace-default-no-image-found.jpg";
+
     private OneSpaceApi.Service api;
     private Call call;
     private boolean callResponse;  //bad code
@@ -111,6 +116,8 @@ public final class FlickrActivity
     //for GPSBroadcastReceiver
     private FlickrActivity.GPSBroadcastReceiver gpsBroadcastReceiver;
 
+    private SettingsManager settingManager;
+
     //===========================================================================================================//
     //  ON ACTION                                                                                   ON ACTION
     //===========================================================================================================//
@@ -125,6 +132,7 @@ public final class FlickrActivity
         FlickrActivity.super.setContentView(R.layout.activity_dashboard_flickr);
         FlickrActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
 
+        this.settingManager = SettingsManager.getSettingsManager(getApplicationContext());
     }
 
     @Override
@@ -883,7 +891,7 @@ public final class FlickrActivity
         }
 
         //main
-        FlickrActivity.this.url = "http://172.29.33.45:11090/data/?tabid=0&type=flickr&vloc=" + FlickrActivity.this.placeNearest.getVloc() + "&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10";
+        FlickrActivity.this.url = this.settingManager.getOnespaceServerURL() + "/data/?tabid=0&type=flickr&vloc=" + FlickrActivity.this.placeNearest.getVloc() + "&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10";
 
     }
 
@@ -955,11 +963,31 @@ public final class FlickrActivity
                 }
 
                 Bitmap bitmap = null;
+                boolean imageExists = false;
                 try {
                     bitmap = BitmapFactory.decodeStream(newurl.openConnection() .getInputStream());
+                    imageExists =  true;
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
+                    Log.e("Original Instagram images not available");
                 }
+
+                if (!imageExists) {
+                    URL altUrl = null;
+                    try {
+                        altUrl = new URL(DEFAULT_URL__IMAGE_NOT_FOUND);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        bitmap = BitmapFactory.decodeStream(altUrl.openConnection() .getInputStream());
+                    } catch (IOException e) {
+                        //e.printStackTrace();
+                        Log.e("Default images not available");
+                    }
+                }
+
 
                 FlickrActivity.this.items.add(new FlickrFragment.FlickrItem(String.valueOf(object.get("title")), bitmap));
 
@@ -1008,7 +1036,8 @@ public final class FlickrActivity
                 location.setLongitude(FlickrActivity.this.placeNearest.getLng());
 
                 toolbar.setSubtitle(FlickrActivity.this.placeNearest.getName());
-                textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+                double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+                textView.setText("DISTANCE " + distance + " km");
 
             }
 
@@ -1109,7 +1138,8 @@ public final class FlickrActivity
             location.setLongitude(FlickrActivity.this.placeNearest.getLng());
 
             toolbar.setSubtitle(FlickrActivity.this.placeNearest.getName());
-            textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+            double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+            textView.setText("DISTANCE " + distance + " km");
 
             switch (FlickrActivity.this.idFragment){
 
@@ -1168,7 +1198,8 @@ public final class FlickrActivity
                 location.setLatitude(FlickrActivity.this.placeNearest.getLat());
                 location.setLongitude(FlickrActivity.this.placeNearest.getLng());
 
-                textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+                double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+                textView.setText("DISTANCE " + distance + " km");
 
             }
             else{

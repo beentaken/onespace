@@ -200,7 +200,7 @@ public class LoginActivity extends AppCompatActivity implements
         Observable<String> observable = service.loginRx(
                 userAccountManager.getUsername(),
                 userAccountManager.getPassword(),
-                userAccountManager.getUsername() + "@" + settingsManager.xmppServer,
+                userAccountManager.getUsername() + "@" + settingsManager.xmppServiceName,
                 settingsManager.xmppRecource);
 
         getUserIDSubscription = observable.observeOn(AndroidSchedulers.mainThread())

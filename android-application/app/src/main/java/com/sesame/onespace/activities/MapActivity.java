@@ -7,13 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -42,6 +42,7 @@ import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 import com.sesame.onespace.R;
 import com.sesame.onespace.constant.MapMarkerIconSelector;
+import com.sesame.onespace.fragments.MainMenuFragment;
 import com.sesame.onespace.managers.SettingsManager;
 import com.sesame.onespace.managers.location.UserLocationManager;
 import com.sesame.onespace.network.CornerMarkerLoader;
@@ -214,11 +215,11 @@ public class MapActivity
         }
 
         //Thianchai (I add this)
-        mWalkerLoader.startThread();
+        //mWalkerLoader.startThread();
         //**
 
         //Thianchai (I add this)
-        mSurferLoader.startThread();
+        //mSurferLoader.startThread();
         //**
 
         //Thianchai (I add this)
@@ -335,20 +336,20 @@ public class MapActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        try {
-            mOneSpaceMap = new OneSpaceMap(getApplicationContext(), mapFragment.getMap());
-            mOneSpaceMap.addOnCameraChangeListener(this);
-            mOneSpaceMap.setOnClusterItemClick(this);
-        } catch(NullPointerException e) {
-            displayAlertDialog("Error", getString(R.string.error_missing_google_play_services),
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            finish();
-                        }
-                    });
-        }
+//        try {
+//            mOneSpaceMap = new OneSpaceMap(getApplicationContext(), mapFragment.getMap());
+//            mOneSpaceMap.addOnCameraChangeListener(this);
+//            mOneSpaceMap.setOnClusterItemClick(this);
+//        } catch(NullPointerException e) {
+//            displayAlertDialog("Error", getString(R.string.error_missing_google_play_services),
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            finish();
+//                        }
+//                    });
+//        }
 
-        initFilter();
+        //initFilter();
 
     }
 
@@ -449,6 +450,7 @@ public class MapActivity
         mCornerLoader.setRecyclerView(mCornerListView);
         mCornerLoader.setFilter(cornerFilter);
 
+
         //Thianchai (I add this)
         WalkerMarkerLoader.setIsFilter(walkerFilter.isSelected());
         SurferMarkerLoader.setIsFilter(surferFilter.isSelected());
@@ -477,10 +479,39 @@ public class MapActivity
 
     @Override
     public void onMapReady(GoogleMap map) {
-        map.setMyLocationEnabled(true);
+
+        try {
+            map.setMyLocationEnabled(true);
+        } catch (SecurityException e) {
+            Log.d(">>>>>>>>>>> MapActivity.onMapReady() No permission the use LocationManager.GPS_PROVIDER " + e.getMessage());
+        }
+
         map.getUiSettings().setMyLocationButtonEnabled(false);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(UserLocationManager.getLatitude(), UserLocationManager.getLongitude()), 11f));  //Thianchai (I modified this)
+
+        try {
+            mOneSpaceMap = new OneSpaceMap(getApplicationContext(), map);
+            mOneSpaceMap.addOnCameraChangeListener(this);
+            mOneSpaceMap.setOnClusterItemClick(this);
+        } catch(NullPointerException e) {
+            displayAlertDialog("Error", getString(R.string.error_missing_google_play_services),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    });
+        }
+
+        initFilter();
+
+        //Thianchai (I add this)
+        mWalkerLoader.startThread();
+        //**
+
+        //Thianchai (I add this)
+        mSurferLoader.startThread();
+        //**
     }
 
     //Thianchai (I delete this)
@@ -658,7 +689,7 @@ public class MapActivity
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                             .build()
                             .addCorner(userID, username,
-                                    username + "@" + mSettingManager.xmppServer,
+                                    username + "@" + mSettingManager.xmppServiceName,
                                     mSettingManager.xmppRecource, name, description,
                                     UserLocationManager.getLatitude(), UserLocationManager.getLongitude());  //Thianchai (I modified this)
 
@@ -729,32 +760,32 @@ public class MapActivity
      * This method used for put location to server
      * @param location Location object that contain Latitude and Longitude
      */
-    private void putLocationToServer(Location location) {
-        Observable<String> observable = new OneSpaceApi.Builder(getApplicationContext())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build()
-                .updateGeoLocationRx(userID,
-                        location.getLatitude(),
-                        location.getLongitude());
-
-        observable.subscribe(new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-                android.util.Log.i("PutLocation", "completed");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onNext(String s) {
-
-            }
-        });
-    }
+//    private void putLocationToServer(Location location) {
+//        Observable<String> observable = new OneSpaceApi.Builder(getApplicationContext())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+//                .build()
+//                .updateGeoLocationRx(userID,
+//                        location.getLatitude(),
+//                        location.getLongitude());
+//
+//        observable.subscribe(new Subscriber<String>() {
+//            @Override
+//            public void onCompleted() {
+//                android.util.Log.i("PutLocation", "completed");
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                e.printStackTrace();
+//            }
+//
+//            @Override
+//            public void onNext(String s) {
+//
+//            }
+//        });
+//    }
 
     private void locationServiceUnavailable() {
         mCurrentLocationFab.setVisibility(View.GONE);
@@ -786,7 +817,9 @@ public class MapActivity
     }
 
     private String getLocationAsString() {
-        return UserLocationManager.getLatitude() + ", " + UserLocationManager.getLongitude(); //Thianchai (I modified this)
+        double lat = MainMenuFragment.roundToDecimal(UserLocationManager.getLatitude(), 5);
+        double lng = MainMenuFragment.roundToDecimal(UserLocationManager.getLongitude(), 5);
+        return lat + ", " + lng; //Thianchai (I modified this)
     }
 
     @Override
@@ -884,7 +917,9 @@ public class MapActivity
 
         this.context = getApplicationContext();
 
-        mCornerLocation.setText(UserLocationManager.getLatitude() + ", " + UserLocationManager.getLongitude());
+        double lat = MainMenuFragment.roundToDecimal(UserLocationManager.getLatitude(), 5);
+        double lng = MainMenuFragment.roundToDecimal(UserLocationManager.getLongitude(), 5);
+        mCornerLocation.setText(lat + ", " + lng);
 
     }
 

@@ -3,678 +3,1020 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="0c3e81d3eb86b86d194b5cdb6a4de78203f6f7fd">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appindexing-8.3.0_b0785e29d1b4db490ddded8e4b09e818674249ca\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-resolver-minidns\4.1.0\5b8783270e55f49937492b23df34993c4e51c8d7\smack-resolver-minidns-4.1.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="5b8783270e55f49937492b23df34993c4e51c8d7">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-resolver-minidns-4.1.0_b05300bade7af735dc39b6358ec2f7df5613d69a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-extensions\4.1.0\b0968f9b209feb2f51d1a1e72238989271750625\smack-extensions-4.1.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="b0968f9b209feb2f51d1a1e72238989271750625">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-extensions-4.1.0_d3390dea81d0ea28ce663bc918492c9a7a9ad739\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.sothree.slidinguppanel\library\3.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="6ca08eae09a2083fd5b430ce2a1faf86721a46bf">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.sothree.slidinguppanel-library-3.2.0_8121ac1392a3d430e9627acd7927331ecddfefcf\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.1.1_1a64c5387812ea2ab2b70524fa1134d7efb00039\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.jxmpp\jxmpp-util-cache\0.4.2-beta1\43e2a81f52600639daeb02ede60cc498a13614a5\jxmpp-util-cache-0.4.2-beta1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="43e2a81f52600639daeb02ede60cc498a13614a5">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\jxmpp-util-cache-0.4.2-beta1_047a76f73e8adb3b6b04deea95e6201906da3070\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.6.0\98476622f10715998eacf9240d6b479f12c66143\okio-1.6.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.6.0_c6687b4b6bdfff5f4ffc1973aeaf22ed0e516018\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.github.ozodrukh\CircularReveal\1.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="e3a3d62fab67ccb83f386a4c092bfb5747ea15a7">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.github.ozodrukh-CircularReveal-1.1.1_b2bf124efa71624726c3e67551dc988ae6cb4c6b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="744c49c02a27569cc4cc049685d3649e4ef439f2">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-panorama-8.3.0_15a16436d72609cfc704892eea79ba1bfd09d460\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-measurement\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="b000ecceb9877fefcdc7ab1959ff03df91551656">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-measurement-8.3.0_4bd638e8abe2571715d09903a36cfd83d4093e3a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-android-extensions\4.1.0\355b8e606f77ae354e86a84755d2dab9f7536121\smack-android-extensions-4.1.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="355b8e606f77ae354e86a84755d2dab9f7536121">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-android-extensions-4.1.0_6bd6fda99ce3d46d39680614275c18e3a9b0bb50\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-vision\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="724ce977487ab3a215d4d2eb47d8dccd9f30013f">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-vision-8.3.0_9347dd450028bf9bab74e9fe86245c27f590ab2f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.amulyakhare\com.amulyakhare.textdrawable\1.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="d237556caead5b93d97e18a071059a2c0045978e">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.amulyakhare-com.amulyakhare.textdrawable-1.0.1_63e3c9c16de59f3918784ac7415217994cf3ec2e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-core\4.1.3\bd2c1094cc7770e456da9b49a32b5d82e7cb5ac5\smack-core-4.1.3.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="bd2c1094cc7770e456da9b49a32b5d82e7cb5ac5">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-core-4.1.3_33b57e5cd99f0ce27baf5e4a1bd21826d6533550\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-bosh\4.1.3\a3aad15eaa0932c66242c57d829e139056a0ce9d\smack-bosh-4.1.3.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="a3aad15eaa0932c66242c57d829e139056a0ce9d">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-bosh-4.1.3_1765bd21f5623a655fc9d8a8d8be14c9b18447c8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\libs\internal_impl-23.1.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.1.1_1c8e3ed1ff56c7925e17df9eb01b8cb566975a58\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.android.support\percent\23.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="1badcc3d0af60cfcab190ea7b78d060e824cfb1e">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-percent-23.1.1_836f265b1d00271e0577240c5ac3dcc405f4d4ec\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.4\695b63d702f505b9b916e02272e3b6381bade7f\gson-2.4.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="0695b63d702f505b9b916e02272e3b6381bade7f">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.4_0973687e93c3048d4bf861c691a948062f52020b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.2.0\jars\libs\internal_impl-22.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="0632f06970823b7e3436f649bfa65b47035c91d0">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-22.2.0_83bcf724948dd386149cbafbaf1bc6387522e4fb\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\library-2.4.0_12e0e0db6fff118e9b07bbe250d2e6a836271cf6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="9aedc597d74c6d77258ce5236e9abff0c3cc65e3">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-wearable-8.3.0_4c36fcd98e8e9f51bc0c912a8879ceeb7f9e6435\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="345a1b5cf5b144ce18ba6962bc66a7e2f26c1c1b">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-8.3.0_dd63ffbe215eb54e60a304e05911a89d835328a5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.igniterealtime.jbosh\jbosh\0.8.0\a99cba02dc7aba256001e5d74c15d73bcc87fc14\jbosh-0.8.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="a99cba02dc7aba256001e5d74c15d73bcc87fc14">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\jbosh-0.8.0_c49b73444d056d8ba586bb26d1613006ea264577\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\.idea\libraries\YouTubeAndroidPlayerApi.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="3c4f96ff493456651cc7bdb0b47e10eb25545a16">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\2\YouTubeAndroidPlayerApi_6d1e535637694abb0cc21ba826ce01ea9133913d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit\converter-gson\2.0.0-beta1\3de922cdbf9bb3a6f72f6b6b3327cfb348cf445a\converter-gson-2.0.0-beta1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="3de922cdbf9bb3a6f72f6b6b3327cfb348cf445a">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\converter-gson-2.0.0-beta1_764d12d055b84449337645c786a90c674e1614ca\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_369e90c8f16a32c4225f384a11ab16cdbc96d272\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="2c6fcd6267cbac6509a2e72a61127534a1d616cf">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-games-8.3.0_ff0eee6ff039a4e2dfe60aabd9a1e35c650a7695\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\com.squareup\otto\1.3.8\cf615176cd1177edf71d3c9605f8dc148fede6be\otto-1.3.8.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="cf615176cd1177edf71d3c9605f8dc148fede6be">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\otto-1.3.8_1feaf60b49916fa0a47b2033fe3da779ff8a83af\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="ea34579b1be157cd792376362157e9c54ebb4cd7">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-safetynet-8.3.0_5d2cb304b2af514d866c3587f404d3296decb7b2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit\adapter-rxjava\2.0.0-beta1\27db6ccd014c866500af30d92fbfad0e3cc99ee8\adapter-rxjava-2.0.0-beta1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="27db6ccd014c866500af30d92fbfad0e3cc99ee8">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\adapter-rxjava-2.0.0-beta1_04af753aa075214faa26a17c65187875a51cf905\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="6d9ed9a288364688e7fcf6704776284dac1eb42e">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-location-8.3.0_2a4f0b69288d6ed559ce27d5617fe5ab6124d6bf\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.1.1_b2ec8cbbc2f78a8ffa486fb9e86409af43bb49c3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="af6ee25641df3142059c0828517aa7ee6eba08d6">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-analytics-8.3.0_a6235a6f39a4dd0cfd59800e00048b425fd17b65\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-auth\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="fd76d95678a6b2b8a49bb8a9fb5bcef7aedb70e7">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-auth-8.3.0_e37f5ff8d93c4900b70be5145e7336bf750774ff\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit\retrofit\2.0.0-beta1\53b5be42d6cf719ac1431b9aa9a4d5ab78856148\retrofit-2.0.0-beta1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="53b5be42d6cf719ac1431b9aa9a4d5ab78856148">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\retrofit-2.0.0-beta1_6ae4018fa9daae606b033bac456c97ad02ad1f7a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-23.1.1_c8cf40635e5b3395246e9079a08d888577554630\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="77f9593d979f4347344be233bd0d888315f79517">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-maps-8.3.0_8471389d1dbc2db414c123caf9b6107d3cc965e8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Program Files\Android\Android Studio\gradle\m2repository\com\google\guava\guava\18.0\guava-18.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="cce0823396aa693798f8882e64213b1772032b09">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\guava-18.0_23ae9d619c9ad952ac11ce7bff78df802e3e98c2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-sasl-provided\4.1.0\74422a92b7bba8eb633ceecdb017530b67451731\smack-sasl-provided-4.1.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="74422a92b7bba8eb633ceecdb017530b67451731">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-sasl-provided-4.1.0_afeb20b61ce8fe11dda3e724ce66c31d9a6f2c5c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-multidex-1.0.1_c42e9aac0d33f34af46e1e7011e8e3f837c63fb7\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="eb576427887e497cd958a475475f9206e38dc314">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-nearby-8.3.0_674253bf11e4e09ae96fe22865bb976530d2d37d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\io.nlopez.smartlocation\library\3.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="9f005bd05449fbd99a9f9baa8fa01631017bbaf8">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\io.nlopez.smartlocation-library-3.2.0_31b7fef5fc71200185aaedeeff9a50a4a67ddc79\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\io.reactivex\rxjava\1.0.14\898f9ab61e2a23afd615f0b0389478bec86f49f9\rxjava-1.0.14.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="898f9ab61e2a23afd615f0b0389478bec86f49f9">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\rxjava-1.0.14_5eb80f0a601e4941f8ca05a456306ac0df8ce0af\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="71eda10e33212e44245524b5087366ff8d805825">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-gcm-8.3.0_b4f0c16c2b1f569933b4e70246aeb6166cef09ba\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="01a90bbb9495a8bbf6f3cfdf12f1b35caaa9524b">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-base-8.3.0_057ebc9b26eb01c8127cc66e05301563645d2952\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.vanniktech\vntnumberpickerpreference\1.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="e05a6b83b64ee199a36d228715bbf9987edb8efa">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.vanniktech-vntnumberpickerpreference-1.0.0_d80a342436b93c19386dfabcaf30ac466844e1bc\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.1.1_c7882997420a130441aff9e950c99ea4cc104223\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-tcp\4.1.0\b5043991d7ed52da15089fcfcbca1dd862d1af42\smack-tcp-4.1.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="b5043991d7ed52da15089fcfcbca1dd862d1af42">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-tcp-4.1.0_96c4282e92f162829375375b9f344b5d54aeabe1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-android\4.1.0\3da1ad907fe8eb0db80471b8837d3e51690fe13c\smack-android-4.1.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="3da1ad907fe8eb0db80471b8837d3e51690fe13c">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-android-4.1.0_5f9716afb22a15804aa2421edbc6a5a20a521d46\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.android.support\customtabs\23.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="91514e250eabdb61165eafc821c54bd95c218c47">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-customtabs-23.1.1_6a408ff7c8e5aa85c7935ff56fa74900022da288\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="cb4af597d079ffdc0984a3ec2c03cbf6a1b9f869">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-cast-8.3.0_658ad59778a6cda22c4ac9cff5839a114ddd2f1e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.1\support-annotations-23.1.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.1.1_60fee7cab5ce4219460601d99a193e6a2b2ff9a0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="4b8df1b1e51fe14b0e89b3845dc2e215a024a09f">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-identity-8.3.0_8f93c2b3b64c8ea0ddbb103e3b790aeb51df450c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\.idea\libraries\apache-httpcomponents-httpclient.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="13d1b1d8f318f5b0f95bc2901f378ef68982584f">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\2\apache-httpcomponents-httpclient_24ce6d8a2762c62701b22581de2a81104e4475a5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="0af4f577b4a21eb9be2a7f52e33b077b67e6d9f8">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-plus-8.3.0_5ff6a33c9a8b02f57439f14fc384ca7b471d8c56\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="8d469b7a669aaf666334ddc9b7cad7d1495f50cc">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_86e8fe4b3d7ce08344084b0b1a7243af625d507c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp\2.5.0\4de2b4ed3445c37ec1720a7d214712e845a24636\okhttp-2.5.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="4de2b4ed3445c37ec1720a7d214712e845a24636">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-2.5.0_10d5485ae3f4d76c07468b022ffa9a8ffdc1ea21\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="27775d59b16610ac76f1b83693fedd9520396332">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-ads-8.3.0_88c132168fc4dd6d84f0fd4db571e9d7a0220756\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.cocosw\bottomsheet\1.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="37a4672e2ae8d65082bd66183d12fcd5d106a336">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.cocosw-bottomsheet-1.3.0_8e79e0ac56621ee3677798d78ef522b2e0ac1e0c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="58adcfbe2c8393765e84c5489d01bba6a5159eb2">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appinvite-8.3.0_4819c71362b0aca40cef4a0e447fa0fd00efb47a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="dcf8c83c3dead00a6c4fe313e95f7aaca20dc641">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-mediarouter-v7-22.2.0_7d997f6cfe5f9b477f84ca74b513847a4363abb6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.4\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="4b1a7fac58cc85b115adee653a10b6300f90951a">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.maps.android-android-maps-utils-0.4_a5f5aacd9a7bcb7b4fa3deb63cf6f0a2384bb18d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.android.support\design\23.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.1.1_2f10ab03217eebc935f9cd07f14fe41950549bdc\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-im\4.1.0\4b6d736ad02f64ba54f4a5712a4a453a2c3848b1\smack-im-4.1.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="4b6d736ad02f64ba54f4a5712a4a453a2c3848b1">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\smack-im-4.1.0_18bb8277704b3289be6f2155de81f83fdee39d69\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\8.3.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="0a1897426566e408a5c20a3d931f77d89771d07f">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-drive-8.3.0_05e425220cb9a3311601eaf99ed7365f45316e6c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.jjoe64\graphview\4.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="987adec819c9a98faf215814f41195da48fc724e">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.jjoe64-graphview-4.2.1_f103520fb07cfac49d47d8285dfb02b9521f4b43\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\.idea\libraries\apache-httpcomponents-httpcore.jar"
+        jar="/home/christian/work/development/github/onespace/android-application/app/.idea/libraries/apache-httpcomponents-httpcore.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
         sha1="33fc26c02f8043ab0ede19eadc8c9885386b255c">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\2\apache-httpcomponents-httpcore_eba7d9f769fc2261f393cbe7c7e7160b8ff5d7d7\classes.dex" />
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/2/apache-httpcomponents-httpcore_596b3a4bc5117591c7e97947203d934aaa54b646/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\io.reactivex\rxandroid\1.0.1\jars\classes.jar"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="aa81bfe8c5cc88c2472ca936ae71f0c3dd1766df">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\io.reactivex-rxandroid-1.0.1_b56c8faf83b22f63be451527cab57fb103726fb8\classes.dex" />
+        sha1="1e11c68fec92a17c84dd8d1dd80e74c4e67b12e2">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-games-10.0.1_eabee0e97189f0e10f907b4b204fe2cd17187393/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\de.measite.minidns\minidns\0.1.7\993582d1455b93a5723d2af4b39d8679735b3550\minidns-0.1.7.jar"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="993582d1455b93a5723d2af4b39d8679735b3550">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\minidns-0.1.7_6c6dd5c9818afc1e0f252f21216138c68f05b58a\classes.dex" />
+        sha1="4b17463c814bdc562fb0392fa3494063623a0904">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-messaging-10.0.1_2087d30c1204625b19df47f8d76c6f1042180deb/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\8.3.0\jars\classes.jar"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="697679619b00837e3d09e9988a2e1e2a9009d502">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-fitness-8.3.0_3b14c4d66545d4db317ea7bbc4d51493b2b1a182\classes.dex" />
+        sha1="611705359c24bf94ea8ab852eac4cd0fc01717e4">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_2d4f9417395f38ebbad82def21e75aa2cb41887c/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\8.3.0\jars\classes.jar"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="9c9bdb4b2497465a6cf7d5e8f57c5298f828a380">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-wallet-8.3.0_9391b61143c3784b9800738996924ce3a98f6558\classes.dex" />
+        sha1="028f8255cb977b29cdffbfcf05caa0459686120c">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-drive-10.0.1_2db2fbd1e0dd6b500111fbaea3a662dfa325a892/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.scottyab\aes-crypto\0.0.3\jars\classes.jar"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="6dc5cb105e62ef1526b764e6793f1703f0f20b09">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.scottyab-aes-crypto-0.0.3_cfff89376beeca78e8f702302531fb744cee4a06\classes.dex" />
+        sha1="4de2b4ed3445c37ec1720a7d214712e845a24636">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-2.5.0_60cc78112e9f4eff31feafbd1504fb2cd4568adb/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Thian\.gradle\caches\modules-2\files-2.1\org.jxmpp\jxmpp-core\0.4.2-beta1\14ade1a89b0f6db4fa481f9f8a721cdec69374de\jxmpp-core-0.4.2-beta1.jar"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="a48dc0b148059764d32500be558702d5ff932058">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-identity-10.0.1_74877b5c274cc38392ef5bb4fac018e00da8e298/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.amulyakhare/com.amulyakhare.textdrawable/1.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="d237556caead5b93d97e18a071059a2c0045978e">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.amulyakhare-com.amulyakhare.textdrawable-1.0.1_2d6b442bb95ec76669b3fea7b91f1c7aac778dcc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_5e218aa1b4e6927aafbf3d943760532d1a2b4f5f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e2185aff89caeb337b1ffc36d5e525d8318e7cfe">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-10.0.1_b0edbefd90d04bd820371b2a619888490777cece/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_a4627d87e643ea429435eb52277eae7e53fa3b37/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="8308ed003522a2ee8958311afcc4cfd0470377cd">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gcm-10.0.1_f14e3266685400245ba737e0f1d28018c0916bfa/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="7491d30d47712efa7cd9f44895b6d5af861dd3dd">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_fa02750df93c613b6fe14db4042fe86f3d2e1ec4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="39907d5c8f5902fffef30160ca7447c93b82405c">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appinvite-10.0.1_0b64a08e0834c1355593d2cd7effd9725f4a8ba8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.cocosw/bottomsheet/1.3.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="37a4672e2ae8d65082bd66183d12fcd5d106a336">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.cocosw-bottomsheet-1.3.0_b855d933705d0be9670908d504c664877896f2ed/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.maps.android/android-maps-utils/0.4/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="4b1a7fac58cc85b115adee653a10b6300f90951a">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.maps.android-android-maps-utils-0.4_2463fd6eab68bfeeb227d1ae0668beefc9a9325b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="7a64bf6dc775198eed9db9468a133adf7dfe6562">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-fitness-10.0.1_f7078408f7d0236182fece3167dcc94c57550f6a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-23.1.1_f0a149d9aea9864bb2fc198d3be569621782c4b6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-android/4.1.0/3da1ad907fe8eb0db80471b8837d3e51690fe13c/smack-android-4.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="3da1ad907fe8eb0db80471b8837d3e51690fe13c">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-android-4.1.0_6ddc55e504315e174cdc433ef79b9a856048cf58/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-places/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="f3e51e9c5233b8897f61e08a6a27bc36283c2724">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-places-10.0.1_0c5e2e33f925454c12052720e82f5e19489e8fed/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="9cca2818594cc5348806d6662133491e7ea0fa8d">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-auth-10.0.1_052fc98bca34ff31b71f4ec1fdc22963a87e50c1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-resolver-minidns/4.1.0/5b8783270e55f49937492b23df34993c4e51c8d7/smack-resolver-minidns-4.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="5b8783270e55f49937492b23df34993c4e51c8d7">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-resolver-minidns-4.1.0_5db5f932c035ed337eec3bd6dcae8972227e0f8f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gass/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="57c2eceb8548de84509d1ebc293fedec53231f6c">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gass-10.0.1_cbeb0650e34dc02973696a2d1db6a098ed85dfc1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.6.0_e5eee314acb581fcff313c963dd6d5a3c3884ccc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-25.0.1_6254dfda6f8787188a3a2d0f693e726ed853e43b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-25.0.1_58b6ee509822f5f21e093b774591c2cd8bd33ae6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.jxmpp/jxmpp-core/0.4.2-beta1/14ade1a89b0f6db4fa481f9f8a721cdec69374de/jxmpp-core-0.4.2-beta1.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
         sha1="14ade1a89b0f6db4fa481f9f8a721cdec69374de">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\jxmpp-core-0.4.2-beta1_2f2909907ef9aef00346816dda1c03cff64fe793\classes.dex" />
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/jxmpp-core-0.4.2-beta1_2997082badca01f95e132d6d37e7dbd8f352af13/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-im/4.1.0/4b6d736ad02f64ba54f4a5712a4a453a2c3848b1/smack-im-4.1.0.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="7c4de4c8e43e53160eb7606e3ce55f559f55c2ad">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_fa50271d146c9593be2944c908e90faa03d0df2b\classes.dex" />
+        sha1="4b6d736ad02f64ba54f4a5712a4a453a2c3848b1">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-im-4.1.0_49e28f0d985b7dca27ea51ff550982a8dbcbb008/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\exploded-aar\com.scottyab\secure-preferences-lib\0.1.3\jars\classes.jar"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.0.1_3ebc702ae425e40aea0be57ca5e0b44f81720e61/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/library-2.4.0_9ec5e6e9359ff1994b26359251038b1d894528c2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/percent/23.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="1badcc3d0af60cfcab190ea7b78d060e824cfb1e">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-percent-23.1.1_60817cfb66fcf13ef5677c01b188cdc94ce72f46/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-config/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="ffc15e965a9e8c28f24455eedd4cac215c45d1fc">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-config-10.0.1_3f5f5fd116daf8656818ec45b8fce6e31e56013b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/transition/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-transition-25.0.1_b5413576c152b3764669c15e5c7417c0545b5da2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-25.0.1_140ae8e6a56372e0be43bae67088badb77f87cc3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="44a694d4095be84c2888764b1f7256b385c030ad">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-location-10.0.1_a532c449cf0e707a7d808fd6a3e57082bea316bf/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/apps/android-studio/gradle/m2repository/com/google/guava/guava/18.0/guava-18.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="cce0823396aa693798f8882e64213b1772032b09">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/guava-18.0_f32ab55ebdcf87e3ff2fe60db2cf11e788a01ea7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.igniterealtime.jbosh/jbosh/0.8.0/a99cba02dc7aba256001e5d74c15d73bcc87fc14/jbosh-0.8.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="a99cba02dc7aba256001e5d74c15d73bcc87fc14">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/jbosh-0.8.0_d3336ee1221df3d434a17d0931f1bce882fa672c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-10.0.1_0eb07d99b6c44e09f25c5395fdba8617a8a51931/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.jxmpp/jxmpp-util-cache/0.4.2-beta1/43e2a81f52600639daeb02ede60cc498a13614a5/jxmpp-util-cache-0.4.2-beta1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="43e2a81f52600639daeb02ede60cc498a13614a5">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/jxmpp-util-cache-0.4.2-beta1_87f6426de28b626566802781035d53779cdec4d5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.vanniktech/vntnumberpickerpreference/1.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e05a6b83b64ee199a36d228715bbf9987edb8efa">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.vanniktech-vntnumberpickerpreference-1.0.0_0dadd7220fc33b7228d334c81c635bbd4de9b1a2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-iid-10.0.1_33b7d1dd99bde7bf1bd1a0f538e236778e8dbcbe/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-android-extensions/4.1.0/355b8e606f77ae354e86a84755d2dab9f7536121/smack-android-extensions-4.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="355b8e606f77ae354e86a84755d2dab9f7536121">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-android-extensions-4.1.0_d85ba8824c24345d2e1c0c94ea80dcf9d8e9bff8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="971509bbe30bb7b971fc1c49d7b23d0d818830ac">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-10.0.1_b913ea63eb7fa56377ff4db454abfaa8d8b3ac44/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e96c6974cf924e7ee3b230e6847d5731423388c9">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-base-10.0.1_4ceee63d3514f1c966edffe7006a461ba01bd1e0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/multidex/1.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-multidex-1.0.1_9892f99969b2439a53cb8ab55fb69512d0a0b9cb/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.jjoe64/graphview/4.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="987adec819c9a98faf215814f41195da48fc724e">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.jjoe64-graphview-4.2.1_ec201b90040be64084dae970e046e52c88bbb30f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-crash/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="de29a39f9260f88151b1ef453140e71c76b6c415">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-crash-10.0.1_c2152b7c7108d0632c1e693084d91a3a5f75bc71/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/customtabs/23.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="91514e250eabdb61165eafc821c54bd95c218c47">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-customtabs-23.1.1_2a286230cf04fd4d4dbb60c45b8aa60099987b33/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.4/695b63d702f505b9b916e02272e3b6381bade7f/gson-2.4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="0695b63d702f505b9b916e02272e3b6381bade7f">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.4_86bf984e2837976ab4efca595e2b4558ee757108/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.scottyab/aes-crypto/0.0.3/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6dc5cb105e62ef1526b764e6793f1703f0f20b09">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.scottyab-aes-crypto-0.0.3_5e49d7ff1feb14680e0c213ace0b6247fdd5f5c0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-25.0.1_3c033bd78f7bbd4f123eb98bb0c2702e77f963c0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-core/4.1.3/bd2c1094cc7770e456da9b49a32b5d82e7cb5ac5/smack-core-4.1.3.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="bd2c1094cc7770e456da9b49a32b5d82e7cb5ac5">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-core-4.1.3_5a3085bd3550663957cb79fb9c4b3acc7c95adfc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-25.0.1_07f9c5a118134ef117924702e0c44aec56819df0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/io.reactivex/rxjava/1.0.14/898f9ab61e2a23afd615f0b0389478bec86f49f9/rxjava-1.0.14.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="898f9ab61e2a23afd615f0b0389478bec86f49f9">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/rxjava-1.0.14_6c0b320603bc61d056b7bc2a0bb64f34001e9e96/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-10.0.1_43d473cb34902b551601df25ec59232cee36842c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-awareness/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="4385ccc0a88b33d182a836eadb47be55c8eb1107">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-awareness-10.0.1_245f6164194a0fdf983530aabd8b9514b24aa2b3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-database-10.0.1_82b3e2d901be7dcdb51342ce36549b0f4fd4bc40/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/de.measite.minidns/minidns/0.1.7/993582d1455b93a5723d2af4b39d8679735b3550/minidns-0.1.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="993582d1455b93a5723d2af4b39d8679735b3550">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/minidns-0.1.7_23859d1caf9ac866dcd3d7f81176a133f62209b0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-impl-10.0.1_f59ec56428e4beff5c9881b32b7095881425b2d0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="c14f0c89f28cf782e42581ab0aba5f63af39b3d2">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-plus-10.0.1_1a5d0df6bef1c15387995501cff8a059f35a1aa0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database-connection/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="8010ae6ed32828a145b25ec97bc07b7a83c6318f">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-database-connection-10.0.1_fa66d3f61f47b9faccf35c8fa81d07306a543064/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="408a599ac77cd17fe8e8919326bec617b3d005bd">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wearable-10.0.1_53cab3d71c9f81fab17ff599b2d877d69c2447e6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="92c871a22463a247e8a77a9f3fd231c278788c4a">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-panorama-10.0.1_60e01aeb6c0e9e850ada7b5665a0a8857b44dce2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage-common/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="09cf6aa1390f95157e8295d02be7868f568825fc">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-storage-common-10.0.1_18e602bea23b2e109b7039ec8432353df79a3bdb/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager-api/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="b1df8fa3d372a27e4e969ce00b00689ee1eed031">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-api-10.0.1_3c461bcc073fad9c815b859756f430f5983d4be5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/2.0.0-beta1/53b5be42d6cf719ac1431b9aa9a4d5ab78856148/retrofit-2.0.0-beta1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="53b5be42d6cf719ac1431b9aa9a4d5ab78856148">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/retrofit-2.0.0-beta1_52bbe524a8d25bbe274e0e8d294fa3068371b0ff/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-10.0.1_82b0619fc7a5c79fd7d0312205730cd969399023/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="dd39827d2067497e60e21da48a7926000b6d4b0c">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-storage-10.0.1_9d596c5637c1f549bb6bfb84c2ecb9febc751d0b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-25.0.1_97ab34ccf166d03ec3a1746cf533e71491258f0c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-10.0.1_cb1f496030b5ca85fd06cf552774b37190cb3ad1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_29e2ca07b584fd9e602797507104a024a885df9f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast-framework/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="df1cb17511aabbb63264a0024949d1e42502a512">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-cast-framework-10.0.1_e5a2dd059492eaa1bb82e16485638be37653fef7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/picasso-2.5.2_445876116fcb780626ca2cd575a0c4d969a77077/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.0.1/support-annotations-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.0.1_ab1eb4cd4e2ee61cd5d5457e1b48e3278430410d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.github.ozodrukh/CircularReveal/1.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e3a3d62fab67ccb83f386a4c092bfb5747ea15a7">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.github.ozodrukh-CircularReveal-1.1.1_735e9f5be4a34712029d7fb88c9d64f712af2269/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.8/cf615176cd1177edf71d3c9605f8dc148fede6be/otto-1.3.8.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="cf615176cd1177edf71d3c9605f8dc148fede6be">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/otto-1.3.8_ec97c17e6e46979222468ce229402fdfa1fbb2c2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/adapter-rxjava/2.0.0-beta1/27db6ccd014c866500af30d92fbfad0e3cc99ee8/adapter-rxjava-2.0.0-beta1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="27db6ccd014c866500af30d92fbfad0e3cc99ee8">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/adapter-rxjava-2.0.0-beta1_02b5fdf2aea44f4313e4b1044b1f9f4cace3d75a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-instantapps/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="45305e6af414dab5aba6c3225081c2f15c3bdd1e">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-instantapps-10.0.1_eed92737cd8b982c8d2760350aed1af0c98d21a6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-25.0.1_acd9cc02214413e5efda2a3f7ab48523e256c048/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/io.nlopez.smartlocation/library/3.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="9f005bd05449fbd99a9f9baa8fa01631017bbaf8">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/io.nlopez.smartlocation-library-3.2.0_01f621f7b01d2ae4afdb84f82b715bf7e83c7224/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="d0460bf07cc3657e0be518ca01c174493951c6b8">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-10.0.1_706a3eb8fac51ecb0287f0dbcef5d051c1da7b59/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-sasl-provided/4.1.0/74422a92b7bba8eb633ceecdb017530b67451731/smack-sasl-provided-4.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="74422a92b7bba8eb633ceecdb017530b67451731">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-sasl-provided-4.1.0_cac43fd38871deb6382de9f52f85d0ead271e386/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/design/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-25.0.1_f53140a7507e8ec32973fb8460f64e73f1bd5250/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-iid/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6bb5d347ebc0c6ef3c83a905222a688da5d2f7b4">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-iid-10.0.1_ae7d833e087cb5b37f2d45a3943c5d74f98ec392/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-extensions/4.1.0/b0968f9b209feb2f51d1a1e72238989271750625/smack-extensions-4.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="b0968f9b209feb2f51d1a1e72238989271750625">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-extensions-4.1.0_7b8db88c8460c7bb26a5cd04876dd71cbea14877/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-25.0.1_8cd33d0817baa138b6f40eb4a9a93a8a53d0b306/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="f6cf557be4dbd0282ea2388633e5378634423226">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-safetynet-10.0.1_38e9a16fc75670e9f8c4adabf745cfccc56fafbb/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/24.0.0/jars/libs/internal_impl-24.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="b6763651ec29b4c95e7bbe63fc393ffcc8c4c2c5">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.0.0_054de53f536f079d7927f358b37ed130fe3cec10/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/.idea/libraries/YouTubeAndroidPlayerApi.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="3c4f96ff493456651cc7bdb0b47e10eb25545a16">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/2/YouTubeAndroidPlayerApi_8ec0a0ee30a4d8a5a0f44dbc3fa36f800cf48afe/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="c6e1f361e9d61aece9dac39b77fcc98a337a144d">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-nearby-10.0.1_91ceaeef0331eea0fc7309a94eb8dcd71a8c52f4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="771267c5b0c7a5b348d3205dcfa1f871af7e0177">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-cast-10.0.1_83bbdde4f05499bad5c1e7af1a9f6e460b575b46/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.scottyab/secure-preferences-lib/0.1.3/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
         sha1="e9b9ce1828dd97c0a67957d3e0fc25669d9109e7">
-        <dex dex="C:\Users\Thian\Desktop\OneSpace_Thianchai_github\onespace\android-application\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.scottyab-secure-preferences-lib-0.1.3_46b211e9c341ea418257d72df08b5eb625a27397\classes.dex" />
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.scottyab-secure-preferences-lib-0.1.3_7b0264e9858ea0d53ce009650702660ecf36bc36/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="4c829ff0ccfecb28a999ee46d9e75948dfc777a4">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-analytics-10.0.1_1b5710428cb6da83df7c3181eeb4b84306b2648c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/palette-v7/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-palette-v7-24.0.0_fdacc0cf223822cce9fa7214e75206943ee808f4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics-impl/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e871881b36b32e6bfd271a830c6eeb54ff0fc185">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-analytics-impl-10.0.1_b3f4ac5b0fea3b8be7ba11a5786cd971c446c0a9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-tcp/4.1.0/b5043991d7ed52da15089fcfcbca1dd862d1af42/smack-tcp-4.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="b5043991d7ed52da15089fcfcbca1dd862d1af42">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-tcp-4.1.0_53908a6dd3e1bbf3d6cfcdd7854fef9f5bc4781c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-25.0.1_de8171a403bf70f417744382500907c4ec583c0a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="ba6aa5e69ef31dee57208125323cee958fc67565">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-vision-10.0.1_462c660b590693b17a6d2775faf828e53af0071a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/.idea/libraries/apache-httpcomponents-httpclient.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="13d1b1d8f318f5b0f95bc2901f378ef68982584f">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/2/apache-httpcomponents-httpclient_9abbf1915c4429bbc90de4764c8766116468e284/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="27777b3cad3c20b1acab19f6e37fe3e03371bf6e">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-maps-10.0.1_77e6114d76fbe49aacea36d31c25d5e79c636fa0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-10.0.1_140fd7d3ea4db1896acd0037b949fbce9f84f394/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_0fb343f9f814e8ea6dcd89ee7083500898fe6157/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/io.reactivex/rxandroid/1.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="aa81bfe8c5cc88c2472ca936ae71f0c3dd1766df">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/io.reactivex-rxandroid-1.0.1_921a7d6b70a92a98763eccaadf4997592d328673/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="b327fbe2fad414bc38cf0ce8f7efe1a38f572837">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-mediarouter-v7-24.0.0_031d9b7ba603ea2eb8d0daf27ffb0df34383b442/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-clearcut/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="1d193729baf37df3d902a423291423a0df7e3779">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-clearcut-10.0.1_b48c6eb00a850f9ced08bb86e513959a1cdd6993/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_146d32ad24b0a4829aed70ecda2ec2260f4093f0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/converter-gson/2.0.0-beta1/3de922cdbf9bb3a6f72f6b6b3327cfb348cf445a/converter-gson-2.0.0-beta1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="3de922cdbf9bb3a6f72f6b6b3327cfb348cf445a">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/converter-gson-2.0.0-beta1_d3d77e49c4e302d2899ee7546a5f09baec5c8e26/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.sothree.slidinguppanel/library/3.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6ca08eae09a2083fd5b430ce2a1faf86721a46bf">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.sothree.slidinguppanel-library-3.2.0_3f384011914756cb215b2961f48ecd21ef306616/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.firebase/firebase-appindexing/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="ae80d328a8548b4610ead6c624bab8c6a6984f5b">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-appindexing-10.0.1_6af24496a8d642485619a3b1ff16115136c40015/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads-lite/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="b955cb3a1ad6f1b6ff728ce1e0cd592c1717b440">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-lite-10.0.1_3aa2383e13b70efd547485a9299897d0cd8e2476/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-bosh/4.1.3/a3aad15eaa0932c66242c57d829e139056a0ce9d/smack-bosh-4.1.3.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="a3aad15eaa0932c66242c57d829e139056a0ce9d">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/smack-bosh-4.1.3_b5c357a3ef3c1a9b1e3b3b4fe681427e3d94fdd6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="2d5d113b0352ab60946fc44c518cf68fd26cbb79">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wallet-10.0.1_55867b3117bd1481b0327354343e16d89c5b58a3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager-v4-impl/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="f23ad0f8e58713ff4b55f61c0bbde3830378347c">
+        <dex dex="/home/christian/work/development/github/onespace/android-application/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-v4-impl-10.0.1_48c9602b7ab827a102dadf4c1df40e0c8e145bb2/classes.dex" />
     </item>
 
 </items>

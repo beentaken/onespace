@@ -97,14 +97,14 @@ public final class LastTweetsFragment
 
         recyclerView.setAdapter(LastTweetsFragment.this.adapter);
 
-        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int current_page) {
-
-                LastTweetsFragment.this.addRecyclerView();
-
-            }
-        });
+//        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+//            @Override
+//            public void onLoadMore(int current_page) {
+//
+//                LastTweetsFragment.this.addRecyclerView();
+//
+//            }
+//        });
 
     }
 

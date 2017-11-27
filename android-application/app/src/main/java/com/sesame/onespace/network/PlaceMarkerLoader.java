@@ -172,6 +172,9 @@ public class PlaceMarkerLoader extends MapMarkerLoader {
     }
 
     private String getCategoryClassName(String str) {
+        if (str == null)
+            return null;
+
         if(str.equals("transport"))
             return context.getString(R.string.display_places_transport);
         else if(str.equals("accommodation"))

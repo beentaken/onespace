@@ -964,10 +964,11 @@ OneSpacePopupView.Chat.prototype = {
     $('#chat-participants').empty();
     str = "<div class='" + CSS_CLASS_CHAT_PARTICIPANTS + "'>";
     participants = null;
+    var bareJid = jid.split("/")[0];
     if (this.controller.model.xmpp.groupChats[jid] != null) {
       participants = this.controller.model.xmpp.groupChats[jid].participants;
-    } else if (this.controller.model.xmpp.privateChats[jid] != null) {
-      participants = this.controller.model.xmpp.privateChats[jid].participants;
+    } else if (this.controller.model.xmpp.privateChats[bareJid] != null) {
+      participants = this.controller.model.xmpp.privateChats[bareJid].participants;
     } else {
       return;
     }
@@ -995,30 +996,37 @@ OneSpacePopupView.Chat.prototype = {
   },
   
   updateReceivedMessages : function(jid) {
+    var bareJid = jid.split("/")[0];
     $('#chat-received-messages').empty();
     if (this.controller.model.xmpp.groupChats[jid] != null) {
       this.controller.model.xmpp.groupChats[jid].showHistory(jid);
-    } else if (this.controller.model.xmpp.privateChats[jid] != null) {
-      this.controller.model.xmpp.privateChats[jid].showHistory(jid);
+    } else if (this.controller.model.xmpp.privateChats[bareJid] != null) {
+      this.controller.model.xmpp.privateChats[bareJid].showHistory(jid);
     } else {
       return;
     }
   },
 
-  displayNewMessage : function(jid, user, text) {
+  displayNewMessage : function(jid, user, text, convert) {
     if (text.indexOf(XMPP_CHAT_COMMAND_PREFIX) > -1) {
       return; // don't display CMD messages
     }
     
+    var displayText = text;
+    if (convert == true) {
+      displayText = OneSpacePopup.Controller.Utility.convertToLinks(text);
+    }
+    
+    
     if (user != null) {
       if (user == this.controller.model.xmpp.user) {
-        entry = "<div class='bubble you'>" + OneSpacePopup.Controller.Utility.convertToLinks(text); + "</div>"
+        entry = "<div class='bubble you'>" + displayText + "</div>"
       } else {
         name = jid.split('@')[0];
         if (name == user) {
-          entry = "<div class='bubble me'>" + OneSpacePopup.Controller.Utility.convertToLinks(text); + "</div>";
+          entry = "<div class='bubble me'>" + displayText + "</div>";
         } else {
-          entry = "<div class='bubble me'><b>" + user + ":</b> " + OneSpacePopup.Controller.Utility.convertToLinks(text); + "</div>";
+          entry = "<div class='bubble me'><b>" + user + ":</b> " + displayText + "</div>";
         }
       }
       $('#chat-received-messages').append(entry);

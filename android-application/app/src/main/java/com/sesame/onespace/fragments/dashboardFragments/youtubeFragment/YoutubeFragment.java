@@ -112,14 +112,14 @@ public final class YoutubeFragment
 
         recyclerView.setAdapter(YoutubeFragment.this.adapter);
 
-        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int current_page) {
-
-                YoutubeFragment.this.addRecyclerView();
-
-            }
-        });
+//        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+//            @Override
+//            public void onLoadMore(int current_page) {
+//
+//                YoutubeFragment.this.addRecyclerView();
+//
+//            }
+//        });
 
     }
 

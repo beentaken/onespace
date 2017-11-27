@@ -18,8 +18,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,9 +34,11 @@ import android.widget.TextView;
 import com.sesame.onespace.R;
 import com.sesame.onespace.fragments.dashboardFragments.DashboardMainFragment;
 import com.sesame.onespace.fragments.qaMessageFragments.QAMainFragment;
+import com.sesame.onespace.managers.service.OnespaceNotificationManager;
 import com.sesame.onespace.models.chat.Chat;
 import com.sesame.onespace.service.MessageService;
 import com.sesame.onespace.utils.DrawableUtil;
+import com.sesame.onespace.utils.Log;
 import com.sesame.onespace.views.MenuCoverLocationView;
 
 import java.util.ArrayList;
@@ -165,7 +167,9 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
         super.onAttach(context);
         try {
             mListener = (OnNewMenuFragmentInteractionListener) context;
+            Log.i(">>>>>>>>>>>>>>>> MainMenuFragment.onAttach(): try block, all OK");
         } catch (ClassCastException e) {
+            Log.i(">>>>>>>>>>>>>>>> MainMenuFragment.onAttach(): catch block (so mListener is NULL)");
             throw new ClassCastException(context.toString()
                     + " must implement OnMenuFragmentInteractionListener");
         }
@@ -200,7 +204,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
     public void setLocation(Location location) {
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
-        mMenuCoverLocationView.setLocation(latitude + ", " + longitude);
+        mMenuCoverLocationView.setLocation(this.roundToDecimal(latitude,5) + ", " + this.roundToDecimal(longitude,5));
     }
 
     public void setLocationAddress(String location,Address address) { //edit by Thianchai (add paramiter String location) (old code by chongos)
@@ -272,6 +276,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
         v.startAnimation(alphaAnimation);
     }
 
+
     @TargetApi(Build.VERSION_CODES.M)
     private void setupViewPager(final ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
@@ -290,7 +295,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
 
                 @Override
                 public void run() {
-                    if(count < 5) {  //change 3 -> 5 by Thianchai
+                    if(count < 3) {  //change 3 -> 5 by Thianchai
                         count++;
                         tabMapFragment.setText(tabMapFragment.getText()+".");
                         handler.postDelayed(runnable, 400);
@@ -303,21 +308,16 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
                 }
             };
 
+
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
                 if (mTabLayout.getSelectedTabPosition() == 2){
-
                     bFocusQA = true;
-
-                    NotificationManager notifManager= (NotificationManager) MainMenuFragment.this.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                    notifManager.cancelAll();
-
+                    OnespaceNotificationManager.getSettingsManager(getContext()).cancelNotifications("ONESPACE_NOTIFICATION_GROUP_KEY__QA_MESSAGE");
                 }
                 else{
-
                     bFocusQA = false;
-
                 }
 
                 if(viewPager.getCurrentItem() <= 1) {
@@ -350,7 +350,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
         //wrote by Thianchai
         TextView qaTabView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_menu_icon_and_text, null);
         qaTabView.setText("Q&A");
-        qaTabView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_qa, 0, 0);
+        qaTabView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_qa_new, 0, 0);
         tablayout.getTabAt(2).setCustomView(qaTabView);
 
         TextView dashboardTabView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_menu_icon_and_text, null);
@@ -360,7 +360,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
         //
 
         TextView tabSetting = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_menu_icon_and_text, null);
-        tabSetting.setText("Settings");
+        tabSetting.setText("Set");
         tabSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_tab_settings, 0, 0);
         tablayout.getTabAt(4).setCustomView(tabSetting);
 
@@ -369,6 +369,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
     public void setConncetionStatus(int conncetionStatus) {
         chatListFragment.setConncetionStatus(conncetionStatus);
     }
+
 
     public void removeChat(Chat chat) {
         chatListFragment.removeChat(chat);
@@ -423,6 +424,12 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
         }
     }
 
+
+    public static double roundToDecimal(double coord, int decimals) {
+        return (double) Math.round(coord * Math.pow(10, decimals)) / Math.pow(10, decimals);
+    }
+
+
     public interface OnNewMenuFragmentInteractionListener {
         void onOpenMap();
         void onOpenChat(Chat chat);
@@ -440,5 +447,8 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener, 
 
     }
 
+    public ViewPager getViewPager() {
+        return this.mViewPager;
+    }
 
 }

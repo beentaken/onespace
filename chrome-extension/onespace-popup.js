@@ -419,7 +419,7 @@ OneSpacePopup.Controller.prototype = {
       bodyJson = jQuery.parseJSON(body);
     } catch (e) {
       if (jid == this.view.chat.currentDisplayedChat) {
-        this.view.chat.displayNewMessage(jid, user, body);
+        this.view.chat.displayNewMessage(jid, user, body, true);
       }
     }
     
@@ -443,10 +443,10 @@ OneSpacePopup.Controller.prototype = {
     var media = bodyJson["media"];
     switch (media) {
       case 'text':
-	this.handleChatTextMessage(jid, user, bodyJson);
+        this.handleChatTextMessage(jid, user, bodyJson);
         break;
       case 'image':
-	this.handleChatImageMessage(jid, user, bodyJson);
+        this.handleChatImageMessage(jid, user, bodyJson);
         break;
     }
   },
@@ -456,14 +456,15 @@ OneSpacePopup.Controller.prototype = {
   handleChatTextMessage : function(jid, user, bodyJson){
     if (jid == this.view.chat.currentDisplayedChat) {
       msg = bodyJson["content"];
-      this.view.chat.displayNewMessage(jid, user, msg);
+      this.view.chat.displayNewMessage(jid, user, msg, true);
     }
   },
   
   handleChatImageMessage : function(jid, user, bodyJson){
     if (jid == this.view.chat.currentDisplayedChat) {
       msg = '<a href="' + bodyJson["image-link"] + '" target="_blank"><img src="' + bodyJson["thumbnail-link"] + '" /></a>';
-      this.view.chat.displayNewMessage(jid, user, msg);
+      //msg = '<img src="http://172.29.33.45/onespace/media/uploads/images/2017-07-03/QqafIO3cnXKGvTIeIvr5I0za_t.jpg" />';
+      this.view.chat.displayNewMessage(jid, user, msg, false);
     }
   },
 
@@ -481,7 +482,8 @@ OneSpacePopup.Controller.prototype = {
   handleStartPrivateChatClick : function(userJid, forceTracking) {
     // Open Chat (Check if already exists)
     var isNewPrivateChat = false;
-    if (this.model.xmpp.privateChats[userJid] == null) {
+    var bareJid = userJid.split("/")[0];
+    if (this.model.xmpp.privateChats[bareJid] == null) {
       this.model.xmpp.startPrivateChat(userJid);
       this.view.chat.addPrivateChatToList(userJid);
       isNewPrivateChat = true;

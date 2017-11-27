@@ -1,11 +1,13 @@
 package com.sesame.onespace.activities;
 
+
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.Location;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,8 +17,10 @@ import android.support.customtabs.CustomTabsClient;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.customtabs.CustomTabsServiceConnection;
 import android.support.customtabs.CustomTabsSession;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -27,11 +31,13 @@ import com.sesame.onespace.R;
 import com.sesame.onespace.fragments.ChatRoomFragment;
 import com.sesame.onespace.fragments.ChatListFragment;
 import com.sesame.onespace.fragments.MainMenuFragment;
+import com.sesame.onespace.managers.SettingsManager;
 import com.sesame.onespace.managers.UserAccountManager;
 import com.sesame.onespace.managers.location.UserLocationManager;
 import com.sesame.onespace.managers.chat.ChatHistoryManager;
 import com.sesame.onespace.managers.map.LocationPreferencesManager;
 import com.sesame.onespace.managers.service.GPSServiceManager;
+import com.sesame.onespace.managers.service.OnespaceNotificationManager;
 import com.sesame.onespace.models.chat.Chat;
 import com.sesame.onespace.models.chat.ChatMessage;
 import com.sesame.onespace.network.OneSpaceApi;
@@ -39,10 +45,12 @@ import com.sesame.onespace.service.MessageService;
 import com.sesame.onespace.service.xmpp.Tools;
 import com.sesame.onespace.utils.Log;
 
+
 import retrofit.GsonConverterFactory;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by chongos on 7/31/15 AD.
@@ -60,6 +68,11 @@ public class MainActivity
     //Thianchai (I delete this listener) : I think it is not necessary to use it.
     //OnLocationUpdatedListener
     //**
+
+
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 10;
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 11;
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 12;
 
     //===========================================================================================================//
     //  ATTRIBUTE                                                                                   ATTRIBUTE
@@ -115,12 +128,16 @@ public class MainActivity
         this.myInit();
         //**
 
+        this.updateFcmToken();
+
+        this.checkPermissions();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
+        //this.handleActiveNotifications();
         //Thianchai (I deleate this) : I think it is not necessary to use it.
 //        if(SmartLocation.with(this).location().state().locationServicesEnabled()) {
 //            SmartLocation.with(this)
@@ -167,6 +184,8 @@ public class MainActivity
     @Override
     protected void onResume(){
         super.onResume();
+
+        this.handleActiveNotifications();
 
         //Thianchai (I add this)
         registerReceiver(this.broadcastReceiver, new IntentFilter("GPSTrackerService"));
@@ -283,33 +302,31 @@ public class MainActivity
      * This method used for put location to server
      * @param location location object that contain Latitude and Longitude
      */
-    private void putLocationToServer(Location location) {
-        String userid = userAccountManager.getUserID();
-        Observable<String> observable = new OneSpaceApi.Builder(getApplicationContext())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build()
-                .updateGeoLocationRx(userid,
-        location.getLatitude(),
-        location.getLongitude());
-
-        observable.subscribe(new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-                Log.i("PutLocation completed");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onNext(String s) {
-
-            }
-        });
-    }
+//    private void putLocationToServer(Location location) {
+//        String userid = userAccountManager.getUserID();
+//        Observable<String> observable = new OneSpaceApi.Builder(getApplicationContext())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+//                .build()
+//                .updateGeoLocationRx(userid, location.getLatitude(), location.getLongitude());
+//
+//        observable.subscribe(new Subscriber<String>() {
+//            @Override
+//            public void onCompleted() {
+//                Log.i("PutLocation completed");
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                e.printStackTrace();
+//            }
+//
+//            @Override
+//            public void onNext(String s) {
+//
+//            }
+//        });
+//    }
 
     /**
      * For binding CustomChromeTabService
@@ -422,8 +439,9 @@ public class MainActivity
     @Override
     public void onOpenChat(Chat chat) {
         currentSelectedChat = chat;
-        if(chatRoomFragment != null && chatRoomFragment.isVisible())
+        if(chatRoomFragment != null && chatRoomFragment.isVisible()) {
             getSupportFragmentManager().popBackStack();
+        }
         chatRoomFragment = ChatRoomFragment.newInstance(chat, connectionStatus);
         setFragment(chatRoomFragment, true);
     }
@@ -514,6 +532,41 @@ public class MainActivity
         }
     }
 
+
+
+    private void updateFcmToken() {
+
+        String fcmToken =  SettingsManager.getSettingsManager(getApplicationContext()).getStringPreference("fcm_token", "NULL");
+
+        Observable<String> observable = new OneSpaceApi.Builder(getApplicationContext())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build()
+                .updateFcmToken(userAccountManager.getUserID(), fcmToken);
+
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.i("FCM token updated.");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i("FCM token update failed.");
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+
+                    }
+                });
+
+
+    }
+
+
+
     //===========================================================================================================//
     //  METHOD BY Thianchai                                                                         METHOD BY Thianchai
     //===========================================================================================================//
@@ -557,8 +610,9 @@ public class MainActivity
             mainMenuFragment.setLocation(UserLocationManager.getLocation());
 
             try{
-
-                mainMenuFragment.setLocationAddress(UserLocationManager.getLatitude() + ", " + UserLocationManager.getLongitude(), UserLocationManager.getAddress(context));
+                double lat = MainMenuFragment.roundToDecimal(UserLocationManager.getLatitude(), 5);
+                double lng = MainMenuFragment.roundToDecimal(UserLocationManager.getLongitude(), 5);
+                mainMenuFragment.setLocationAddress(lat + ", " + lng, UserLocationManager.getAddress(context));
 
             }catch (Exception e){
 
@@ -570,4 +624,77 @@ public class MainActivity
 
     }
 
+
+    private void handleActiveNotifications() {
+        int currentViewPagerItem = this.mainMenuFragment.getViewPager().getCurrentItem();
+        switch (currentViewPagerItem) {
+            case 1: // Chat message tab
+                //OnespaceNotificationManager.getSettingsManager(getApplicationContext()).cancelNotifications("ONESPACE_NOTIFICATION_GROUP_KEY__CHAT_MESSAGE");
+                break;
+            case 2: // Q&A message tab
+                OnespaceNotificationManager.getSettingsManager(getApplicationContext()).cancelNotifications("ONESPACE_NOTIFICATION_GROUP_KEY__QA_MESSAGE");
+                break;
+        }
+
+    }
+
+
+    private void checkPermissions() {
+
+        int permissionAccessFineLocation = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionAccessFineLocation < 0) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+
+        int permissionAccessCoarseLocation = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (permissionAccessCoarseLocation < 0) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+        }
+
+        int permissionWriteExternalStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionWriteExternalStorage < 0) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+
+            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the contacts-related task you need to do.
+                    if (!(GPSServiceManager.isGPSServiceRunning(this.context))){
+                        GPSServiceManager.startGPSService(this.context, userAccountManager.getUserID());
+                    }
+                } else {
+                    // permission denied, boo! Disable the functionality that depends on this permission.
+                }
+                return;
+            }
+            case MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION: {
+
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the contacts-related task you need to do.
+                } else {
+                    // permission denied, boo! Disable the functionality that depends on this permission.
+                }
+                return;
+            }
+            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the contacts-related task you need to do.
+                } else {
+                    // permission denied, boo! Disable the functionality that depends on this permission.
+                }
+                return;
+            }
+
+        }
+
+    }
 }

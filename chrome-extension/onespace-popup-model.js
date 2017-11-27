@@ -505,27 +505,26 @@ OneSpacePopupModel.Xmpp.prototype = {
   
   
   handlePrivateChatMessage : function(oJSJaCPacket) {
-    
     from = oJSJaCPacket.getFromJID().toString();
     user = from.split("@")[0];
     body = oJSJaCPacket.getBody().htmlEnc();
-    console.log('handlePrivateChatMessage: ' + from);
     if (body == "") { return; }
-    //this.startPrivateChat(from);
     this.controller.handleStartPrivateChatClick(from, false);
-    this.privateChats[from].addNewMessage(from, body);
-    
+    var bareJid = from.split("/")[0];
+    this.privateChats[bareJid].addNewMessage(from, body);
     this.controller.handleIncomingMessage(from, user, body, true);
   },
   
   startPrivateChat : function(from) {
-    if (this.privateChats[from] == null) {
-      this.privateChats[from] = new OneSpacePopupModel.Xmpp.PrivateChat(this.controller, from);
+    var bareJid = from.split("/")[0];
+    if (this.privateChats[bareJid] == null) {
+      this.privateChats[bareJid] = new OneSpacePopupModel.Xmpp.PrivateChat(this.controller, from);
     }
   },
   
   closePrivateChat : function(from) {
-    try { delete this.privateChats[from]; } catch(e) { }
+    var bareJid = from.split("/")[0];
+    try { delete this.privateChats[bareJid]; } catch(e) { }
   },
   
   sendMessage : function(jid, body) {
@@ -559,7 +558,8 @@ OneSpacePopupModel.Xmpp.prototype = {
       aMsg.setTo(new JSJaCJID(toJid));
       aMsg.setBody(body.toString());
       this.connection.send(aMsg);
-      this.privateChats[toJid].addNewMessage(this.userJid, body);
+      var bareJid = toJid.split("/")[0];
+      this.privateChats[bareJid].addNewMessage(this.userJid, body);
       var user = toJid.split('@')[0];
       this.controller.handleIncomingMessage(toJid, this.controller.model.xmpp.user, body, false);
       return true;

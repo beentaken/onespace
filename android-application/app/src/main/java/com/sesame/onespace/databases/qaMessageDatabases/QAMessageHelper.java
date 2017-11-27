@@ -55,7 +55,8 @@ public final class QAMessageHelper
                                                                       "" + QAMessageHelper.KEY_QUESTIONSTR + " TEXT, "+
                                                                       "" + QAMessageHelper.KEY_ANSWERIDLIST + " TEXT, "+
                                                                       "" + QAMessageHelper.KEY_ANSWERSTRLIST + " TEXT, "+
-                                                                      "" + QAMessageHelper.KEY_DATE+ " TEXT )";
+                                                                      "" + QAMessageHelper.KEY_DATE+ " TEXT, "+
+                                                              "UNIQUE (" + QAMessageHelper.KEY_QUESTIONID + " ))";
 
     //===========================================================================================================//
     //  CONSTRUCTOR                                                                                 CONSTRUCTOR
@@ -100,7 +101,7 @@ public final class QAMessageHelper
 
     }
 
-    public void addQAMessage(QAMessage qaMessage){
+    public long addQAMessage(QAMessage qaMessage){
 
         SQLiteDatabase sqLiteDatabase = QAMessageHelper.this.getWritableDatabase();
 
@@ -113,9 +114,11 @@ public final class QAMessageHelper
         contentValues.put(QAMessageHelper.KEY_ANSWERSTRLIST, DatabaseConvert.convertArrayListToString(qaMessage.getAnswerStrList()));
         contentValues.put(QAMessageHelper.KEY_DATE, qaMessage.getDate());
 
-        sqLiteDatabase.insert(QAMessageHelper.TABLE_QAMESSAGES, null, contentValues);
+        long rowId = sqLiteDatabase.insert(QAMessageHelper.TABLE_QAMESSAGES, null, contentValues);
 
         sqLiteDatabase.close();
+
+        return rowId;
     }
 
     public QAMessage getQAMessage(int id){

@@ -7,7 +7,6 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.utils.Log;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -25,7 +24,6 @@ public class SettingsManager {
     private SharedPreferences.OnSharedPreferenceChangeListener onSharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            Log.i( "Preferences updated: key= " + key);
             importPreferences();
             onPreferencesUpdated(key);
             for(SharedPreferences.OnSharedPreferenceChangeListener listener : preferenceChangeListeners) {
@@ -37,6 +35,8 @@ public class SettingsManager {
     public String onespaceServer;
     public String onespacePort;
     public String xmppServer;
+    public int xmppPort;
+    public String xmppServiceName;
     public String xmppRecource;
 
     public boolean startOnBoot;
@@ -131,10 +131,20 @@ public class SettingsManager {
         }
     }
 
+
+
     private void importPreferences() {
         onespaceServer = mSharedPreferences.getString(mContext.getString(R.string.pref_advanced_onespace_server), "172.29.33.45");
         onespacePort = mSharedPreferences.getString(mContext.getString(R.string.pref_advanced_onespace_port), "11090");
+        //onespaceServer = mSharedPreferences.getString("pref_advanced_onespace_server", "ubicomp-web.d1.comp.nus.edu.sg/app/onespace/api/v1/");
+        //onespacePort = mSharedPreferences.getString("pref_advanced_onespace_port", "");
+        //onespaceServer = mSharedPreferences.getString("pref_advanced_onespace_server", "172.29.32.195");
+        //onespacePort = mSharedPreferences.getString("pref_advanced_onespace_port", "11090");
         xmppServer = mSharedPreferences.getString(mContext.getString(R.string.pref_advanced_xmpp_server), "172.29.33.45");
+        //xmppServer = mSharedPreferences.getString(mContext.getString(R.string.pref_advanced_xmpp_server), "ubicomp-web.d1.comp.nus.edu.sg");
+        //xmppServer = mSharedPreferences.getString(mContext.getString(R.string.pref_advanced_xmpp_server), "137.132.82.220");
+        xmppPort = mSharedPreferences.getInt(mContext.getString(R.string.pref_advanced_xmpp_port), 5222);
+        xmppServiceName = mSharedPreferences.getString(mContext.getString(R.string.pref_advanced_xmpp_service_name), "172.29.33.45");
         xmppRecource = mSharedPreferences.getString(mContext.getString(R.string.pref_advanced_xmpp_resource), "conference");
 
         notification = mSharedPreferences.getBoolean(mContext.getString(R.string.pref_notification), true);
@@ -149,7 +159,10 @@ public class SettingsManager {
     }
 
     public String getOnespaceServerURL() {
-        return "http://" + onespaceServer + ":" + onespacePort;
+        if (onespacePort == "")
+            return "http://" + onespaceServer;
+        else
+            return "http://" + onespaceServer + ":" + onespacePort;
     }
 
 }

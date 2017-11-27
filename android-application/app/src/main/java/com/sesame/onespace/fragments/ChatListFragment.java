@@ -81,7 +81,14 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-                loadMoreChat.load();
+                //loadMoreChat.load();
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Notify adapter with appropriate notify methods
+                        loadMoreChat.load();
+                    }
+                });
             }
         });
 

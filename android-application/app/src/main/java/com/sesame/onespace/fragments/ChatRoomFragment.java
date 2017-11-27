@@ -30,7 +30,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -62,7 +61,6 @@ import com.sesame.onespace.utils.DateTimeUtil;
 import com.sesame.onespace.utils.DrawableUtil;
 import com.sesame.onespace.utils.FilePathUtil;
 import com.sesame.onespace.views.ConncetionStatusView;
-import com.sesame.onespace.views.EndlessRecyclerOnScrollListener;
 import com.sesame.onespace.models.chat.LoadMoreMessageProgress;
 import com.sesame.onespace.views.adapters.ChatMessageArrayAdapter;
 
@@ -156,7 +154,7 @@ public class ChatRoomFragment extends Fragment {
 
         // UserJID = username + @ + XMPP Server host
         userJID = userAccountManager.getUsername()
-                + "@" + settingsManager.xmppServer;
+                + "@" + settingsManager.xmppServiceName;
 
         // load more history message
         loadMessageHistory = new LoadMessageHistory();
@@ -225,7 +223,7 @@ public class ChatRoomFragment extends Fragment {
                     if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                         String text = getSendMessage();
                         if (text.length() > 0)
-                            SendMessage(ChatMessage.Type.TEXT, text);
+                            SendMessage(ChatMessage.MediaType.TEXT, text);
                         return true;
                     }
                     return false;
@@ -239,7 +237,7 @@ public class ChatRoomFragment extends Fragment {
             public void onClick(View view) {
                 String text = getSendMessage();
                 if (text.length() > 0)
-                    SendMessage(ChatMessage.Type.TEXT, text);
+                    SendMessage(ChatMessage.MediaType.TEXT, text);
             }
         });
 
@@ -298,12 +296,22 @@ public class ChatRoomFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int current_page) {
-                loadMessageHistory.load();
-            }
-        });
+        //
+        // Removed for the time being since it causes issues; pretty sure it's buggy.
+        //
+        //mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+        //    @Override
+        //    public void onLoadMore(int current_page) {
+        //        //loadMessageHistory.load();
+        //        mRecyclerView.post(new Runnable() {
+        //            @Override
+        //            public void run() {
+        //                // Notify adapter with appropriate notify methods
+        //                loadMessageHistory.load();
+        //           }
+        //        });
+        //    }
+        //});
         chatMessageArrayAdapter = new ChatMessageArrayAdapter(getContext(), chat, new ArrayList<>());
         chatMessageArrayAdapter.setOnChatFragmentInteractionListener(mListener);
         mRecyclerView.setAdapter(chatMessageArrayAdapter);
@@ -647,7 +655,7 @@ public class ChatRoomFragment extends Fragment {
                         super.onPostExecute(s);
                         if(s != null) {
                             chatMessageArrayAdapter.removeItem(uploadImage);
-                            SendMessage(ChatMessage.Type.IMAGE, s[0], s[1]);
+                            SendMessage(ChatMessage.MediaType.IMAGE, s[0], s[1]);
                         }
                     }
                 }.execute(result);
@@ -676,7 +684,7 @@ public class ChatRoomFragment extends Fragment {
      * @param type type of ChatMessage [TEXT, IMAGE]
      * @param body if type equal to IMAGE body[0] must be {image_url} and body[1] must be {thumbnail_url}
      */
-    private void SendMessage(final ChatMessage.Type type, final String... body) {
+    private void SendMessage(final ChatMessage.MediaType type, final String... body) {
         new AsyncTask<Void, Void, ChatMessage>() {
 
             @Override
@@ -686,9 +694,9 @@ public class ChatRoomFragment extends Fragment {
                     jsonObject.put(ChatMessage.KEY_MESSAGE_TYPE, "chat");
                     jsonObject.put(ChatMessage.KEY_MEDIA_TYPE, type.getString());
 
-                    if(type == ChatMessage.Type.TEXT) {
+                    if(type == ChatMessage.MediaType.TEXT) {
                         jsonObject.put(TextMessage.KEY_CONTENT, body[0]);
-                    } else if(type == ChatMessage.Type.IMAGE) {
+                    } else if(type == ChatMessage.MediaType.IMAGE) {
                         jsonObject.put(ImageMessage.KEY_FILE_URL, body[0]);
                         jsonObject.put(ImageMessage.KEY_THUMBNAIL_URL, body[1]);
                         if(body.length > 2)
@@ -717,7 +725,7 @@ public class ChatRoomFragment extends Fragment {
                 addMessage(message);
                 mListener.onSendMessage(message);
 
-                if(type == ChatMessage.Type.TEXT)
+                if(type == ChatMessage.MediaType.TEXT)
                     clearSendMessage();
             }
         }.execute();

@@ -36,7 +36,8 @@
         <activity
             android:name=".activities.SplashScreenActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.FullScreen">
+            android:theme="@style/AppTheme.FullScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,50 +48,61 @@
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoTitleBar" />
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.MapActivity"
             android:label="@string/title_activity_map"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoTitleBar" />
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.NoTitleBar.NonColorAccent"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme.NoTitleBar" />
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:screenOrientation="portrait"/>
 
         <!-- Thianchai (Dashboard) -->
         <activity
             android:name=".activities.dashboardActivities.TwitterActivity"
             android:label="Twitter"
-            android:theme="@style/AppTheme.NoTitleBar" />
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.dashboardActivities.YoutubeActivity"
             android:label="Youtube"
-            android:theme="@style/AppTheme.NoTitleBar" />
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.dashboardActivities.FlickrActivity"
             android:label="Flickr"
-            android:theme="@style/AppTheme.NoTitleBar" />
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.dashboardActivities.InstagramActivity"
             android:label="Instagram"
-            android:theme="@style/AppTheme.NoTitleBar" />
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.dashboardActivities.WeatherActivity"
             android:label="Weather"
-            android:theme="@style/AppTheme.NoTitleBar" />
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.dashboardActivities.CarParkActivity"
             android:label="Car Park"
-            android:theme="@style/AppTheme.NoTitleBar" />
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.dashboardActivities.BusInfoActivity"
             android:label="Bus Info"
-            android:theme="@style/AppTheme.NoTitleBar" />
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:screenOrientation="portrait"/>
 
         <!-- **** -->
 
@@ -100,13 +112,15 @@
             android:name=".activities.dialogActivities.QAChoiceDialogActivity"
             android:label=""
             android:excludeFromRecents="true"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activities.dialogActivities.QAImageDialogActivity"
             android:label=""
             android:excludeFromRecents="true"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+            android:screenOrientation="portrait"/>
 
         <!-- **** -->
 
@@ -114,7 +128,8 @@
             android:name=".activities.FullScreenViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoTitleBar" />
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:screenOrientation="portrait"/>
 
         <receiver
             android:name=".service.BootUpReceiver"
@@ -144,6 +159,18 @@
             </intent-filter>
         </receiver>
         -->
+
+        <service android:name="com.sesame.onespace.service.fcm.FCMInitializationService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.sesame.onespace.service.fcm.FCMCallbackService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <service
             android:name=".service.MessageService"

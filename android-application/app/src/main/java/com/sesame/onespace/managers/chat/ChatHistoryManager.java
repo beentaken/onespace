@@ -149,11 +149,11 @@ public class ChatHistoryManager {
             return resMessages;
 
         String fromID = mSettingManager.getUserAccountManager().getUsername()
-                + "@" + mSettingManager.xmppServer;
-        int nowSize = resMessages.size();
-        resMessages.addAll(getMessagesFromServer(fromID, chatID,
-                nowSize > 0 ? resMessages.get(nowSize - 1).getTimestamp() : timestamp,
-                limit - nowSize));
+                + "@" + mSettingManager.xmppServiceName;
+        //int nowSize = resMessages.size();
+        //resMessages.addAll(getMessagesFromServer(fromID, chatID,
+        //        nowSize > 0 ? resMessages.get(nowSize - 1).getTimestamp() : timestamp,
+        //        limit - nowSize));
 
         Collections.sort(resMessages);
         return resMessages;

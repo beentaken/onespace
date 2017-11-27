@@ -24,24 +24,20 @@ public class FilePathUtil {
     public static File getOutputMediaFile() {
         // External sdcard location
         File mediaStorageDir = new File(
-                Environment
-                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
                 Constant.APP_NAME);
 
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                android.util.Log.d(Constant.APP_NAME, "Oops! Failed create "
-                        + Constant.APP_NAME + " directory");
+                android.util.Log.d(Constant.APP_NAME, "Oops! Failed create " + Constant.APP_NAME + " directory");
                 return null;
             }
         }
 
         // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
-                Locale.getDefault()).format(new Date());
-        return new File(mediaStorageDir.getPath() + File.separator
-                + "IMG_" + timeStamp + ".jpg");
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        return new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
     }
 
     public static String getPath(Context context, Uri uri) {

@@ -21,6 +21,7 @@ import com.sesame.onespace.utils.Log;
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
+import org.jivesoftware.smack.Manager;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
@@ -36,6 +37,8 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.jivesoftware.smackx.disco.ServiceDiscoveryManager;
 import org.jivesoftware.smackx.iqregister.AccountManager;
 import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.jivesoftware.smackx.ping.PingFailedListener;
+import org.jivesoftware.smackx.ping.PingManager;
 import org.jivesoftware.smackx.xhtmlim.XHTMLManager;
 
 import java.io.IOException;
@@ -85,6 +88,7 @@ public class XmppManager {
     private ConnectionListener mConnectionListener = null;
     private ChatHistoryManager mChatHistoryManager;
     private OfflineMessageManager mOfflineMessageManager;
+    private QAMessageManager mQAMessageManager;
 
     // Our current retry attempt, plus a runnable and handler to implement retry
     private int mCurrentRetryCount = 0;
@@ -95,6 +99,8 @@ public class XmppManager {
         }
     };
 
+
+    private PingManager mPingManager;
     private Handler mReconnectHandler;
     private SettingsManager mSettings;
     private XmppStatus mXmppStatus;
@@ -111,6 +117,7 @@ public class XmppManager {
         mXmppMultiUserChat = XmppMultiUserChat.getInstance(context);
         mXmppMultiUserChat.registerListener(this);
         mChatHistoryManager = ChatHistoryManager.getInstance(mContext);
+        mQAMessageManager = QAMessageManager.getInstance(mContext);
         mOfflineMessageManager = OfflineMessageManager.getInstance(context);
         mOfflineMessageManager.registerListener(this);
         sReusedConnectionCount = 0;
@@ -402,6 +409,7 @@ public class XmppManager {
 
             @Override
             public void connectionClosedOnError(Exception e) {
+                Log.i(">>> ConnectionListener.connectionClosedOnError: " + e.toString());
                 Log.w("xmpp disconnected due to error: ", e);
                 if (e.getMessage().startsWith("Attr.value missing")) {
                     Log.w((android.util.Log.getStackTraceString(e)));
@@ -411,16 +419,19 @@ public class XmppManager {
 
             @Override
             public void reconnectingIn(int arg0) {
+                Log.i(">>> ConnectionListener.reconnectingIn: " + arg0);
                 throw new IllegalStateException("Reconnection Manager is running");
             }
 
             @Override
             public void reconnectionFailed(Exception arg0) {
+                Log.i(">>> ConnectionListener.reconnectionFailed:" + arg0.toString());
                 throw new IllegalStateException("Reconnection Manager is running");
             }
 
             @Override
             public void reconnectionSuccessful() {
+                Log.i(">>> ConnectionListener.reconnectionSuccessful");
                 throw new IllegalStateException("Reconnection Manager is running");
             }
         };
@@ -447,6 +458,20 @@ public class XmppManager {
     private boolean connectAndAuth(AbstractXMPPConnection connection) {
         try {
             connection.connect();
+            //PingManager.getInstanceFor(connection).setPingInterval(300);
+
+
+            mPingManager = PingManager.getInstanceFor(connection);
+            mPingManager.setPingInterval(300);
+
+            mPingManager.registerPingFailedListener(new PingFailedListener() {
+                public void pingFailed() {
+                    // Do operation to handle if ping fail like force reconnect etc
+                    Log.i(">>>>> PingManager: ping failed");
+                }
+            });
+
+
             broadcastConnectAndAuthStatus(LoginActivity.CONNECTED, "");
         } catch (Exception e) {
             Log.w("xmpp connection failed: " + e.getMessage());
@@ -524,24 +549,24 @@ public class XmppManager {
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
         configBuilder.setUsernameAndPassword(username, password);
         configBuilder.setResource(settings.xmppRecource);
-        configBuilder.setServiceName(settings.xmppServer);
+        configBuilder.setServiceName(settings.xmppServiceName);
         configBuilder.setHost(settings.xmppServer);
+        configBuilder.setPort(settings.xmppPort);
         configBuilder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
         configBuilder.setCompressionEnabled(false);
         configBuilder.setDebuggerEnabled(true);
         configBuilder.setConnectTimeout(DNSSRV_TIMEOUT);
 
-//        BOSHConfiguration.Builder boshConfigBuilder =   BOSHConfiguration.builder();
+
+//        BOSHConfiguration.Builder boshConfigBuilder = BOSHConfiguration.builder();
 //        boshConfigBuilder.setUsernameAndPassword(username, password);
-//        boshConfigBuilder.setHost(settings.xmppServer);
-//        boshConfigBuilder.setPort(Integer.parseInt(settings.onespacePort));
-//        boshConfigBuilder.setFile("/http-bind/");
+//        boshConfigBuilder.setHost("ubicomp-web.d1.comp.nus.edu.sg");
+//        boshConfigBuilder.setPort(80);
+//        boshConfigBuilder.setFile("/app/onespace/xmpp/bosh/");
 //        boshConfigBuilder.setUseHttps(false);
 //        boshConfigBuilder.setServiceName(settings.xmppServer);
 
-        //new XMPPTCPConnection(configBuilder.build());
-        //new XMPPBOSHConnection(boshConfigBuilder.build());
-
+//        return new XMPPBOSHConnection(boshConfigBuilder.build());
         return new XMPPTCPConnection(configBuilder.build());
     }
 
@@ -551,8 +576,6 @@ public class XmppManager {
 
 
     private boolean sendToPrivate(ChatMessage chatMessage) {
-        Log.i("Sending message \"" + chatMessage.getBody() + "\"");
-
         String toJid = chatMessage.getChatID() + "/" + mSettings.xmppRecource;
         String body = chatMessage.getBody();
 
@@ -582,8 +605,10 @@ public class XmppManager {
         return true;
     }
 
+
     public long send(ChatMessage chatMessage) {
         if (isConnected()) {
+
             boolean isSent;
             try {
                 isSent = sendToGroup(chatMessage);
@@ -598,8 +623,11 @@ public class XmppManager {
             broadcastMessageSent(chatMessage);
             return id;
         } else {
-            Log.d("Adding message: \"" + chatMessage.getBody() + "\" to offline queue, because  we are not connected. Status=" + statusString());
-            mOfflineMessageManager.addOfflineMessage(chatMessage);
+            //
+            // This should be handled by the XMPP Server not the app
+            //
+            //Log.d("Adding message: \"" + chatMessage.getBody() + "\" to offline queue, because  we are not connected. Status=" + statusString());
+            //mOfflineMessageManager.addOfflineMessage(chatMessage);
             return -1;
         }
     }
@@ -612,11 +640,14 @@ public class XmppManager {
             isSent = sendToPrivate(chatMessage);
             long id = chatMessage.getId();
             chatMessage.setNeedPush(!isSent);
-            broadcastMessageSent(chatMessage);
+            //broadcastMessageSent(chatMessage); // This needs to go, otherwise a Q&A message is treated as a text message (kind of)
             return id;
         } else {
-            Log.d("Adding message: \"" + chatMessage.getBody() + "\" to offline queue, because  we are not connected. Status=" + statusString());
-            mOfflineMessageManager.addOfflineMessage(chatMessage);
+            //
+            // This should be handled by the XMPP Server not the app
+            //
+            //Log.d("Adding message: \"" + chatMessage.getBody() + "\" to offline queue, because  we are not connected. Status=" + statusString());
+            //mOfflineMessageManager.addOfflineMessage(chatMessage);
             return -1;
         }
 
@@ -699,5 +730,12 @@ public class XmppManager {
 
     public String statusString() {
         return statusAsString(mStatus);
+    }
+
+
+    public void handleQAMessage(ChatMessage msg) {
+        String msgFrom = msg.getFromJID();
+        String msgBody = msg.getBody();
+        this.mQAMessageManager.addMessageBody(msgFrom, msgBody, "XMPP");
     }
 }

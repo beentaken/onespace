@@ -163,7 +163,7 @@ public final class QAChoiceDialogActivity
 
         QAChoiceDialogActivity.QAAlertDialogBuilder qaAlertDialogBuilder = new QAChoiceDialogActivity.QAAlertDialogBuilder(QAChoiceDialogActivity.this, R.style.QAMessageDialogStyle);
 
-        qaAlertDialogBuilder.setSender(QAChoiceDialogActivity.this.msgFrom.split("@")[0] + " send message.");
+        qaAlertDialogBuilder.setSender(QAChoiceDialogActivity.this.msgFrom.split("@")[0] + " asked:");
         qaAlertDialogBuilder.setTitle(QAChoiceDialogActivity.this.questionStr);
         qaAlertDialogBuilder.setIcon(R.mipmap.ic_launcher_trim);
 

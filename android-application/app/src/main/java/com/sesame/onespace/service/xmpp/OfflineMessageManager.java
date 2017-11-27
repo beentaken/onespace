@@ -5,6 +5,7 @@ import android.content.Context;
 import com.sesame.onespace.databases.MessagesHelper;
 import com.sesame.onespace.managers.chat.ChatHistoryManager;
 import com.sesame.onespace.models.chat.ChatMessage;
+import com.sesame.onespace.utils.Log;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
@@ -24,6 +25,7 @@ public class OfflineMessageManager {
         this.context = context;
     }
 
+
     public static OfflineMessageManager getInstance(Context context) {
         if(instance == null)
             instance = new OfflineMessageManager(context);
@@ -36,7 +38,10 @@ public class OfflineMessageManager {
 
             @Override
             public void newConnection(AbstractXMPPConnection connection) {
-                sendOfflineMessages();
+                //
+                // This should be handled by the XMPP Server not the app
+                //
+                //sendOfflineMessages();
             }
 
         };
@@ -54,6 +59,7 @@ public class OfflineMessageManager {
     private void sendOfflineMessages() {
         if(xmppManager == null)
             return;
+
         List<ChatMessage> messages = MessagesHelper.getInstance(context).getAllNeedPushMessages();
         for (ChatMessage message : messages) {
             long id = xmppManager.send(message);

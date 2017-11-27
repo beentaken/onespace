@@ -16,7 +16,6 @@ import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.sesame.onespace.constant.Constant;
-import com.sesame.onespace.databases.MessagesHelper;
 import com.sesame.onespace.managers.chat.ChatHistoryManager;
 import com.sesame.onespace.managers.SettingsManager;
 import com.sesame.onespace.managers.chat.ChatNotificationManager;
@@ -42,7 +41,7 @@ public class MessageService extends Service {
     public static final String ACTION_NETWORK_CHANGED = "com.sesame.onespace.action.NETWORK_CHANGED";
 
     public static final String ACTION_XMPP_MESSAGE_SEND = "com.sesame.onespace.action.XMPP.MESSAGE.SEND";
-    public static final String ACTION_XMPP_MESSAGE_RECEIVED = "com.sesame.onespace.action.XMPP.MESSAGE_RECEIVED";
+    public static final String ACTION_XMPP_MESSAGE_RECEIVED = "com.sesame.onespace.action.XMPP.CHAT.MESSAGE_RECEIVED";
     public static final String ACTION_XMPP_MESSAGE_SENT = "com.sesame.onespace.action.XMPP.MESSAGE_SENT";
     public static final String ACTION_XMPP_MESSAGE_DELIVERED = "com.sesame.onespace.action.XMPP.MESSAGE_DELIVERED";
     public static final String ACTION_XMPP_PRESENCE_CHANGED = "com.sesame.onespace.action.XMPP.PRESENCE_CHANGED";
@@ -206,7 +205,7 @@ public class MessageService extends Service {
        } else if (action.equals(ACTION_XMPP_MESSAGE_SEND)) {
            processActionSendMessage(intent);
        } else if (action.equals(ACTION_XMPP_MESSAGE_RECEIVED)) {
-           processActionReceiveMessage(intent);
+           processActionMessageReceived(intent);
        } else if (action.equals(ACTION_XMPP_GROUP_JOIN)) {
            processActionJoinGroup(intent);
        } else if (action.equals(ACTION_XMPP_GROUP_LEAVE)) {
@@ -293,27 +292,57 @@ public class MessageService extends Service {
         }
     }
 
-    private void processActionReceiveMessage(final Intent intent) {
-        Log.i("MessageService process: ACTION_XMPP_MESSAGE_RECEIVED");
+    private void processActionMessageReceived(final Intent intent) {
         final ChatMessage msg = intent.getParcelableExtra(KEY_BUNDLE_CHAT_MESSAGE);
-        if (msg != null) {
-            new AsyncTask<Void, Void, Void>() {
+        if (msg == null)
+            return;
 
-                @Override
-                protected Void doInBackground(Void... params) {
-                    xmppManager.received(msg);
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
-                    sendBroadcast(intent);
-                    notificationManager.displayNotification(msg);
-                }
-            }.execute();
+        String msgType = msg.getMessageType();
+        if (msgType.equalsIgnoreCase(ChatMessage.MESSAGE_TYPE__CHAT)) {
+            processActionChatMessageReceived(intent, msg);
+        } else if (msgType.equalsIgnoreCase(ChatMessage.MESSAGE_TYPE__QUERY)) {
+            processActionQAMessageReceived(intent, msg);
         }
     }
+
+
+    private void processActionChatMessageReceived(final Intent intent, final ChatMessage msg) {
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                xmppManager.received(msg);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                sendBroadcast(intent);
+                notificationManager.displayNotification(msg);
+            }
+        }.execute();
+    }
+
+
+    private void processActionQAMessageReceived(final Intent intent, final ChatMessage msg) {
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                xmppManager.handleQAMessage(msg);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                //sendBroadcast(intent);
+                //notificationManager.displayNotification(msg);
+            }
+        }.execute();
+    }
+
 
     private void processActionJoinGroup(Intent intent) {
         Log.i("MessageService process: ACTION_XMPP_GROUP_JOIN");
@@ -322,7 +351,7 @@ public class MessageService extends Service {
         boolean status = xmppManager.joinGroupchat(room, name);
 
         intent.putExtra(KEY_BUNDLE_CHAT, ChatHistoryManager.getInstance(getApplicationContext())
-                .getChat(room + "@" + settingsManager.xmppRecource + "." + settingsManager.xmppServer));
+                .getChat(room + "@" + settingsManager.xmppRecource + "." + settingsManager.xmppServiceName));
         intent.putExtra(KEY_BUNDLE_GROUP_JOIN_STATUS, status);
         sendBroadcast(intent);
     }

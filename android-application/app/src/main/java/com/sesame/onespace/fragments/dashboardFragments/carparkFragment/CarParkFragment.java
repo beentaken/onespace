@@ -1,4 +1,4 @@
-package com.sesame.onespace.fragments.dashboardFragments.carParkFragment;
+package com.sesame.onespace.fragments.dashboardFragments.carparkFragment;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
+import com.sesame.onespace.fragments.MainMenuFragment;
 import com.sesame.onespace.interfaces.recyclerViewInterfaces.EndlessRecyclerOnScrollListener;
 import com.sesame.onespace.utils.connect.Connection;
 
@@ -96,14 +97,14 @@ public final class CarParkFragment
 
         recyclerView.setAdapter(CarParkFragment.this.adapter);
 
-        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int current_page) {
-
-                CarParkFragment.this.addRecyclerView();
-
-            }
-        });
+//        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+//            @Override
+//            public void onLoadMore(int current_page) {
+//
+//                CarParkFragment.this.addRecyclerView();
+//
+//            }
+//        });
 
     }
 
@@ -156,7 +157,16 @@ public final class CarParkFragment
             try {
 
                 JSONObject object = jsonArray.getJSONObject(index);
-                CarParkFragment.this.items.add(new CarParkFragment.CarparkItem(R.drawable.ic_dashboard_carpark_car, String.valueOf(object.get("area")), String.valueOf(object.get("development")), String.valueOf(object.get("available_lots")), String.valueOf(object.get("distance_in_km"))));
+
+                Double distance = MainMenuFragment.roundToDecimal(object.getDouble("distance"), 2);
+
+                CarParkFragment.this.items.add(new CarParkFragment.CarparkItem(
+                        R.drawable.ic_dashboard_carpark_car,
+                        String.valueOf(object.get("Area")),
+                        String.valueOf(object.get("Development")),
+                        String.valueOf(object.get("Lots")),
+                        String.valueOf(distance)
+                ));
 
 
             } catch (JSONException e) {
@@ -170,6 +180,7 @@ public final class CarParkFragment
         }
 
     }
+
 
     private JSONObject connectToServer(){
 

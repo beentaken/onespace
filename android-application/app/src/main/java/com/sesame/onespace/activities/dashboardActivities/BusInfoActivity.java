@@ -30,6 +30,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
+import com.sesame.onespace.fragments.MainMenuFragment;
 import com.sesame.onespace.fragments.dashboardFragments.busInfoFragment.BusInfoFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.CanNotConnectedToServerFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.DoNotHaveLocationFragment;
@@ -37,6 +38,7 @@ import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.Int
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.NoDataFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.WaitingFragment;
 import com.sesame.onespace.interfaces.activityInterfaces.SimpleGestureFilter;
+import com.sesame.onespace.managers.SettingsManager;
 import com.sesame.onespace.managers.location.UserLocationManager;
 import com.sesame.onespace.models.map.Place;
 import com.sesame.onespace.network.OneSpaceApi;
@@ -106,6 +108,8 @@ public final class BusInfoActivity
     //for GPSBroadcastReceiver
     private BusInfoActivity.GPSBroadcastReceiver gpsBroadcastReceiver;
 
+    private SettingsManager settingManager;
+
     //===========================================================================================================//
     //  ON ACTION                                                                                   ON ACTION
     //===========================================================================================================//
@@ -120,6 +124,7 @@ public final class BusInfoActivity
         BusInfoActivity.super.setContentView(R.layout.activity_dashboard_bus_info);
         BusInfoActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
 
+        this.settingManager = SettingsManager.getSettingsManager(getApplicationContext());
     }
 
     @Override
@@ -880,7 +885,7 @@ public final class BusInfoActivity
         }
 
         //main
-        BusInfoActivity.this.url = "http://172.29.33.45:11090/data/?tabid=0&type=ltabuses&vloc=" + BusInfoActivity.this.placeNearest.getVloc() + "&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10";
+        BusInfoActivity.this.url = this.settingManager.getOnespaceServerURL() + "/data/?tabid=0&type=ltabuses&vloc=" + BusInfoActivity.this.placeNearest.getVloc() + "&vlocsha1=DOESNOTMATTER&limit=10";
 
     }
 
@@ -1013,7 +1018,8 @@ public final class BusInfoActivity
                 location.setLongitude(BusInfoActivity.this.placeNearest.getLng());
 
                 toolbar.setSubtitle(BusInfoActivity.this.placeNearest.getName());
-                textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+                double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+                textView.setText("DISTANCE " + distance + " km");
 
             }
 
@@ -1114,7 +1120,8 @@ public final class BusInfoActivity
             location.setLongitude(BusInfoActivity.this.placeNearest.getLng());
 
             toolbar.setSubtitle(BusInfoActivity.this.placeNearest.getName());
-            textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+            double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+            textView.setText("DISTANCE " + distance + " km");
 
             switch (BusInfoActivity.this.idFragment){
 
@@ -1173,7 +1180,8 @@ public final class BusInfoActivity
                 location.setLatitude(BusInfoActivity.this.placeNearest.getLat());
                 location.setLongitude(BusInfoActivity.this.placeNearest.getLng());
 
-                textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+                double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+                textView.setText("DISTANCE " + distance + " km");
 
             }
             else{

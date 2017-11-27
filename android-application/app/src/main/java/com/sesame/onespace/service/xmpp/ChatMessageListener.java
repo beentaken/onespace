@@ -17,6 +17,7 @@ import com.sesame.onespace.activities.dialogActivities.QAImageDialogActivity;
 import com.sesame.onespace.databases.qaMessageDatabases.QAMessageHelper;
 import com.sesame.onespace.fragments.MainMenuFragment;
 import com.sesame.onespace.managers.SettingsManager;
+import com.sesame.onespace.managers.service.OnespaceNotificationManager;
 import com.sesame.onespace.models.chat.ChatMessage;
 import com.sesame.onespace.models.qaMessage.QAMessage;
 import com.sesame.onespace.service.MessageService;
@@ -61,136 +62,21 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
 
                     @Override
                     protected Object doInBackground(Void... params) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(msgBody);
-                            String messageType = jsonObject.getString(ChatMessage.KEY_MESSAGE_TYPE);
-
-                            //----------------------------------------------------------------------
-                            //Thianchai (I add this for QAMessage)
-
-                            String type = jsonObject.get("media") + "";
-                            String questionId = jsonObject.getJSONObject("question").get("id") + "";
-                            String questionStr = jsonObject.getJSONObject("question").get("str") + "";
-                            ArrayList<String> answerIdList = new ArrayList<String>();
-                            ArrayList<String> answerStrList = new ArrayList<String>();
-
-                            Long tsLong = System.currentTimeMillis()/1000;
-                            String ts = tsLong.toString();
-                            String date = DateConvert.convertTimeStampToDate(ts, DateConvert.DATE_FORMAT1);
-
-                            JSONArray jsonArray = jsonObject.getJSONArray("answers");
-
-                            int index = 0;
-
-                            while(index < jsonArray.length()){
-
-                                answerIdList.add((String) ((JSONObject) jsonArray.get(index)).get("id"));
-
-                                index = index + 1;
-
-                            }
-
-                            index = 0;
-
-                            while(index < jsonArray.length()){
-
-                                answerStrList.add((String) ((JSONObject) jsonArray.get(index)).get("str"));
-
-                                index = index + 1;
-
-                            }
-
-                            QAMessageHelper qaMessageHelper = new QAMessageHelper(mContext);
-                            qaMessageHelper.addQAMessage(new QAMessage(msgFrom ,
-                                                                       type,
-                                                                       questionId,
-                                                                       questionStr,
-                                                                       answerIdList,
-                                                                       answerStrList,
-                                                                       date));
-
-                            if (isAppOnForeground(mContext) == false || MainMenuFragment.getbFocusQA() == false){
-
-                                ArrayList<QAMessage> list = qaMessageHelper.getAllQAMessages();
-
-                                Intent dialogIntent = null;
-
-                                if (type.equals("text")){
-
-                                    dialogIntent = new Intent(mContext, QAChoiceDialogActivity.class);
-
-                                }
-
-                                if (type.equals("image")){
-
-                                    dialogIntent = new Intent(mContext, QAImageDialogActivity.class);
-
-                                }
-
-                                dialogIntent.putExtra("id", list.get(list.size() - 1).getId());
-                                dialogIntent.putExtra("msgFrom", msgFrom);
-                                dialogIntent.putExtra("type", type);
-                                dialogIntent.putExtra("questionId", questionId);
-                                dialogIntent.putExtra("questionStr", questionStr);
-                                dialogIntent.putStringArrayListExtra("answerIdList", answerIdList);
-                                dialogIntent.putStringArrayListExtra("answerStrList", answerStrList);
-                                dialogIntent.putExtra("date", date);
-                                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                                PendingIntent pi = PendingIntent.getActivity(mContext, list.get(list.size() - 1).getId(), dialogIntent, PendingIntent.FLAG_ONE_SHOT);
-                                Notification notification = new NotificationCompat.Builder(mContext)
-                                        .setSmallIcon(R.drawable.ic_app_notification)
-                                        .setContentTitle(msgFrom.split("@")[0] + " send message.")
-                                        .setContentText(jsonObject.getJSONObject("question").get("str") + "")
-                                        .setContentIntent(pi)
-                                        .setAutoCancel(true)
-                                        .build();
-
-                                SettingsManager settingsManager =  SettingsManager.getSettingsManager(mContext);
-
-                                if(settingsManager.notificationSound)
-                                    notification.sound = Uri.parse(settingsManager.notificationRingtone);
-
-                                if(settingsManager.notificationVibrate)
-                                    notification.vibrate = new long[]{25, 100, 100, 200};
-
-                                if(settingsManager.notificationLED) {
-                                    notification.ledOnMS = 1000;
-                                    notification.ledOffMS = 2000;
-                                    notification.ledARGB = Color.BLUE;
-                                    notification.flags |= Notification.FLAG_SHOW_LIGHTS;
-                                }
-
-                                NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-                                notificationManager.notify(list.get(list.size() - 1).getId(), notification);
-
-                            }
-
-                            //----------------------------------------------------------------------
-
-                            if(messageType.equals("chat")) {
-                                return new ChatMessage.Builder()
-                                        .setChatID(msgFrom)
-                                        .setBody(msgBody)
-                                        .setFromJID(msgFrom)
-                                        .setFromMe(false)
-                                        .setTimestamp(DateTimeUtil.getCurrentTimeStamp())
-                                        .build();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        return null;
+                        return new ChatMessage.Builder()
+                                .setChatID(msgFrom)
+                                .setBody(msgBody)
+                                .setFromJID(msgFrom)
+                                .setFromMe(false)
+                                .setTimestamp(DateTimeUtil.getCurrentTimeStamp())
+                                .build();
                     }
 
                     @Override
                     protected void onPostExecute(Object obj) {
                         super.onPostExecute(obj);
-                        if(obj instanceof ChatMessage)
+                        if(obj instanceof ChatMessage) {
                             Tools.sendToService(mContext, MessageService.ACTION_XMPP_MESSAGE_RECEIVED, (ChatMessage) obj);
+                        }
                     }
                 }.execute();
 
@@ -206,7 +92,7 @@ public class ChatMessageListener implements org.jivesoftware.smack.chat.ChatMess
     //----------------------------------------------------------------------------------------------
 
     //Thianchai (I add this)
-    private boolean isAppOnForeground(Context context) {
+    public static boolean isAppOnForeground(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
         if (appProcesses == null) {

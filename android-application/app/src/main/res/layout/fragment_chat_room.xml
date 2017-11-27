@@ -35,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_background"
-            android:layout_above="@+id/root_view"/>
+            android:layout_above="@+id/root_view"
+            android:layout_below="@+id/connection_status_layout" />
 
         <RelativeLayout
             android:layout_width="match_parent"

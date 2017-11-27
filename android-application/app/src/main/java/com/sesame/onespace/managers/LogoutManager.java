@@ -3,6 +3,7 @@ package com.sesame.onespace.managers;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.sesame.onespace.activities.LoginActivity;
 import com.sesame.onespace.databases.Database;
@@ -58,13 +59,13 @@ public class LogoutManager {
                 double latitude = 1000;
                 double longitude = 1000;
 
+                String userid = UserAccountManager.getInstance(context).getUserID();
+
                 Observable<String> observable = new OneSpaceApi.Builder(context)
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                         .build()
-                        .updateGeoLocationRx(UserAccountManager.getInstance(context).getUserID(),
-                                latitude,
-                                longitude);
+                        .updateGeoLocationRx(userid, latitude, longitude);
 
                 observable.subscribe(new Subscriber<String>() {
                     @Override

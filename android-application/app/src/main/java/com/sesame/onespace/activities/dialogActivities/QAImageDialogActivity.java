@@ -34,6 +34,7 @@ import com.sesame.onespace.models.qaMessage.QAMessage;
 import com.sesame.onespace.service.xmpp.XmppManager;
 import com.sesame.onespace.utils.DateTimeUtil;
 import com.sesame.onespace.utils.FilePathUtil;
+import com.sesame.onespace.utils.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -215,7 +216,7 @@ public final class QAImageDialogActivity
         QAImageDialogActivity.this.settingsManager = SettingsManager.getSettingsManager(QAImageDialogActivity.this.getApplicationContext());
 
         UserAccountManager userAccountManager = settingsManager.getUserAccountManager();
-        QAImageDialogActivity.this.userJID = userAccountManager.getUsername() + "@" + settingsManager.xmppServer;
+        QAImageDialogActivity.this.userJID = userAccountManager.getUsername() + "@" + settingsManager.xmppServiceName;
 
         QAImageDialogActivity.this.handler = new Handler();
 
@@ -523,7 +524,7 @@ public final class QAImageDialogActivity
                             @Override
                             public void run() {
 
-                                Toast.makeText(QAImageDialogActivity.this, "Upload completed, please waiting", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(QAImageDialogActivity.this, "Upload completed, please wait.", Toast.LENGTH_SHORT).show();
 
                             }
 
@@ -562,7 +563,7 @@ public final class QAImageDialogActivity
                     @Override
                     public void run() {
 
-                        Toast.makeText(QAImageDialogActivity.this, "Upload failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QAImageDialogActivity.this, "Upload failed.", Toast.LENGTH_SHORT).show();
 
                         QAImageDialogActivity.this.alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
 
@@ -594,9 +595,7 @@ public final class QAImageDialogActivity
                     @Override
                     protected void onPostExecute(String[] s) {
                         super.onPostExecute(s);
-
                         if(s != null) {
-
                             String answerID = QAImageDialogActivity.this.answerIdArray[0];
 
                             JSONObject jsonObject = new JSONObject();
@@ -636,7 +635,7 @@ public final class QAImageDialogActivity
 
                         }
 
-                        Toast.makeText(QAImageDialogActivity.this, "Send completed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QAImageDialogActivity.this, "Sending completed.", Toast.LENGTH_SHORT).show();
 
                         QAImageDialogActivity.this.removeQAMessage();
 

@@ -31,14 +31,14 @@ Object.size = function(obj) {
 UploadManager.prototype = {
 
   handleFiles : function(fromJid, fromJidResource, toJid, toJidResource, files, callback) {
-    console.log(files);
+    console.log(">>> " + files);
     var fileCount = 0;
     for (var key in files) {
       fileArrayLength = files[key].length;
       if (fileArrayLength === undefined || fileArrayLength === null) {
-	fileCount += 1
+        fileCount += 1
       } else {
-	fileCount += fileArrayLength
+        fileCount += fileArrayLength
       }
     }
 
@@ -47,13 +47,13 @@ UploadManager.prototype = {
     for (var key in files) {
       fileArrayLength = files[key].length;
       if (fileArrayLength === undefined || fileArrayLength === null) {
-	var file = files[key];
-	this.handleFile(fromJid, fromJidResource, toJid, toJidResource, file, handledFiles, callback);
+        var file = files[key];
+        this.handleFile(fromJid, fromJidResource, toJid, toJidResource, file, handledFiles, callback);
       } else {
-	for (var i = 0; i < files[key].length; i++) {
-	  var file = files[key][i];
-	  this.handleFile(fromJid, fromJidResource, toJid, toJidResource, file, handledFiles, callback);
-	}
+        for (var i = 0; i < files[key].length; i++) {
+          var file = files[key][i];
+          this.handleFile(fromJid, fromJidResource, toJid, toJidResource, file, handledFiles, callback);
+        }
       }
     }
     
@@ -63,18 +63,19 @@ UploadManager.prototype = {
 
 
   handleFile : function(fromJid, fromJidResource, toJid, toJidResource, file, handledFiles, callback) {
+    console.log('UploadManager.handleFile');
     var that = this;
     
     var fileContentType = mimeTypes.lookup(file['originalFilename']).toLowerCase();
     var fileMimeType = fileContentType.split('/')[0];
-    //console.log(file);
+    console.log(file);
     switch (fileMimeType) {
       case 'image':
-	that.imageManager.handleImage(fromJid, fromJidResource, toJid, toJidResource, file, handledFiles, this.onFileHandled, callback);
-	break;
+        that.imageManager.handleImage(fromJid, fromJidResource, toJid, toJidResource, file, handledFiles, this.onFileHandled, callback);
+        break;
       default:
-	this.deleteFile(file, handledFiles, this.onFileHandled, callback);
-	break;
+        this.deleteFile(file, handledFiles, this.onFileHandled, callback);
+        break;
     }    
     
   },
@@ -94,10 +95,10 @@ UploadManager.prototype = {
     var fileName = file.name;
     fs.unlink(file.path, function(error) {
       if (error) {
-	callbackFileHandled(error, handledFiles, callbackResponse)
+        callbackFileHandled(error, handledFiles, callbackResponse)
       } else {
-	handledFiles['file-results'][fileName] = { 'result-code' : 100 };
-	callbackFileHandled(null, handledFiles, callbackResponse);
+        handledFiles['file-results'][fileName] = { 'result-code' : 100 };
+        callbackFileHandled(null, handledFiles, callbackResponse);
       }
     });
   },
@@ -151,60 +152,61 @@ UploadManager.ImageManager.prototype = {
     
     step(
       function createDirIfNotExists(){
-	currentDateString = that.main.getCurrentDateString();
-	console.log(currentDateString);
-	mkdirp(path.join(DIR_PATH, MEDIA_UPLOAD_DIR_IMAGES, currentDateString), this);
+        currentDateString = that.main.getCurrentDateString();
+        console.log(currentDateString);
+        mkdirp(path.join(DIR_PATH, MEDIA_UPLOAD_DIR_IMAGES, currentDateString), this);
       },
       function onDirCreated(error){
- 	if (error) {
- 	  callbackFileHandled(error, handledFiles, callbackResponse);
- 	} else {
-	  targetPath = path.join(DIR_PATH, MEDIA_UPLOAD_DIR_IMAGES, currentDateString, '/', newFileName)
-	  console.log(targetPath);
-	  fs.rename(tmpPath, targetPath, this);
- 	}
+        if (error) {
+          console.log("UploadManager.ImageManager.handleImage.onDirCreated -> error" + error);
+          callbackFileHandled(error, handledFiles, callbackResponse);
+        } else {
+          targetPath = path.join(DIR_PATH, MEDIA_UPLOAD_DIR_IMAGES, currentDateString, '/', newFileName)
+          console.log(targetPath);
+          fs.rename(tmpPath, targetPath, this);
+        }
       },
       function onFileMoved(error) {
-	if (error) {
-	  callbackFileHandled(error, handledFiles, callbackResponse);
-	} else {
-	  lwip.open(targetPath, this)
-	}
+        if (error) {
+          callbackFileHandled(error, handledFiles, callbackResponse);
+        } else {
+          lwip.open(targetPath, this)
+        }
       },
       function onImageFileOpened(error, image) {
- 	if (error) {
- 	  callbackFileHandled(error, handledFiles, callbackResponse);
-  	} else {
-	  thumbnailFileName = that.main.addFileNameSuffix(newFileName, '_t');
- 	  thumbnailPath = path.join(DIR_PATH, MEDIA_UPLOAD_DIR_IMAGES, currentDateString, '/', thumbnailFileName);
-	  console.log(thumbnailFileName);
-	  dimensions = that.calculateResizeDimensions(image.width(), image.height());
-	  
-	  image.batch()
-	    .resize(dimensions[0], dimensions[1])
-	    .writeFile(thumbnailPath, this);
+        if (error) {
+          callbackFileHandled(error, handledFiles, callbackResponse);
+          } else {
+          thumbnailFileName = that.main.addFileNameSuffix(newFileName, '_t');
+          thumbnailPath = path.join(DIR_PATH, MEDIA_UPLOAD_DIR_IMAGES, currentDateString, '/', thumbnailFileName);
+          console.log(thumbnailFileName);
+          dimensions = that.calculateResizeDimensions(image.width(), image.height());
+          
+          image.batch()
+            .resize(dimensions[0], dimensions[1])
+            .writeFile(thumbnailPath, this);
         }
       },
       function onThumbnailCreated(error) {
-	if (error) {
-  	  callbackFileHandled(error, handledFiles, callbackResponse);
-  	} else {
-	  uploadUnixTimestamp = Math.round(Date.now() / 1000);
-	  imageLink = path.join(HOST_PATH, MEDIA_UPLOAD_DIR_IMAGES, currentDateString, '/', newFileName);
-	  thumbnailLink = path.join(HOST_PATH, MEDIA_UPLOAD_DIR_IMAGES, currentDateString, '/', thumbnailFileName);
-	  console.log(that.main.server.mysqlManagerOnespace.dbConfig);
-	  that.main.server.mysqlManagerOnespace.mediaUploader.insertImageData(fromJid, fromJidResource, toJid, toJidResource, uploadUnixTimestamp, imageLink, thumbnailLink, this);
-	}
+        if (error) {
+            callbackFileHandled(error, handledFiles, callbackResponse);
+          } else {
+          uploadUnixTimestamp = Math.round(Date.now() / 1000);
+          imageLink = path.join(HOST_PATH, MEDIA_UPLOAD_DIR_IMAGES, currentDateString, '/', newFileName);
+          thumbnailLink = path.join(HOST_PATH, MEDIA_UPLOAD_DIR_IMAGES, currentDateString, '/', thumbnailFileName);
+          console.log(that.main.server.mysqlManagerOnespace.dbConfig);
+          that.main.server.mysqlManagerOnespace.mediaUploader.insertImageData(fromJid, fromJidResource, toJid, toJidResource, uploadUnixTimestamp, imageLink, thumbnailLink, this);
+        }
       },
       function onImageDataStored(error, result) {
-	if (error) {
-   	  callbackFileHandled(error, handledFiles, callbackResponse);
-  	} else {
-	  result = { 'result-code' : 0, 'from-jid' : fromJid, 'from-jid-resource' : fromJidResource, 'to-jid' : toJid, 'to-jid-resource' : toJidResource, 'upload-unix-timestamp' : uploadUnixTimestamp, 'image-link' : imageLink , 'thumbnail-link' : thumbnailLink };
-	  handledFiles['file-results'][fileName] = result;
-	  console.log(result);
-	  callbackFileHandled(null, handledFiles, callbackResponse);
-	}
+        if (error) {
+            callbackFileHandled(error, handledFiles, callbackResponse);
+          } else {
+          result = { 'result-code' : 0, 'from-jid' : fromJid, 'from-jid-resource' : fromJidResource, 'to-jid' : toJid, 'to-jid-resource' : toJidResource, 'upload-unix-timestamp' : uploadUnixTimestamp, 'image-link' : imageLink , 'thumbnail-link' : thumbnailLink };
+          handledFiles['file-results'][fileName] = result;
+          console.log(result);
+          callbackFileHandled(null, handledFiles, callbackResponse);
+        }
       }
     );    
     

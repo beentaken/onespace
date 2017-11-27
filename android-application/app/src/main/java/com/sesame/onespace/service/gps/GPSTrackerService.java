@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.sesame.onespace.managers.UserAccountManager;
 import com.sesame.onespace.network.OneSpaceApi;
 
 import retrofit.GsonConverterFactory;
@@ -96,11 +97,19 @@ public final class GPSTrackerService
         intentFilter.addAction("GPSTrackerService2");
         registerReceiver(this.receiver, intentFilter);
 
-        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location location = null;
+        try {
+            location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        } catch (SecurityException e) {
+            Log.d(TAG, "GPSTrackerService.onCreate() No permission the use LocationManager.GPS_PROVIDER " + e.getMessage());
+        }
 
-        if (location == null){
-
-            location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (location == null) {
+            try {
+                location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            } catch (SecurityException e) {
+                Log.d(TAG, "GPSTrackerService.onCreate() No permission the use LocationManager.NETWORK_PROVIDER " + e.getMessage());
+            }
 
         }
 
@@ -108,6 +117,8 @@ public final class GPSTrackerService
 
             latitude = location.getLatitude();
             longitude = location.getLongitude();
+
+            this.userid = UserAccountManager.getInstance(getApplicationContext()).getUserID();
 
             Observable<String> observable = new OneSpaceApi.Builder(getApplicationContext())
                     .addConverterFactory(GsonConverterFactory.create())

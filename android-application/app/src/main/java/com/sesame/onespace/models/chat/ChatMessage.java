@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.sesame.onespace.utils.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,6 +17,9 @@ import org.json.JSONObject;
     // Last Update 27/12/2016
 
 public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage> {
+
+    public static final String MESSAGE_TYPE__CHAT = "chat";
+    public static final String MESSAGE_TYPE__QUERY = "query";
 
     public static final String KEY_MESSAGE_TYPE = "message-type";
     public static final String KEY_MEDIA_TYPE = "media";
@@ -30,6 +35,8 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
     private static final String KEY_READ_DEVICE_TIMESTAMP = "read_device_timestamp";
 
     private long id;
+    private String messageType;
+    private String mediaType;
     private String chatID;
     private String fromJID;
     private String serverID;
@@ -41,6 +48,8 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
 
     protected ChatMessage(Bundle bundle) {
         id = bundle.getLong(KEY_ID, -1);
+        messageType = bundle.getString(KEY_MESSAGE_TYPE);
+        mediaType = bundle.getString(KEY_MEDIA_TYPE);
         chatID = bundle.getString(KEY_CHAT_ID);
         fromJID = bundle.getString(KEY_FROM_JID);
         serverID = bundle.getString(KEY_SERVER_ID);
@@ -55,9 +64,11 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
         return id;
     }
 
-    public String getChatID() {
-        return chatID;
-    }
+    public String getChatID() { return chatID; }
+
+    public String getMessageType() { return messageType; };
+
+    public String getMediaType() { return mediaType; };
 
     public String getFromJID() {
         return fromJID;
@@ -111,6 +122,8 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
     public void writeToParcel(Parcel dest, int flags) {
         Bundle bundle = new Bundle();
         bundle.putLong(KEY_ID, id);
+        bundle.putString(KEY_MESSAGE_TYPE, messageType);
+        bundle.putString(KEY_MEDIA_TYPE, mediaType);
         bundle.putString(KEY_CHAT_ID, chatID);
         bundle.putString(KEY_FROM_JID, fromJID);
         bundle.putString(KEY_SERVER_ID, serverID);
@@ -134,7 +147,8 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
         private String serverID;
         private String timestamp;
         private String body;
-        private String type;
+        private String mediaType;
+        private String messageType;
         private String readDeviceTimestamp;
         private boolean fromMe;
         private boolean needPush = true;
@@ -185,24 +199,11 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
             this.body = body;
             try {
                 JSONObject jsonObject = new JSONObject(body);
-
-                //Thianchai (I modified this)
-                if (jsonObject.getString("message-type").equals("chat")){
-
-                    this.type = jsonObject.getString(KEY_MEDIA_TYPE);
-
-                }
-
-                if (jsonObject.getString("message-type").equals("query")){
-
-                    this.type = "query";
-
-                }
-                //**
-
-
+                this.messageType = jsonObject.getString(KEY_MESSAGE_TYPE);
+                this.mediaType = jsonObject.getString(KEY_MEDIA_TYPE);
             } catch (JSONException e) {
-                this.type = Type.TEXT.getString();
+                this.messageType = MessageType.CHAT.getString();
+                this.mediaType = MediaType.TEXT.getString();
             }
             return this;
         }
@@ -210,6 +211,8 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
         public ChatMessage build() {
             Bundle bundle = new Bundle();
             bundle.putLong(KEY_ID, this.id);
+            bundle.putString(KEY_MESSAGE_TYPE, this.messageType);
+            bundle.putString(KEY_MEDIA_TYPE, this.mediaType);
             bundle.putString(KEY_CHAT_ID, this.chatID);
             bundle.putString(KEY_FROM_JID, this.fromJID);
             bundle.putString(KEY_SERVER_ID, this.serverID);
@@ -219,14 +222,14 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
             bundle.putString(KEY_BODY, this.body);
             bundle.putString(KEY_READ_DEVICE_TIMESTAMP, this.readDeviceTimestamp);
 
-            if(this.type.equals(Type.IMAGE.getString())) {
+            if(this.mediaType.equals(MediaType.IMAGE.getString())) {
 
                 return new ImageMessage(bundle);
 
             }
 
             //Thianchai (I add this)
-            if(this.type.equals(Type.QUERY.getString())) {
+            if(this.messageType.equals(MessageType.QUERY.getString())) {
 
                 return new QueryMessage(bundle);
 
@@ -237,12 +240,28 @@ public abstract class ChatMessage implements Parcelable, Comparable<ChatMessage>
         }
     }
 
-    public enum Type {
+
+
+    public enum MessageType {
+        CHAT("chat"), QUERY("query");
+
+        private String str;
+
+        MessageType(String str) {
+            this.str = str;
+        }
+
+        public String getString() {
+            return str;
+        }
+    }
+
+    public enum MediaType {
         TEXT("text"), IMAGE("image"), VIDEO("video"), AUDIO("audio"), QUERY("query"); //Thianchai (I add QUERY("query"))
 
         private String str;
 
-        Type(String str) {
+        MediaType(String str) {
             this.str = str;
         }
 

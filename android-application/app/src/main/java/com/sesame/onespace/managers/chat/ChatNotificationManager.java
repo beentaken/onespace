@@ -66,7 +66,8 @@ public class ChatNotificationManager {
                         .setSmallIcon(R.drawable.ic_app_notification)
                         .setContentTitle(chat.getName())
                         .setContentText(chatMessage.getMessage())
-                        .setAutoCancel(true);
+                        .setAutoCancel(true)
+                        .setGroup("ONESPACE_NOTIFICATION_GROUP_KEY__CHAT_MESSAGE");
 
         Intent resultIntent = new Intent(context, MainActivity.class);
         resultIntent.putExtra(MessageService.KEY_BUNDLE_CHAT, chat);
@@ -90,10 +91,11 @@ public class ChatNotificationManager {
         if(settingsManager.notificationLED) {
             notification.ledOnMS = 1000;
             notification.ledOffMS = 2000;
-            notification.ledARGB = Color.BLUE;
+            notification.ledARGB = Color.MAGENTA;
             notification.flags |= Notification.FLAG_SHOW_LIGHTS;
         }
 
+        Log.i(">>>>>>>>>>>>>> Push put Chat Notification");
         mNotificationManager.notify(getNotifyID(chatMessage.getChatID()), notification);
     }
 

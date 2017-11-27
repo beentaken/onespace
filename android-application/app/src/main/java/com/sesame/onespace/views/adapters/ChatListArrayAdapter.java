@@ -20,6 +20,7 @@ import com.sesame.onespace.models.chat.Chat;
 import com.sesame.onespace.models.chat.LoadMoreMessageProgress;
 import com.sesame.onespace.utils.DateTimeUtil;
 import com.sesame.onespace.utils.DrawableUtil;
+import com.sesame.onespace.utils.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -197,7 +198,9 @@ public class ChatListArrayAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public void addItem(Object obj) {
         chats.add(obj);
+        Log.i("ChatListArrayAdapter.addItem(Object obj) called");
         notifyDataSetChanged();
+        Log.i("ChatListArrayAdapter.addItem(Object obj) called END");
     }
 
     public void addAll(List<Object> objs) {

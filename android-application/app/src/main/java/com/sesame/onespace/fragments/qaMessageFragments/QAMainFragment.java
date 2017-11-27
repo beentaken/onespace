@@ -1,5 +1,6 @@
 package com.sesame.onespace.fragments.qaMessageFragments;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.sesame.onespace.activities.dialogActivities.QAChoiceDialogActivity;
 import com.sesame.onespace.activities.dialogActivities.QAImageDialogActivity;
 import com.sesame.onespace.databases.qaMessageDatabases.QAMessageHelper;
 import com.sesame.onespace.models.qaMessage.QAMessage;
+import com.sesame.onespace.utils.Log;
 import com.sesame.onespace.views.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -243,7 +245,7 @@ public final class QAMainFragment
 
             final QAListItem item = QAListAdapter.this.items.get(i);
 
-            viewHolder.sender.setText(item.getMsgFrom().split("@")[0] + " send message.");
+            viewHolder.sender.setText(item.getMsgFrom().split("@")[0] + " asked:");
             viewHolder.title.setText(item.getQuestionStr());
             viewHolder.icon.setImageResource(item.getIcon());
             viewHolder.date.setText(item.getDate());

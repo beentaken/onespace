@@ -30,6 +30,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
+import com.sesame.onespace.fragments.MainMenuFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.CanNotConnectedToServerFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.DoNotHaveLocationFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.InternetNotAvailableFragment;
@@ -37,9 +38,11 @@ import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.NoD
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.WaitingFragment;
 import com.sesame.onespace.fragments.dashboardFragments.youtubeFragment.YoutubeFragment;
 import com.sesame.onespace.interfaces.activityInterfaces.SimpleGestureFilter;
+import com.sesame.onespace.managers.SettingsManager;
 import com.sesame.onespace.managers.location.UserLocationManager;
 import com.sesame.onespace.models.map.Place;
 import com.sesame.onespace.network.OneSpaceApi;
+import com.sesame.onespace.utils.Log;
 import com.sesame.onespace.utils.connect.Connection;
 
 import org.json.JSONArray;
@@ -106,6 +109,8 @@ public final class YoutubeActivity
     //for GPSBroadcastReceiver
     private YoutubeActivity.GPSBroadcastReceiver gpsBroadcastReceiver;
 
+    private SettingsManager settingManager;
+
     //===========================================================================================================//
     //  ACTIVITY LIFECYCLE                                                                          ACTIVITY LIFECYCLE
     //===========================================================================================================//
@@ -120,6 +125,7 @@ public final class YoutubeActivity
         YoutubeActivity.super.setContentView(R.layout.activity_dashboard_youtube);
         YoutubeActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
 
+        this.settingManager = SettingsManager.getSettingsManager(getApplicationContext());
     }
 
     @Override
@@ -878,7 +884,7 @@ public final class YoutubeActivity
         }
 
         //main
-        YoutubeActivity.this.url = "http://172.29.33.45:11090/data/?tabid=0&type=youtube&vloc=" + YoutubeActivity.this.placeNearest.getVloc() + "&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10";
+        YoutubeActivity.this.url = this.settingManager.getOnespaceServerURL() + "/data/?tabid=0&type=youtube&vloc=" + YoutubeActivity.this.placeNearest.getVloc() + "&vlocsha1=DOESNOMATTER&limit=10";
 
     }
 
@@ -989,7 +995,8 @@ public final class YoutubeActivity
                 location.setLongitude(YoutubeActivity.this.placeNearest.getLng());
 
                 toolbar.setSubtitle(YoutubeActivity.this.placeNearest.getName());
-                textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+                double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+                textView.setText("DISTANCE " + distance + " km");
 
             }
 
@@ -1090,7 +1097,8 @@ public final class YoutubeActivity
             location.setLongitude(YoutubeActivity.this.placeNearest.getLng());
 
             toolbar.setSubtitle(YoutubeActivity.this.placeNearest.getName());
-            textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+            double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+            textView.setText("DISTANCE " + distance + " km");
 
             switch (YoutubeActivity.this.idFragment){
 
@@ -1149,7 +1157,8 @@ public final class YoutubeActivity
                 location.setLatitude(YoutubeActivity.this.placeNearest.getLat());
                 location.setLongitude(YoutubeActivity.this.placeNearest.getLng());
 
-                textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+                double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+                textView.setText("DISTANCE " + distance + " km");
 
             }
             else{

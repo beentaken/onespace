@@ -132,6 +132,12 @@ Server.Http.prototype = {
     // curl -F "test=@feedme-sg-hospitals.png" "http://localhost:11090/media/upload/?fromjid=homer@172.29.33.45&fromjidresource=conference&tojid=carl@172.29.33.45&tojidresource=conference"
     // curl -F "test=@feedme-sg-hospitals.png" "http://localhost:11090/media/upload/?fromjid=homer@172.29.33.45&fromjidresource=conference&tojid=carl@172.29.33.45&tojidresource=conference"
     
+    // curl -F "test=@stages-of-life.jpeg" "http://ubicomp-web.d1.comp.nus.edu.sg/app/onespace/api/v1/media/upload/?fromjid=homer@172.29.33.45&fromjidresource=conference&tojid=closeup01@172.29.33.45&tojidresource=conference"
+    
+    // curl -F "test=@stages-of-life.jpeg" "http://ubicomp-web.d1.comp.nus.edu.sg/app/onespace/api/v1/places/box/?lat1=1.292064&lng1=103.775114&lat2=1.293019&lng2=103.776233&limit=1"
+    
+    // curl -F "test=@stages-of-life.jpeg" "http://172.29.33.45:11090/media/upload/?fromjid=homer@172.29.33.45&fromjidresource=conference&tojid=closeup01@172.29.33.45&tojidresource=conference"
+    
     
     // curl -d "" "http://localhost:11090/notification/push/?bla=blubb"
     
@@ -182,7 +188,7 @@ Server.Http.prototype = {
     
     this.app.put('/user/ploc/', Server.Util.bind(this, this.onUpdatePlocOfUserRequest));
     this.app.put('/user/vloc/', Server.Util.bind(this, this.onUpdateVlocOfUserRequest));
-    this.app.put('/user/vloc/', Server.Util.bind(this, this.onUpdateVlocOfUserRequest));
+    this.app.put('/user/fcm/', Server.Util.bind(this, this.onUpdateFcmTokenOfUserRequest));
     
     this.app.post('/notes/add/', Server.Util.bind(this, this.onInsertNoteRequest));
     
@@ -407,6 +413,14 @@ Server.Http.prototype = {
     );
   },
 
+  onUpdateFcmTokenOfUserRequest : function(request, response) {
+    var that = this;
+    this.main.mysqlManagerOnespace.users.updateFcmToken(
+      request.query.userid,
+      request.query.fcmtoken,
+      function(error, result) { that.sendResponse(error, response, 'text/json', JSON.stringify(result)); }
+    );
+  },  
   
   onUpdatePlocOfUserRequest : function(request, response) {
     var that = this;

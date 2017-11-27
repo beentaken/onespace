@@ -49,6 +49,10 @@ public class OneSpaceApi {
                            @Query("jid") String jid,
                            @Query("jidresource") String jidresource);
 
+        @PUT("user/fcm")
+        Observable<String> updateFcmToken(@Query("userid") String userid,
+                                          @Query("fcmtoken") String fcmToken);
+
         @PUT("user/ploc")
         Call<String> updateGeoLocation(@Query("userid") String userid,
                                @Query("lat") double lat,
@@ -56,8 +60,8 @@ public class OneSpaceApi {
 
         @PUT("user/ploc")
         Observable<String> updateGeoLocationRx(@Query("userid") String userid,
-                                         @Query("lat") double lat,
-                                         @Query("lng") double lng);
+                                                @Query("lat") double lat,
+                                                @Query("lng") double lng);
 
         @GET("places/box")
         Call<ArrayList<Place>> getPlaces(@Query("lat1") double lat1,
@@ -127,6 +131,10 @@ public class OneSpaceApi {
                                                     @Query("tojidresource") String toJidResource,
                                                     @Query("lastsentdate") String lastsentdate,
                                                     @Query("limit") int limit);
+
+        @PUT("report/add")
+        Observable<String> sendReport(@Query("groupid") long groupId,
+                                      @Query("report") String msg);
     }
 
 

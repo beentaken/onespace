@@ -101,14 +101,14 @@ public final class InstagramFragment
 
         recyclerView.setAdapter(InstagramFragment.this.adapter);
 
-        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int current_page) {
-
-                InstagramFragment.this.addRecyclerView();
-
-            }
-        });
+//        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+//            @Override
+//            public void onLoadMore(int current_page) {
+//
+//                InstagramFragment.this.addRecyclerView();
+//
+//            }
+//        });
 
     }
 

@@ -30,13 +30,15 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.sesame.onespace.R;
-import com.sesame.onespace.fragments.dashboardFragments.carParkFragment.CarParkFragment;
+import com.sesame.onespace.fragments.MainMenuFragment;
+import com.sesame.onespace.fragments.dashboardFragments.carparkFragment.CarParkFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.CanNotConnectedToServerFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.DoNotHaveLocationFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.InternetNotAvailableFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.NoDataFragment;
 import com.sesame.onespace.fragments.dashboardFragments.notificationFragment.WaitingFragment;
 import com.sesame.onespace.interfaces.activityInterfaces.SimpleGestureFilter;
+import com.sesame.onespace.managers.SettingsManager;
 import com.sesame.onespace.managers.location.UserLocationManager;
 import com.sesame.onespace.models.map.Place;
 import com.sesame.onespace.network.OneSpaceApi;
@@ -106,6 +108,8 @@ public final class CarParkActivity
     //for GPSBroadcastReceiver
     private CarParkActivity.GPSBroadcastReceiver gpsBroadcastReceiver;
 
+    private SettingsManager settingManager;
+
     //===========================================================================================================//
     //  ON ACTION                                                                                   ON ACTION
     //===========================================================================================================//
@@ -120,6 +124,7 @@ public final class CarParkActivity
         CarParkActivity.super.setContentView(R.layout.activity_dashboard_carpark);
         CarParkActivity.super.overridePendingTransition(R.anim.slide_in_from_right, R.anim.nothing);
 
+        this.settingManager = SettingsManager.getSettingsManager(getApplicationContext());
     }
 
     @Override
@@ -880,7 +885,7 @@ public final class CarParkActivity
         }
 
         //main
-        CarParkActivity.this.url = "http://172.29.33.45:11090/data/?tabid=0&type=lta&vloc=" + CarParkActivity.this.placeNearest.getVloc() + "&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10";
+        CarParkActivity.this.url = this.settingManager.getOnespaceServerURL() + "/data/?tabid=0&type=lta&vloc=" + CarParkActivity.this.placeNearest.getVloc() + "&vlocsha1=9ae3562a174ccf1de97ad7939d39b505075bdc7a&limit=10";
 
     }
 
@@ -944,7 +949,14 @@ public final class CarParkActivity
 
                 JSONObject object = jsonArray.getJSONObject(index);
 
-                CarParkActivity.this.items.add(new CarParkFragment.CarparkItem(R.drawable.ic_dashboard_carpark_car, String.valueOf(object.get("area")), String.valueOf(object.get("development")), String.valueOf(object.get("available_lots")), String.valueOf(object.get("distance_in_km"))));
+                Double distance = MainMenuFragment.roundToDecimal(object.getDouble("distance"), 2);
+
+                CarParkActivity.this.items.add(new CarParkFragment.CarparkItem(
+                        R.drawable.ic_dashboard_carpark_car,
+                        String.valueOf(object.get("Area")),
+                        String.valueOf(object.get("Development")),
+                        String.valueOf(object.get("Lots")),
+                        String.valueOf(distance)));
 
 
             } catch (JSONException e) {
@@ -991,7 +1003,8 @@ public final class CarParkActivity
                 location.setLongitude(CarParkActivity.this.placeNearest.getLng());
 
                 toolbar.setSubtitle(CarParkActivity.this.placeNearest.getName());
-                textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+                double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+                textView.setText("DISTANCE " + distance + " km");
 
             }
 
@@ -1092,7 +1105,8 @@ public final class CarParkActivity
             location.setLongitude(CarParkActivity.this.placeNearest.getLng());
 
             toolbar.setSubtitle(CarParkActivity.this.placeNearest.getName());
-            textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+            double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+            textView.setText("DISTANCE " + distance + " km");
 
             switch (CarParkActivity.this.idFragment){
 
@@ -1151,7 +1165,8 @@ public final class CarParkActivity
                 location.setLatitude(CarParkActivity.this.placeNearest.getLat());
                 location.setLongitude(CarParkActivity.this.placeNearest.getLng());
 
-                textView.setText("DISTANCE " + UserLocationManager.getLocation().distanceTo(location) + " M");
+                double distance = MainMenuFragment.roundToDecimal((UserLocationManager.getLocation().distanceTo(location)) / 1000, 2);
+                textView.setText("DISTANCE " + distance + " km");
 
             }
             else{

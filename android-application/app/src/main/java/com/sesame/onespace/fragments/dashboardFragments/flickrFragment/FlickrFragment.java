@@ -101,14 +101,14 @@ public final class FlickrFragment
 
         recyclerView.setAdapter(FlickrFragment.this.adapter);
 
-        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int current_page) {
-
-                FlickrFragment.this.addRecyclerView();
-
-            }
-        });
+//        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+//            @Override
+//            public void onLoadMore(int current_page) {
+//
+//                FlickrFragment.this.addRecyclerView();
+//
+//            }
+//        });
 
     }
 

@@ -166,21 +166,21 @@ public final class WeatherFragment
 
             viewHolder.icon.setImageBitmap(item.getBitmap());
             viewHolder.headerText.setText(item.getHeaderText());
-            viewHolder.locationArea.setText("Location Area : " + item.getLocationArea());
-            viewHolder.description.setText("Description : " + item.getDescription());
-            viewHolder.time.setText("get at " + item.getTime());
+            //viewHolder.locationArea.setText("Location Area : " + item.getLocationArea());
+            viewHolder.description.setText("Description: " + item.getDescription());
+            viewHolder.time.setText(item.getTime());
             viewHolder.headerTemp.setText(item.getHeaderTemp());
-            viewHolder.temp.setText("Temperature : " + item.getTemp() + " °C (Celsius)");
-            viewHolder.maxTemp.setText("Max Temperature : " + item.getMaxTemp() + " °C (Celsius)");
-            viewHolder.minTemp.setText("Min Temperature : " + item.getMinTemp() + " °C (Celsius)");
+            viewHolder.temp.setText("Temperature: " + item.getTemp() + "°C");
+            viewHolder.maxTemp.setText("Max Temperature: " + item.getMaxTemp() + "°C");
+            viewHolder.minTemp.setText("Min Temperature: " + item.getMinTemp() + "°C");
             viewHolder.headerDetail.setText(item.getHeaderDetail());
-            viewHolder.pressure.setText("Pressure : " + item.getPressure() + " hpa");
-            viewHolder.humidity.setText("Humidity : " + item.getHumidity() + " %");
-            viewHolder.windSpeed.setText("Wind Speed : " + item.getWindSpeed() + " m/s");
-            viewHolder.windDirection.setText("Wind Direction : " + item.getWindDirection() + " degrees");
-            viewHolder.cloudiness.setText("Cloudiness : " + item.getCloudiness() + " %");
-            viewHolder.sunrise.setText("Sunrise : " + item.getSunrise() + " ");
-            viewHolder.sunset.setText("Sunset : " + item.getSunset() + " ");
+            viewHolder.pressure.setText("Pressure: " + item.getPressure() + " hpa");
+            viewHolder.humidity.setText("Humidity: " + item.getHumidity() + "%");
+            viewHolder.windSpeed.setText("Wind Speed: " + item.getWindSpeed() + " m/s");
+            viewHolder.windDirection.setText("Wind Direction: " + item.getWindDirection() + " degrees");
+            viewHolder.cloudiness.setText("Cloudiness: " + item.getCloudiness() + "%");
+            viewHolder.sunrise.setText("Sunrise: " + item.getSunrise() + " ");
+            viewHolder.sunset.setText("Sunset: " + item.getSunset() + " ");
 
         }
 
@@ -221,7 +221,7 @@ public final class WeatherFragment
             ViewHolder.this.rootView = (CardView)itemView.findViewById(R.id.root_view);
             ViewHolder.this.icon = (ImageView)itemView.findViewById(R.id.icon);
             ViewHolder.this.headerText = (TextView)itemView.findViewById(R.id.header_text);
-            ViewHolder.this.locationArea = (TextView)itemView.findViewById(R.id.location_area);
+            //ViewHolder.this.locationArea = (TextView)itemView.findViewById(R.id.location_area);
             ViewHolder.this.description = (TextView)itemView.findViewById(R.id.description);
             ViewHolder.this.time = (TextView)itemView.findViewById(R.id.time);
             ViewHolder.this.headerTemp = (TextView)itemView.findViewById(R.id.header_temp);

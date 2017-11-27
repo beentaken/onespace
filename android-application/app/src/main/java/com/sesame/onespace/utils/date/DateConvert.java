@@ -14,6 +14,7 @@ public abstract class DateConvert {
     //===========================================================================================================//
 
     public final static String DATE_FORMAT1 = "EEE, d MMM yyyy hh:mm aaa";  // Wed, 4 Jul 2001 12:08 PM
+    public final static String DATE_FORMAT2 = "d MMM ''yy, hh:mm aaa";  // Wed, 4 Jul 2001 12:08 PM
 
     //===========================================================================================================//
     //  METHOD                                                                                      METHOD

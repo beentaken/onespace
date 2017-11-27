@@ -234,7 +234,7 @@ public class XmppMultiUserChat {
     }
 
     private String getRoomJID(String name) {
-        return name + "@" + mSettings.xmppRecource + "." + mSettings.xmppServer;
+        return name + "@" + mSettings.xmppRecource + "." + mSettings.xmppServiceName;
     }
 
     private class RejoinRoomsRunnable implements Runnable {

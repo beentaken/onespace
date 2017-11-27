@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "298034632667",
+    "firebase_url": "https://closeup-ca9f6.firebaseio.com",
+    "project_id": "closeup-ca9f6",
+    "storage_bucket": "closeup-ca9f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298034632667:android:9fae21699ad77057",
+        "android_client_info": {
+          "package_name": "sg.edu.nus.closeup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298034632667-hso1qbqpdms0k14s7k0qof0uuaamn2i9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGR5nZ48F-utaSAvUsK7Rcx3UTg_xQN7s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298034632667:android:93ef7f46dead6ab0",
+        "android_client_info": {
+          "package_name": "com.sesame.onespace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298034632667-hso1qbqpdms0k14s7k0qof0uuaamn2i9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGR5nZ48F-utaSAvUsK7Rcx3UTg_xQN7s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

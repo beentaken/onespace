@@ -136,6 +136,29 @@ MysqlManager.Users.prototype = {
     
   },
     
+  
+  //
+  // curl  -X PUT "http://172.29.32.195:11090/user/fcm/?userid=f6447838e6c611e6b5233417ebb4b372&fcmtoken=123"
+  //
+  updateFcmToken : function(userId, fcmToken, callback) {
+    var that = this;
+    step(
+      function executeQuery() {
+        var query = "UPDATE osUsers SET fcm_token = '" + fcmToken + "' WHERE id = UNHEX('" + userId + "')";
+        console.log(query);
+        that.main.connection.query(query, this);
+      },
+      function onResult(error, result) {
+        if(error) {
+          callback(error);
+        } else {
+          callback(null, result)
+        }
+      }
+    );
+  },
+    
+  
 
   //
   // curl  -X PUT "http://172.29.32.195:11090/user/ploc/?userid=f6447838e6c611e6b5233417ebb4b372&lat=1.292454&lng=103.774118"
@@ -149,6 +172,7 @@ MysqlManager.Users.prototype = {
         } else {
           var query = "INSERT INTO osWalkers (user_id, ploc) VALUES (UNHEX('" + userId + "'), POINT(" + latitude + ", " + longitude + ")) ON DUPLICATE KEY UPDATE ploc = POINT(" + latitude + ", " + longitude + "), created = CURRENT_TIMESTAMP;";
         }
+        q = query
         that.main.connection.query(query, this);
       },
       function onResult(error, result) {
@@ -364,8 +388,8 @@ MysqlManager.Netlocs.prototype = {
     var that = this;
     step(
       function executeQuery(){
-	var query = "SELECT path_depth, parameter FROM osNetlocIndex WHERE vloc = '" + vloc + "'";
- 	that.main.connection.query(query, this);
+        var query = "SELECT path_depth, parameter FROM osNetlocIndex WHERE vloc = '" + vloc + "'";
+        that.main.connection.query(query, this);
       },
       function onResult(error, result){
         if (error) {
@@ -849,7 +873,7 @@ MysqlManager.GoLocal.prototype = {
     var that = this;
     step(
       function executeQuery(){
-        var query = "SELECT p.sname, p.pname, p.price, p.url, g.formatted_address, (g.ploc) AS lat, Y(g.ploc) AS lng FROM osplaces g, oslocalproducts p, osglobalproducts m WHERE m.url ='" + vloc + "' AND m.p_id = p.p_id AND p.place_id = g.external_source_id AND g.external_source = 'google_places' ORDER BY p.sname ASC"; 
+        var query = "SELECT p.sname, p.pname, p.price, p.url, g.formatted_address, (g.ploc) AS lat, Y(g.ploc) AS lng FROM osPlaces g, os_local_products p, os_global_products m WHERE m.url ='" + vloc + "' AND m.p_id = p.p_id AND p.place_id = g.external_source_id AND g.external_source = 'google_places' ORDER BY p.sname ASC"; 
         console.log(query);
         that.main.connection.query(query, this);
       },

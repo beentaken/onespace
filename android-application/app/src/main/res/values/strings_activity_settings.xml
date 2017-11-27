@@ -80,6 +80,10 @@
     <string name="pref_header_advanced">Advanced</string>
     <string name="pref_advanced_xmpp_server">pref_advanced_xmpp_server</string>
     <string name="pref_advanced_xmpp_server_title">XMPP Server Host</string>
+    <string name="pref_advanced_xmpp_port">pref_advanced_xmpp_port</string>
+    <string name="pref_advanced_xmpp_port_title">XMPP Server Port</string>
+    <string name="pref_advanced_xmpp_service_name">pref_advanced_xmpp_service_name</string>
+    <string name="pref_advanced_xmpp_service_name_title">XMPP Service Name</string>
     <string name="pref_advanced_xmpp_resource">pref_advanced_xmpp_resource</string>
     <string name="pref_advanced_xmpp_resource_title">XMPP Resource</string>
     <string name="pref_advanced_onespace_server">pref_advanced_onespace_server</string>
